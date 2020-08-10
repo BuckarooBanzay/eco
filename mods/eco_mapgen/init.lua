@@ -1,6 +1,6 @@
 local c_stone = minetest.get_content_id("default:stone")
 local c_air = minetest.get_content_id("air")
-
+local c_dirt_with_grass = minetest.get_content_id("default:dirt_with_grass")
 
 minetest.register_on_generated(function(minp, maxp)
 
@@ -14,7 +14,9 @@ minetest.register_on_generated(function(minp, maxp)
 		local index = area:index(x,y,z)
     if y == 0 then
       data[index] = c_stone
-    else
+    elseif y == 1 then
+			data[index] = c_dirt_with_grass
+		else
       data[index] = c_air
     end
 	end --y

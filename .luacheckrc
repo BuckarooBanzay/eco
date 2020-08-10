@@ -1,4 +1,6 @@
 globals = {
+	"default",
+	"player_api"
 }
 
 read_globals = {
@@ -10,5 +12,7 @@ read_globals = {
 	"minetest",
 	"vector", "ItemStack",
 	"dump", "dump2",
-	"VoxelArea"
+	"VoxelArea",
+
+	"creative"
 }
