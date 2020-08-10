@@ -1,4 +1,4 @@
-local c_stone = minetest.get_content_id("eco_basenodes:stone")
+local c_stone = minetest.get_content_id("default:stone")
 local c_air = minetest.get_content_id("air")
 
 
