@@ -5,7 +5,7 @@ local function get_mapblock_bounds(pos)
 	return min, max
 end
 
-minetest.register_chatcommand("test", {
+minetest.register_chatcommand("save_export", {
 	func = function(name)
     local player = minetest.get_player_by_name(name)
     local pos = player:get_pos()
@@ -15,7 +15,7 @@ minetest.register_chatcommand("test", {
   end
 })
 
-minetest.register_chatcommand("test2", {
+minetest.register_chatcommand("load_export", {
 	func = function(name)
     local player = minetest.get_player_by_name(name)
     local pos = player:get_pos()

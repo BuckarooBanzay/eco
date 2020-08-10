@@ -76,3 +76,22 @@ minetest.register_node("eco_placement:display_node", {
 	groups = {dig_immediate = 3, not_in_creative_inventory = 1},
 	drop = "",
 })
+
+local function get_mapblock_bounds(pos)
+	local mapblock = vector.floor( vector.divide(pos, 16))
+  local min = vector.multiply(mapblock, 16)
+  local max = vector.add(min, 15)
+	return min, max
+end
+
+local MP = minetest.get_modpath("eco_placement")
+
+minetest.register_chatcommand("load_test", {
+	func = function(name)
+    local player = minetest.get_player_by_name(name)
+    local pos = player:get_pos()
+    local min = get_mapblock_bounds(pos)
+    minetest.place_schematic(min, MP .. "/schematics/street_all_sides.mts", 0, {}, true, {})
+		return true
+  end
+})
