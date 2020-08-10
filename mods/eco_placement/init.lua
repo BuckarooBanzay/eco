@@ -1,34 +1,29 @@
-minetest.register_chatcommand("test", {
-	func = function(name)
-    local player = minetest.get_player_by_name(name)
-    if not player then
-      return false
-    end
+local function get_mapblock_center(pos)
+	local mapblock = vector.floor( vector.divide(pos, 16))
+	return vector.add(vector.multiply(mapblock, 16), 7.5)
+end
 
-    local raybegin = vector.add(player:get_pos(),{x=0, y=player:get_properties().eye_height, z=0})
+minetest.register_craftitem("eco_placement:wand", {
+	description = "Placement wand",
+	inventory_image = "eco_placement_wand.png",
+	on_use = function(itemstack, player)
+		local raybegin = vector.add(player:get_pos(),{x=0, y=player:get_properties().eye_height, z=0})
     local rayend = vector.add(raybegin, vector.multiply(player:get_look_dir(), 50))
     local ray = minetest.raycast(raybegin, rayend, true, false)
     ray:next() -- player
+
     local pointed_thing = ray:next()
 
     if not pointed_thing then
-      return false, "out of range!"
+      return itemstack
     end
 
-    if pointed_thing.type == "object" then
-      local object = pointed_thing.ref
-      if object and object.get_luaentity and object:get_luaentity() then
-        return true, "hit entity: " .. object:get_luaentity().name
-      end
-      return false, "unknown entity"
-
-    elseif pointed_thing.type == "node" then
-			minetest.add_entity(pointed_thing.above, "eco_placement:display")
-      return true, "hit node: " .. dump(pointed_thing.above)
-
+		if pointed_thing.type == "node" then
+			local mapblock_center = get_mapblock_center(pointed_thing.above)
+			minetest.add_entity(mapblock_center, "eco_placement:display")
     end
-		return true
-  end
+		return itemstack
+	end
 })
 
 
@@ -40,7 +35,7 @@ minetest.register_entity("eco_placement:display", {
 	textures = {"eco_placement:display_node"},
 	timer = 0,
 	glow = 10,
-
+	static_save = false, --TODO: wtf!?
 	on_step = function(self, dtime)
 
 		self.timer = self.timer + dtime
@@ -53,7 +48,7 @@ minetest.register_entity("eco_placement:display", {
 })
 
 
-local x = 8
+local x = 7.5
 minetest.register_node("eco_placement:display_node", {
 	tiles = {"eco_placement_display.png"},
 	use_texture_alpha = true,
