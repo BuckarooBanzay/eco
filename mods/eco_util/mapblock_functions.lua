@@ -4,6 +4,10 @@ function eco_util.get_mapblock_center(pos)
 	return vector.add(vector.multiply(mapblock, 16), 7.5)
 end
 
+function eco_util.get_mapblock(pos)
+	return vector.floor( vector.divide(pos, 16))
+end
+
 
 function eco_util.get_mapblock_bounds(pos)
 	local mapblock = vector.floor( vector.divide(pos, 16))
