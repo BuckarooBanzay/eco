@@ -1,32 +1,4 @@
 
-minetest.register_entity("eco_util:display", {
-	physical = false,
-	collisionbox = {0, 0, 0, 0, 0, 0},
-	visual = "wielditem",
-	visual_size = {x = 0.67, y = 0.67},
-	textures = {"eco_util:display_node"},
-	timer = 0,
-	glow = 10,
-	-- static_save = false, --TODO: wtf!?
-	on_step = function(self, dtime)
-
-		self.timer = self.timer + dtime
-
-		-- remove after set number of seconds
-		if self.timer > 60 then
-			self.object:remove()
-		end
-	end,
-	on_activate = function(self, staticdata, dtime_s)
-		print("on_activate", staticdata)
-	end,
-	get_staticdata = function(self)
-		print("get_staticdata")
-		return "something"
-	end
-})
-
-
 local x = 7.5
 minetest.register_node("eco_util:display_node", {
 	tiles = {"eco_util_display.png"},
@@ -55,7 +27,51 @@ minetest.register_node("eco_util:display_node", {
 	drop = "",
 })
 
-function eco_util.display_mapblock_at_pos(pos)
+minetest.register_entity("eco_util:display", {
+	initial_properties = {
+		physical = false,
+		collisionbox = {0, 0, 0, 0, 0, 0},
+		visual = "wielditem",
+		visual_size = {x = 0.67, y = 0.67},
+		textures = {"eco_util:display_node"},
+		glow = 10,
+	},
+
+	timer = 0,
+
+	on_step = function(self)
+		local now = os.time()
+		if now > self.data.expire then
+			self.object:remove()
+			return
+		end
+	end,
+	on_activate = function(self, staticdata)
+		self.data = minetest.deserialize(staticdata)
+
+		if not self.data or not self.data.expire then
+			self.object:remove()
+			return
+		end
+
+		if self.data.text then
+			local properties = self.object:get_properties()
+			properties.nametag = self.data.text
+			self.object:set_properties(properties)
+		end
+	end,
+	get_staticdata = function(self)
+		return minetest.serialize(self.data)
+	end
+})
+
+
+
+function eco_util.display_mapblock_at_pos(pos, text)
   local mapblock_center = eco_util.get_mapblock_center(pos)
-  return minetest.add_entity(mapblock_center, "eco_util:display")
+	local data = {
+		expire = os.time() + 5,
+		text = text
+	}
+  return minetest.add_entity(mapblock_center, "eco_util:display", minetest.serialize(data))
 end
