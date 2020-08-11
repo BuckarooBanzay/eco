@@ -23,12 +23,13 @@ minetest.register_craftitem("eco_placement:wand", {
 	inventory_image = "eco_placement_wand.png",
 	range = 0,
 	on_use = function(itemstack, player)
+		local timeout = 2
 		local playername = player:get_player_name()
 		local pos = get_pointed_nodepos(player)
 		if pos then
 			-- check previous click
 			local previous_pos = last_pos[playername]
-			if previous_pos and (previous_pos.time + 5) > os.time() then
+			if previous_pos and (previous_pos.time + timeout) > os.time() then
 				-- clicked 5 seconds ago
 				local distance = vector.distance(eco_util.get_mapblock(pos), previous_pos.mapblock)
 
@@ -42,7 +43,7 @@ minetest.register_craftitem("eco_placement:wand", {
 				end
 			end
 
-			eco_util.display_mapblock_at_pos(pos, "Something, something")
+			eco_util.display_mapblock_at_pos(pos, "Something, something", timeout)
 			last_pos[playername] = {
 				mapblock = eco_util.get_mapblock(pos),
 				time = os.time()

@@ -67,10 +67,10 @@ minetest.register_entity("eco_util:display", {
 
 
 
-function eco_util.display_mapblock_at_pos(pos, text)
+function eco_util.display_mapblock_at_pos(pos, text, timeout)
   local mapblock_center = eco_util.get_mapblock_center(pos)
 	local data = {
-		expire = os.time() + 5,
+		expire = os.time() + timeout,
 		text = text
 	}
   return minetest.add_entity(mapblock_center, "eco_util:display", minetest.serialize(data))
