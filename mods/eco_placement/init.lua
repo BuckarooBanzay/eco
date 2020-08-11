@@ -20,16 +20,3 @@ minetest.register_craftitem("eco_placement:wand", {
 		return itemstack
 	end
 })
-
-
-local MP = minetest.get_modpath("eco_placement")
-
-minetest.register_chatcommand("load_test", {
-	func = function(name)
-    local player = minetest.get_player_by_name(name)
-    local pos = player:get_pos()
-    local min = eco_util.get_mapblock_bounds(pos)
-    minetest.place_schematic(min, MP .. "/schematics/street_all_sides.mts", 0, {}, true, {})
-		return true
-  end
-})
