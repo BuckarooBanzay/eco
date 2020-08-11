@@ -24,11 +24,11 @@ end
 local function worker(ctx)
   if not ctx.pos then
     -- done
-    minetest.log("action", "[eco_serialize] done reading schema from " .. ctx.schema_dir)
+    minetest.log("verbose", "[eco_serialize] done reading schema from " .. ctx.schema_dir)
     return
   end
 
-  minetest.log("action", "[eco_serialize] deserializing mapblock at position " .. minetest.pos_to_string(ctx.pos))
+  minetest.log("verbose", "[eco_serialize] deserializing mapblock at position " .. minetest.pos_to_string(ctx.pos))
 
   local mapblock = read_json_file(
     ctx.schema_dir .. "/mapblock_" .. ctx.mapblock_index .. ".json",

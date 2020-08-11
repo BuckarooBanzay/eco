@@ -35,7 +35,7 @@ minetest.register_craftitem("eco_placement:wand", {
 
 				if distance < 1 then
 					-- build here
-					local schema_dir = minetest.get_modpath("eco_streets") .. "/schemas/street_all_sides"
+					local schema_dir = minetest.get_modpath("eco_streets") .. "/schematics/street_all_sides"
 					local min = eco_util.get_mapblock_bounds(pos)
 					eco_serialize.deserialize(min, schema_dir)
 					last_pos[playername] = nil
