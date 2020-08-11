@@ -1,6 +1,7 @@
 globals = {
 	"default",
 	"player_api",
+	"eco_api",
 	"eco_util",
 	"eco_serialize"
 }
