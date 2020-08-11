@@ -18,7 +18,7 @@ local function worker(ctx)
     return
   end
 
-  minetest.log("action", "[eco_serialize] deserializing mapblock at position " .. dump(ctx.pos))
+  minetest.log("action", "[eco_serialize] deserializing mapblock at position " .. minetest.pos_to_string(ctx.pos))
 
   local mapblock = read_json_file(ctx.schema_dir .. "/mapblock_" .. ctx.mapblock_index .. ".json")
   local metadata = read_json_file(ctx.schema_dir .. "/mapblock_" .. ctx.mapblock_index .. ".metadata.json")
@@ -47,7 +47,7 @@ function eco_serialize.deserialize(pos, schema_dir)
       z = min.z + manifest.max_z
     },
     mapblock_index = 1,
-    pos = min
+    pos = table.copy(min)
   }
 
   minetest.after(0, worker, ctx)

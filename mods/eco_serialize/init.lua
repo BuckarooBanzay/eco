@@ -8,21 +8,4 @@ dofile(MP .. "/serialize.lua")
 dofile(MP .. "/serialize_part.lua")
 dofile(MP .. "/deserialize.lua")
 dofile(MP .. "/deserialize_part.lua")
-
-minetest.register_chatcommand("test_serialize", {
-	func = function(name)
-    local player = minetest.get_player_by_name(name)
-    local pos = player:get_pos()
-    eco_serialize.serialize(pos, pos, minetest.get_worldpath() .. "/schems/test")
-		return true
-  end
-})
-
-minetest.register_chatcommand("test_deserialize", {
-	func = function(name)
-    local player = minetest.get_player_by_name(name)
-    local pos = player:get_pos()
-    eco_serialize.deserialize(pos, minetest.get_worldpath() .. "/schems/test")
-		return true
-  end
-})
+dofile(MP .. "/chat_commands.lua")

@@ -61,7 +61,7 @@ local function worker(ctx)
     return
   end
 
-  minetest.log("action", "[eco_serialize] serializing mapblock at position " .. dump(ctx.pos))
+  minetest.log("action", "[eco_serialize] serializing mapblock at position " .. minetest.pos_to_string(ctx.pos))
 
   local data = eco_serialize.serialize_part(ctx.pos, ctx.manifest.node_mapping)
 
@@ -103,7 +103,7 @@ function eco_serialize.serialize(pos1, pos2, schema_dir)
     min = min,
     max = max,
     mapblock_index = 1,
-    pos = min
+    pos = table.copy(min)
   }
 
   minetest.after(0, worker, ctx)
