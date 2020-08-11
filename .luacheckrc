@@ -19,3 +19,13 @@ read_globals = {
 
 	"creative"
 }
+
+files["mods/default"] = {
+	unused_args = false,
+}
+
+files["mods/player_api/api.lua"] = {
+	globals = {
+		"minetest"
+	}
+}
