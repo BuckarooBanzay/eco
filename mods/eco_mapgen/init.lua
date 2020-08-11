@@ -39,7 +39,7 @@ minetest.register_on_generated(function(minp, maxp)
 			if y == height then
 				local mapblock = { x=x, y=y, z=z }
 				local pos = eco_util.get_mapblock_bounds_from_mapblock(mapblock)
-				eco_serialize.deserialize(pos, MP .. "/schematics/green", true)
+				eco_serialize.deserialize(pos, MP .. "/schematics/grass_flat", true)
 			end
 
 			i = i + 1
