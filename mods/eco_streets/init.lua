@@ -1,6 +1,7 @@
 local MP = minetest.get_modpath("eco_streets")
 
 eco_api.register_street({
+  key = "eco_streets:stone_street",
   name = "Stone street",
   cost = 15000,
   schemas = {
