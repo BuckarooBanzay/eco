@@ -1,10 +1,20 @@
 
-local function read_json_file(filename)
+local cache = {}
+
+local function read_json_file(filename, use_cache)
+  if use_cache and cache[filename] then
+    return cache[filename]
+  end
+
   local file = io.open(filename,"r")
 
   if file then
     local json = file:read("*a")
-    return minetest.parse_json(json)
+    local result = minetest.parse_json(json)
+    if use_cache then
+      cache[filename] = result
+    end
+    return result
   else
     return nil
   end
@@ -20,8 +30,15 @@ local function worker(ctx)
 
   minetest.log("action", "[eco_serialize] deserializing mapblock at position " .. minetest.pos_to_string(ctx.pos))
 
-  local mapblock = read_json_file(ctx.schema_dir .. "/mapblock_" .. ctx.mapblock_index .. ".json")
-  local metadata = read_json_file(ctx.schema_dir .. "/mapblock_" .. ctx.mapblock_index .. ".metadata.json")
+  local mapblock = read_json_file(
+    ctx.schema_dir .. "/mapblock_" .. ctx.mapblock_index .. ".json",
+    ctx.use_cache
+  )
+
+  local metadata = read_json_file(
+    ctx.schema_dir .. "/mapblock_" .. ctx.mapblock_index .. ".metadata.json",
+    ctx.use_cache
+  )
 
   eco_serialize.deserialize_part(ctx.pos, ctx.manifest.node_mapping, mapblock, metadata)
 
@@ -33,8 +50,8 @@ local function worker(ctx)
 end
 
 
-function eco_serialize.deserialize(pos, schema_dir)
-  local manifest = read_json_file(schema_dir .. "/manifest.json")
+function eco_serialize.deserialize(pos, schema_dir, use_cache)
+  local manifest = read_json_file(schema_dir .. "/manifest.json", use_cache)
   local min = eco_util.get_mapblock_bounds(pos)
 
   local ctx = {
@@ -47,8 +64,14 @@ function eco_serialize.deserialize(pos, schema_dir)
       z = min.z + manifest.max_z
     },
     mapblock_index = 1,
-    pos = table.copy(min)
+    pos = table.copy(min),
+    use_cache = use_cache
   }
-
-  minetest.after(0, worker, ctx)
+  if manifest.total_parts == 1 then
+    -- skip async work queue
+    worker(ctx)
+  else
+    -- schedule async work
+    minetest.after(0, worker, ctx)
+  end
 end
