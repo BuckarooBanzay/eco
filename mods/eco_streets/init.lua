@@ -5,9 +5,9 @@ eco_api.register_street({
   name = "Stone street",
   cost = 15000,
   schemas = {
-    straight = MP .. "/schemas/street_straight",
-    corner = MP .. "/schemas/street_corner",
-    all_sides = MP .. "/schemas/street_all_sides",
-    three_sides = MP .. "/schemas/street_three_sides"
+    straight = MP .. "/schematics/street_straight",
+    corner = MP .. "/schematics/street_corner",
+    all_sides = MP .. "/schematics/street_all_sides",
+    three_sides = MP .. "/schematics/street_three_sides"
   }
 })
