@@ -28,14 +28,34 @@ minetest.register_craftitem("eco_placement:wand", {
 	end
 })
 
+local player_entity_map = {}
+
 local function placement_preview()
 	for _, player in ipairs(minetest.get_connected_players()) do
 		local wielded_name = player:get_wielded_item():get_name()
+		local playername = player:get_player_name()
 		if wielded_name == "eco_placement:wand" then
 			local pos = get_pointed_nodepos(player)
 			if pos then
-				eco_util.display_mapblock_at_pos(pos)
+				if player_entity_map[playername] then
+					-- update
+					local mapblock_center = eco_util.get_mapblock_center(pos)
+					player_entity_map[playername]:set_pos(mapblock_center)
+				else
+					-- create
+					player_entity_map[playername] = eco_util.display_mapblock_at_pos(pos)
+				end
+			else
+				-- remove
+				if player_entity_map[playername] then
+					player_entity_map[playername]:remove()
+					player_entity_map[playername] = nil;
+				end
 			end
+		elseif player_entity_map[playername] then
+			-- remove
+			player_entity_map[playername]:remove()
+			player_entity_map[playername] = nil;
 		end
 	end
 
@@ -43,3 +63,12 @@ local function placement_preview()
 end
 
 minetest.after(1, placement_preview)
+
+-- cleanup
+minetest.register_on_leaveplayer(function(player)
+  local playername = player:get_player_name()
+	if (player_entity_map[playername]) then
+		player_entity_map[playername]:remove()
+	end
+  player_entity_map[playername] = nil
+end)

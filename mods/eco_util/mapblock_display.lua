@@ -7,16 +7,23 @@ minetest.register_entity("eco_util:display", {
 	textures = {"eco_util:display_node"},
 	timer = 0,
 	glow = 10,
-	static_save = false, --TODO: wtf!?
+	-- static_save = false, --TODO: wtf!?
 	on_step = function(self, dtime)
 
 		self.timer = self.timer + dtime
 
 		-- remove after set number of seconds
-		if self.timer > 5 then
+		if self.timer > 60 then
 			self.object:remove()
 		end
 	end,
+	on_activate = function(self, staticdata, dtime_s)
+		print("on_activate", staticdata)
+	end,
+	get_staticdata = function(self)
+		print("get_staticdata")
+		return "something"
+	end
 })
 
 
@@ -50,5 +57,5 @@ minetest.register_node("eco_util:display_node", {
 
 function eco_util.display_mapblock_at_pos(pos)
   local mapblock_center = eco_util.get_mapblock_center(pos)
-  minetest.add_entity(mapblock_center, "eco_util:display")
+  return minetest.add_entity(mapblock_center, "eco_util:display")
 end
