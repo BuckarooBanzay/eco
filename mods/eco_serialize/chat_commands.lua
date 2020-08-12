@@ -71,7 +71,10 @@ minetest.register_chatcommand("load_schema", {
 
     eco_serialize.deserialize(pos1, minetest.get_worldpath() .. "/eco_schems/" .. params, {
       transform = {
-        transpose = true --XXX
+        rotate = {
+          axis = "y",
+          angle = 90
+        }
       }
     })
 		return true

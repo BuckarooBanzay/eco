@@ -9,4 +9,8 @@ dofile(MP .. "/serialize_part.lua")
 dofile(MP .. "/deserialize.lua")
 dofile(MP .. "/deserialize_part.lua")
 dofile(MP .. "/chat_commands.lua")
+
 dofile(MP .. "/transform.lua")
+dofile(MP .. "/transform_flip.lua")
+dofile(MP .. "/transform_transpose.lua")
+dofile(MP .. "/transform_orient.lua")
