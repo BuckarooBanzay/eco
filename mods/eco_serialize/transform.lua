@@ -20,7 +20,6 @@ function eco_serialize.transform(options, mapblock, metadata)
     local other1, other2 = get_axis_others(axis)
 
     if angle == 90 then
-      -- TODO: flip flips the wrong axis (z instead of x on y-rotation)
       eco_serialize.flip(other1, mapblock, metadata)
       eco_serialize.transpose(other1, other2, mapblock, metadata)
       if axis == "y" then

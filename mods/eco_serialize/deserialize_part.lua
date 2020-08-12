@@ -46,9 +46,9 @@ function eco_serialize.deserialize_part(pos1, node_mapping, data, metadata)
   local param2 = manip:get_param2_data()
 
   local j = 1
-  for x=pos1.x,pos2.x do
-  for y=pos1.y,pos2.y do
   for z=pos1.z,pos2.z do
+  for y=pos1.y,pos2.y do
+  for x=pos1.x,pos2.x do
     local i = area:index(x,y,z)
     node_data[i] = data.node_ids[j]
     param1[i] = data.param1[j]

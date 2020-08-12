@@ -68,15 +68,16 @@ minetest.register_chatcommand("load_schema", {
     if not params or params == "" then
       return false, "specify a name for the schema"
     end
-
-    eco_serialize.deserialize(pos1, minetest.get_worldpath() .. "/eco_schems/" .. params, {
+    local options = {
       transform = {
         rotate = {
           axis = "y",
           angle = 90
         }
       }
-    })
+    }
+
+    eco_serialize.deserialize(pos1, minetest.get_worldpath() .. "/eco_schems/" .. params, options)
 		return true
   end
 })

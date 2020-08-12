@@ -24,9 +24,9 @@ function eco_serialize.serialize_part(pos, node_mapping)
   }
 
   -- loop over all blocks and fill cid,param1 and param2
-  for x=pos1.x,pos2.x do
-  for y=pos1.y,pos2.y do
   for z=pos1.z,pos2.z do
+  for y=pos1.y,pos2.y do
+  for x=pos1.x,pos2.x do
     local i = area:index(x,y,z)
 
     local node_id = node_data[i]
