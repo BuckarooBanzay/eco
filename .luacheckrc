@@ -5,7 +5,8 @@ globals = {
 	"eco_util",
 	"eco_serialize",
 	"eco_grid",
-	"eco_placement"
+	"eco_placement",
+	"eco_mapgen"
 }
 
 read_globals = {
