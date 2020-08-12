@@ -19,7 +19,7 @@ local function create_manifest(min, max)
     math.ceil(math.abs(min.z - max.z) / 16)
 
   return {
-    version = 1,
+    version = 2,
     total_parts = total_parts,
     node_mapping = {},
     max_x = max.x - min.x,
@@ -28,14 +28,29 @@ local function create_manifest(min, max)
   }
 end
 
+local function int_to_bytes(i)
+	local x =i + 32768
+	local h = math.floor(x/256) % 256;
+	local l = math.floor(x % 256);
+	return(string.char(h, l));
+end
+
 local function write_mapblock(node_ids, param1, param2, filename)
-  local file = io.open(filename,"w")
-  local json = minetest.write_json({
-    node_ids = node_ids,
-    param1 = param1,
-    param2 = param2
-  })
-  if file and file:write(json) and file:close() then
+  local file = io.open(filename,"wb")
+  local data = ""
+  for i=1,4096 do
+    data = data .. int_to_bytes(node_ids[i])
+  end
+  for i=1,4096 do
+    data = data .. string.char(param1[i])
+  end
+  for i=1,4096 do
+    data = data .. string.char(param2[i])
+  end
+
+  file:write(minetest.compress(data, "deflate"))
+
+  if file and file:close() then
     return
   else
     error("write to '" .. filename .. "' failed!")
@@ -69,7 +84,7 @@ local function worker(ctx)
     data.node_ids,
     data.param1,
     data.param2,
-    ctx.schema_dir .. "/mapblock_" .. ctx.mapblock_index .. ".json"
+    ctx.schema_dir .. "/mapblock_" .. ctx.mapblock_index .. ".bin"
   )
 
   if data.metadata then

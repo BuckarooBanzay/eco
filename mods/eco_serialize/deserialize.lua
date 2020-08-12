@@ -20,6 +20,31 @@ local function read_json_file(filename, use_cache)
   end
 end
 
+local function read_compressed_binary(filename)
+  local file = io.open(filename,"rb")
+  local data = file:read("*all")
+  data = minetest.decompress(data, "deflate")
+  local mapblock = {
+    node_ids = {},
+    param1 = {},
+    param2 = {}
+  }
+
+  for i=1,4096 do
+    local node_id_offset = (i * 2) - 1
+    local node_id = (string.byte(data, node_id_offset) * 256) +
+      string.byte(data, node_id_offset+1) - 32768
+
+    local param1 = string.byte(data, (4096 * 2) + i - 1)
+    local param2 = string.byte(data, (4096 * 3) + i - 1)
+
+    table.insert(mapblock.node_ids, node_id)
+    table.insert(mapblock.param1, param1)
+    table.insert(mapblock.param2, param2)
+  end
+  return mapblock
+end
+
 
 local function worker(ctx)
   if not ctx.pos then
@@ -30,10 +55,33 @@ local function worker(ctx)
 
   minetest.log("verbose", "[eco_serialize] deserializing mapblock at position " .. minetest.pos_to_string(ctx.pos))
 
-  local mapblock = read_json_file(
-    ctx.schema_dir .. "/mapblock_" .. ctx.mapblock_index .. ".json",
-    ctx.use_cache
-  )
+  local mapblock
+  local cache_key = ctx.schema_dir .. "/mapblock_" .. ctx.mapblock_index
+
+  if ctx.use_cache and cache[cache_key] then
+    -- reuse from cache
+    mapblock = cache[cache_key]
+
+  elseif ctx.manifest.version == 1 then
+    -- plain json
+    mapblock = read_json_file(
+      ctx.schema_dir .. "/mapblock_" .. ctx.mapblock_index .. ".json"
+    )
+
+  elseif ctx.manifest.version == 2 then
+    -- compressed binary
+    mapblock = read_compressed_binary(
+      ctx.schema_dir .. "/mapblock_" .. ctx.mapblock_index .. ".bin"
+    )
+
+  else
+    error("unknown manifest version: " .. ctx.manifest.version)
+  end
+
+  if ctx.use_cache and not cache[cache_key] then
+    -- populate cache
+    cache[cache_key] = mapblock
+  end
 
   local metadata = read_json_file(
     ctx.schema_dir .. "/mapblock_" .. ctx.mapblock_index .. ".metadata.json",
