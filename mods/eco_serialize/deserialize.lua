@@ -58,7 +58,7 @@ local function worker(ctx)
   local mapblock
   local cache_key = ctx.schema_dir .. "/mapblock_" .. ctx.mapblock_index
 
-  if ctx.use_cache and cache[cache_key] then
+  if ctx.options.use_cache and cache[cache_key] then
     -- reuse from cache
     mapblock = cache[cache_key]
 
@@ -78,15 +78,22 @@ local function worker(ctx)
     error("unknown manifest version: " .. ctx.manifest.version)
   end
 
-  if ctx.use_cache and not cache[cache_key] then
+  if ctx.options.use_cache and not cache[cache_key] then
     -- populate cache
     cache[cache_key] = mapblock
   end
 
   local metadata = read_json_file(
     ctx.schema_dir .. "/mapblock_" .. ctx.mapblock_index .. ".metadata.json",
-    ctx.use_cache
+    ctx.options.use_cache
   )
+
+  if ctx.options.transform then
+    -- apply transformation
+    -- TODO: clone mapblock and metadata and cache them afterwards
+    -- TODO: OR: disable cache if transformation enabled
+    eco_serialize.transform(ctx.options.transform, mapblock, metadata)
+  end
 
   eco_serialize.deserialize_part(ctx.pos, ctx.manifest.node_mapping, mapblock, metadata)
 
@@ -97,9 +104,16 @@ local function worker(ctx)
   minetest.after(0.5, worker, ctx)
 end
 
+--[[
+options = {
+  use_cache = false,
+  transform = {}
+}
 
-function eco_serialize.deserialize(pos, schema_dir, use_cache)
-  local manifest = read_json_file(schema_dir .. "/manifest.json", use_cache)
+--]]
+function eco_serialize.deserialize(pos, schema_dir, options)
+  options = options or {}
+  local manifest = read_json_file(schema_dir .. "/manifest.json", options.use_cache)
   local min = eco_util.get_mapblock_bounds(pos)
 
   local ctx = {
@@ -113,7 +127,7 @@ function eco_serialize.deserialize(pos, schema_dir, use_cache)
     },
     mapblock_index = 1,
     pos = table.copy(min),
-    use_cache = use_cache
+    options = options
   }
   if manifest.total_parts == 1 then
     -- skip async work queue

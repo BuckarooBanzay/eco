@@ -69,7 +69,11 @@ minetest.register_chatcommand("load_schema", {
       return false, "specify a name for the schema"
     end
 
-    eco_serialize.deserialize(pos1, minetest.get_worldpath() .. "/eco_schems/" .. params)
+    eco_serialize.deserialize(pos1, minetest.get_worldpath() .. "/eco_schems/" .. params, {
+      transform = {
+        transpose = true --XXX
+      }
+    })
 		return true
   end
 })
