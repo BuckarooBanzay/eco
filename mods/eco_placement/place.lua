@@ -1,5 +1,5 @@
 
-function eco_placement.place_street(mapblock)
+function eco_placement.place_street(mapblock, check_neighbors)
 
   local xplus_data = eco_grid.get_mapblock({ x=mapblock.x+1, y=mapblock.y, z=mapblock.z })
   local xminus_data = eco_grid.get_mapblock({ x=mapblock.x-1, y=mapblock.y, z=mapblock.z })
@@ -11,29 +11,91 @@ function eco_placement.place_street(mapblock)
   local zplus = zplus_data and zplus_data.type == "street"
   local zminus = zminus_data and zminus_data.type == "street"
 
-  local sides = 0
+  local schema_dir = minetest.get_modpath("eco_streets") .. "/schematics/street_straight"
+  local rotate
 
-  if xplus then sides = sides + 1 end
-  if xminus then sides = sides + 1 end
-  if zplus then sides = sides + 1 end
-  if zminus then sides = sides + 1 end
-
-  local schema_dir
-
-  if sides == 4 then
+  if xplus and xminus and zplus and zminus then
+    -- all sides connected
     schema_dir = minetest.get_modpath("eco_streets") .. "/schematics/street_all_sides"
-  elseif sides == 3 then
+
+  elseif xplus and xminus and zplus and not zminus then
     schema_dir = minetest.get_modpath("eco_streets") .. "/schematics/street_three_sides"
-  elseif sides == 2 then
+    rotate = 180
+
+  elseif xplus and xminus and not zplus and zminus then
+    schema_dir = minetest.get_modpath("eco_streets") .. "/schematics/street_three_sides"
+    rotate = 0
+
+  elseif xplus and not xminus and zplus and zminus then
+    schema_dir = minetest.get_modpath("eco_streets") .. "/schematics/street_three_sides"
+    rotate = 270
+
+  elseif not xplus and xminus and zplus and zminus then
+    schema_dir = minetest.get_modpath("eco_streets") .. "/schematics/street_three_sides"
+    rotate = 90
+
+  elseif (xplus or xminus) and not zplus and not zminus then
     schema_dir = minetest.get_modpath("eco_streets") .. "/schematics/street_straight"
-  else
+    rotate = 0
+
+  elseif not xplus and not xminus and (zplus or zminus) then
     schema_dir = minetest.get_modpath("eco_streets") .. "/schematics/street_straight"
+    rotate = 90
+
+  elseif not xplus and xminus and zplus and not zminus then
+    schema_dir = minetest.get_modpath("eco_streets") .. "/schematics/street_corner"
+    rotate = 270
+
+  elseif not xplus and xminus and not zplus and zminus then
+    schema_dir = minetest.get_modpath("eco_streets") .. "/schematics/street_corner"
+    rotate = 180
+
+  elseif xplus and not xminus and not zplus and zminus then
+    schema_dir = minetest.get_modpath("eco_streets") .. "/schematics/street_corner"
+    rotate = 90
+
+  elseif xplus and not xminus and zplus and not zminus then
+    schema_dir = minetest.get_modpath("eco_streets") .. "/schematics/street_corner"
+    rotate = 0
+
+  end
+
+  local options = {}
+  if rotate and rotate > 0 then
+    options.transform = {
+      rotate = {
+        axis = "y",
+        angle = rotate
+      }
+    }
   end
 
   local min = eco_util.get_mapblock_bounds_from_mapblock(mapblock)
-  eco_serialize.deserialize(min, schema_dir)
+  eco_serialize.deserialize(min, schema_dir, options)
 
   eco_grid.set_mapblock(mapblock, {
-    type = "street"
+    type = "street",
+    connections = {
+      xplus = xplus,
+      xminus = xminus,
+      zplus = zplus,
+      zminus = zminus
+    }
   })
+
+  if check_neighbors then
+    -- check neighbors
+    if xplus and not xplus_data.connections.xminus then
+      eco_placement.place_street({ x=mapblock.x+1, y=mapblock.y, z=mapblock.z })
+    end
+    if xminus and not xminus_data.connections.xplus then
+      eco_placement.place_street({ x=mapblock.x-1, y=mapblock.y, z=mapblock.z })
+    end
+    if zplus and not zplus_data.connections.zminus then
+      eco_placement.place_street({ x=mapblock.x, y=mapblock.y, z=mapblock.z+1 })
+    end
+    if zminus and not zminus_data.connections.zplus then
+      eco_placement.place_street({ x=mapblock.x, y=mapblock.y, z=mapblock.z-1 })
+    end
+  end
 end
