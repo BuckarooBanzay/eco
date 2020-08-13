@@ -3,11 +3,14 @@ local MP = minetest.get_modpath("eco_streets")
 eco_api.register_street({
   key = "eco_streets:stone_street",
   name = "Stone street",
+  description = "A simple street, made out of gravel and stone",
   cost = 15000,
+  destroy_cost = 5000,
   schemas = {
     straight = MP .. "/schematics/street_straight",
     corner = MP .. "/schematics/street_corner",
     all_sides = MP .. "/schematics/street_all_sides",
+    slope = MP .. "/schematics/street_slope",
     three_sides = MP .. "/schematics/street_three_sides"
   }
 })
