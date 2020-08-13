@@ -9,7 +9,9 @@ function eco_placement.show_placement_formspec(playername)
 
   local formspec = [[
     size[16,12;]
+    no_prepend[]
     image_button_exit[0,0;2,2;eco_placement_street.png;streets;Streets]
+    image_button_exit[2,0;2,2;eco_placement_building.png;buildings;Buildings]
     image_button_exit[15,11;1,1;eco_placement_abort.png;exit;Exit]
   ]]
 
@@ -26,6 +28,5 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
   print(FORMNAME, playername, dump(fields))
   if fields.streets then
     minetest.after(0.1, eco_placement.show_streets_formspec, playername)
-    return true
   end
 end)

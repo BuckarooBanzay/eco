@@ -9,6 +9,7 @@ function eco_placement.show_streets_formspec(playername)
 
   local formspec = [[
     size[16,12;]
+    no_prepend[]
     image_button_exit[15,11;1,1;eco_placement_abort.png;exit;Exit]
   ]]
 
