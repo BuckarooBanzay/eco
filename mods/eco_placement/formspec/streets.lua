@@ -1,6 +1,6 @@
-local FORMNAME = "eco_placement_formspec"
+local FORMNAME = "eco_placement_formspec_streets"
 
-function eco_placement.show_placement_formspec(playername)
+function eco_placement.show_streets_formspec(playername)
   local player = minetest.get_player_by_name(playername)
 
   if not player then
@@ -9,12 +9,11 @@ function eco_placement.show_placement_formspec(playername)
 
   local formspec = [[
     size[16,12;]
-    button_exit[12,11;4,1;exit;Exit]
+    image_button_exit[15,11;1,1;eco_placement_abort.png;exit;Exit]
   ]]
 
   minetest.show_formspec(playername, FORMNAME, formspec)
 end
-
 
 minetest.register_on_player_receive_fields(function(player, formname, fields)
 	if formname ~= FORMNAME then
