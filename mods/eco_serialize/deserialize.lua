@@ -101,7 +101,13 @@ local function worker(ctx)
   ctx.mapblock_index = ctx.mapblock_index + 1
   ctx.pos = eco_serialize.iterator_next(ctx.min, ctx.max, ctx.pos)
 
-  minetest.after(0.5, worker, ctx)
+  if ctx.options.sync then
+    -- sync call
+    worker(ctx)
+  else
+    -- queue after a delay
+    minetest.after(0.5, worker, ctx)
+  end
 end
 
 --[[
@@ -129,7 +135,7 @@ function eco_serialize.deserialize(pos, schema_dir, options)
     pos = table.copy(min),
     options = options
   }
-  if manifest.total_parts == 1 then
+  if manifest.total_parts == 1 or options.sync then
     -- skip async work queue
     worker(ctx)
   else

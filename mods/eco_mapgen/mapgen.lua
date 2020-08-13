@@ -33,6 +33,7 @@ minetest.register_on_generated(function(minp, maxp)
 
 			eco_serialize.deserialize(pos, MP .. "/schematics/grass_slope", {
 				-- use_cache = true,
+				sync = true,
 				transform = {
 					rotate = rotate
 				}
@@ -51,6 +52,7 @@ minetest.register_on_generated(function(minp, maxp)
 
 			eco_serialize.deserialize(pos, MP .. "/schematics/grass_slope_inner_corner", {
 				-- use_cache = true,
+				sync = true,
 				transform = {
 					rotate = rotate
 				}
@@ -69,6 +71,7 @@ minetest.register_on_generated(function(minp, maxp)
 
 			eco_serialize.deserialize(pos, MP .. "/schematics/grass_slope_outer_corner", {
 				-- use_cache = true,
+				sync = true,
 				transform = {
 					rotate = rotate
 				}
