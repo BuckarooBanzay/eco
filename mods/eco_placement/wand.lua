@@ -28,6 +28,7 @@ minetest.register_craftitem("eco_placement:wand", {
 		local pos = get_pointed_nodepos(player)
 		if pos then
 			local mapblock = eco_util.get_mapblock(pos)
+			local info = eco_mapgen.get_info(mapblock)
 
 			-- check previous click
 			local previous_pos = last_pos[playername]
@@ -44,15 +45,14 @@ minetest.register_craftitem("eco_placement:wand", {
 				end
 			end
 
-			local info = eco_mapgen.get_info(mapblock)
-			if info.type ~= "flat" then
-				eco_util.display_mapblock_at_pos(pos, "Can't build here!", timeout)
-			else
+			if info.type == "flat" or info.type == "slope" then
 				eco_util.display_mapblock_at_pos(pos, "Something, something", timeout)
 				last_pos[playername] = {
 					mapblock = eco_util.get_mapblock(pos),
 					time = os.time()
 				}
+			else
+				eco_util.display_mapblock_at_pos(pos, "Can't build here!", timeout)
 			end
 
 		end
