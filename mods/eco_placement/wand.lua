@@ -27,27 +27,34 @@ minetest.register_craftitem("eco_placement:wand", {
 		local playername = player:get_player_name()
 		local pos = get_pointed_nodepos(player)
 		if pos then
+			local mapblock = eco_util.get_mapblock(pos)
+
 			-- check previous click
 			local previous_pos = last_pos[playername]
 			if previous_pos and (previous_pos.time + timeout) > os.time() then
 				-- clicked 5 seconds ago
-				local distance = vector.distance(eco_util.get_mapblock(pos), previous_pos.mapblock)
+				local distance = vector.distance(mapblock, previous_pos.mapblock)
 
 				if distance < 1 then
 					-- build here
-					local schema_dir = minetest.get_modpath("eco_streets") .. "/schematics/street_all_sides"
-					local min = eco_util.get_mapblock_bounds(pos)
-					eco_serialize.deserialize(min, schema_dir)
+					eco_placement.place_street(mapblock)
+
 					last_pos[playername] = nil
 					return itemstack
 				end
 			end
 
-			eco_util.display_mapblock_at_pos(pos, "Something, something", timeout)
-			last_pos[playername] = {
-				mapblock = eco_util.get_mapblock(pos),
-				time = os.time()
-			}
+			local info = eco_mapgen.get_info(mapblock)
+			if info.type ~= "flat" then
+				eco_util.display_mapblock_at_pos(pos, "Can't build here!", timeout)
+			else
+				eco_util.display_mapblock_at_pos(pos, "Something, something", timeout)
+				last_pos[playername] = {
+					mapblock = eco_util.get_mapblock(pos),
+					time = os.time()
+				}
+			end
+
 		end
 		return itemstack
 	end,
