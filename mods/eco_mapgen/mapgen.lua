@@ -10,30 +10,70 @@ minetest.register_on_generated(function(minp, maxp)
 
 	for z=min_mapblock.z,max_mapblock.z do
 	for x=min_mapblock.x,max_mapblock.x do
-		local height = eco_mapgen.get_mapblock_height({ x=x, z=z })
+	for y=min_mapblock.y,max_mapblock.y do
 
-		local xplus_height = eco_mapgen.get_mapblock_height({ x=x+1, z=z })
-		local xminus_height = eco_mapgen.get_mapblock_height({ x=x-1, z=z })
-		local zplus_height = eco_mapgen.get_mapblock_height({ x=x, z=z+1 })
-		local zminus_height = eco_mapgen.get_mapblock_height({ x=x, z=z-1 })
+		local mapblock = { x=x, y=y, z=z }
+		local info = eco_mapgen.get_info(mapblock)
+		local pos = eco_util.get_mapblock_bounds_from_mapblock(mapblock)
 
-		local xplus_higher = xplus_height > height
-		local xminus_higher = xminus_height > height
-		local zplus_higher = zplus_height > height
-		local zminus_higher = zminus_height > height
-
-		for y=min_mapblock.y,max_mapblock.y do
-
-			if y == height then
-				-- solid mapblock here
-				-- TODO: check adjecent height and place slope
-
-				local mapblock = { x=x, y=y, z=z }
-				local pos = eco_util.get_mapblock_bounds_from_mapblock(mapblock)
-				eco_serialize.deserialize(pos, MP .. "/schematics/grass_flat", {
-					use_cache = true
-				})
+		if info.type == "flat" then
+			eco_serialize.deserialize(pos, MP .. "/schematics/grass_flat", {
+				use_cache = true
+			})
+		elseif info.type == "slope" then
+			-- slope looks into z+ direction
+			local rotate = nil
+			if info.direction == "z-" then
+				rotate = { axis = "y", angle = 180 }
+			elseif info.direction == "x+" then
+				rotate = { axis = "y", angle = 90 }
+			elseif info.direction == "x-" then
+				rotate = { axis = "y", angle = 270 }
 			end
+
+			eco_serialize.deserialize(pos, MP .. "/schematics/grass_slope", {
+				-- use_cache = true,
+				transform = {
+					rotate = rotate
+				}
+			})
+
+		elseif info.type == "slope_inner" then
+			-- slope looks into x-z+ direction
+			local rotate = nil
+			if info.direction == "x-z-" then
+				rotate = { axis = "y", angle = 270 }
+			elseif info.direction == "x+z-" then
+				rotate = { axis = "y", angle = 180 }
+			elseif info.direction == "x+z+" then
+				rotate = { axis = "y", angle = 90 }
+			end
+
+			eco_serialize.deserialize(pos, MP .. "/schematics/grass_slope_inner_corner", {
+				-- use_cache = true,
+				transform = {
+					rotate = rotate
+				}
+			})
+
+		elseif info.type == "slope_outer" then
+			-- slope looks into x-z+ direction
+			local rotate = nil
+			if info.direction == "x-z-" then
+				rotate = { axis = "y", angle = 270 }
+			elseif info.direction == "x+z-" then
+				rotate = { axis = "y", angle = 180 }
+			elseif info.direction == "x+z+" then
+				rotate = { axis = "y", angle = 90 }
+			end
+
+			eco_serialize.deserialize(pos, MP .. "/schematics/grass_slope_outer_corner", {
+				-- use_cache = true,
+				transform = {
+					rotate = rotate
+				}
+			})
+		end
 
 		end --y
 	end --x
