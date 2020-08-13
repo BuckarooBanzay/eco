@@ -72,6 +72,8 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 
     local meta = itemstack:get_meta()
     meta:set_string("description", "Placement: " .. def.name)
+    meta:set_string("build_type", "street")
+    meta:set_string("build_key", def.key)
 
     player:set_wielded_item(itemstack)
   end

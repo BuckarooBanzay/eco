@@ -23,6 +23,20 @@ minetest.register_craftitem("eco_placement:wand", {
 	inventory_image = "eco_placement_wand.png",
 	range = 0,
 	on_use = function(itemstack, player)
+		local meta = itemstack:get_meta()
+		local build_type = meta:get_string("build_type")
+		local build_key = meta:get_string("build_key")
+
+		if not build_type or build_type == "" then
+			build_type = "street"
+		end
+
+		if not build_key or build_key == "" then
+			build_key = "eco_streets:dirt_road"
+		end
+
+		print(build_type, build_key) --XXX
+
 		local timeout = 2
 		local playername = player:get_player_name()
 		local pos = get_pointed_nodepos(player)
@@ -38,7 +52,7 @@ minetest.register_craftitem("eco_placement:wand", {
 
 				if distance < 1 then
 					-- build here
-					eco_placement.place_street(mapblock, true)
+					eco_placement.place_street(mapblock, build_key, true)
 
 					last_pos[playername] = nil
 					return itemstack

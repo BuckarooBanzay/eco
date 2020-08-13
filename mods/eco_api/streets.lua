@@ -8,3 +8,7 @@ end
 function eco_api.get_streets()
   return streets
 end
+
+function eco_api.get_street(key)
+  return streets[key]
+end
