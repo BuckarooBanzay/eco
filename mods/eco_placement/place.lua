@@ -27,7 +27,7 @@ function eco_placement.place_street(mapblock)
   elseif sides == 2 then
     schema_dir = minetest.get_modpath("eco_streets") .. "/schematics/street_straight"
   else
-    schema_dir = minetest.get_modpath("eco_streets") .. "/schematics/street_all_sides"
+    schema_dir = minetest.get_modpath("eco_streets") .. "/schematics/street_straight"
   end
 
   local min = eco_util.get_mapblock_bounds_from_mapblock(mapblock)
