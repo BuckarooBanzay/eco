@@ -24,12 +24,13 @@ local function read_compressed_binary(filename)
   }
 
   for i=1,4096 do
+    -- 1, 3, 5 ... 8191
     local node_id_offset = (i * 2) - 1
     local node_id = (string.byte(data, node_id_offset) * 256) +
       string.byte(data, node_id_offset+1) - 32768
 
-    local param1 = string.byte(data, (4096 * 2) + i - 1)
-    local param2 = string.byte(data, (4096 * 3) + i - 1)
+    local param1 = string.byte(data, (4096 * 2) + i)
+    local param2 = string.byte(data, (4096 * 3) + i)
 
     table.insert(mapblock.node_ids, node_id)
     table.insert(mapblock.param1, param1)
