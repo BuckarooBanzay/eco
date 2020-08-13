@@ -20,6 +20,7 @@ minetest.register_on_generated(function(minp, maxp)
 			eco_serialize.deserialize(pos, MP .. "/schematics/grass_flat", {
 				use_cache = true
 			})
+
 		elseif info.type == "slope" then
 			-- slope looks into z+ direction
 			local rotate = nil
@@ -32,7 +33,7 @@ minetest.register_on_generated(function(minp, maxp)
 			end
 
 			eco_serialize.deserialize(pos, MP .. "/schematics/grass_slope", {
-				-- use_cache = true,
+				use_cache = true,
 				sync = true,
 				transform = {
 					rotate = rotate
@@ -51,7 +52,7 @@ minetest.register_on_generated(function(minp, maxp)
 			end
 
 			eco_serialize.deserialize(pos, MP .. "/schematics/grass_slope_inner_corner", {
-				-- use_cache = true,
+				use_cache = true,
 				sync = true,
 				transform = {
 					rotate = rotate
@@ -70,7 +71,7 @@ minetest.register_on_generated(function(minp, maxp)
 			end
 
 			eco_serialize.deserialize(pos, MP .. "/schematics/grass_slope_outer_corner", {
-				-- use_cache = true,
+				use_cache = true,
 				sync = true,
 				transform = {
 					rotate = rotate

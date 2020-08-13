@@ -1,20 +1,13 @@
 
-local cache = {}
+local mapblock_cache = {}
+local metadata_cache = {}
+local manifest_cache = {}
 
-local function read_json_file(filename, use_cache)
-  if use_cache and cache[filename] then
-    return cache[filename]
-  end
-
+local function read_json_file(filename)
   local file = io.open(filename,"r")
-
   if file then
     local json = file:read("*a")
-    local result = minetest.parse_json(json)
-    if use_cache then
-      cache[filename] = result
-    end
-    return result
+    return minetest.parse_json(json)
   else
     return nil
   end
@@ -58,40 +51,47 @@ local function worker(ctx)
   local mapblock
   local cache_key = ctx.schema_dir .. "/mapblock_" .. ctx.mapblock_index
 
-  if ctx.options.use_cache and cache[cache_key] then
+  if ctx.options.transform and ctx.options.transform.rotate then
+    -- add rotation info to cache key if specified
+    cache_key = cache_key .. "/" .. ctx.options.transform.rotate.axis .. "/" .. ctx.options.transform.rotate.angle
+  end
+
+  -- true if the mapblock and metadata are read from cache
+  -- they are already transformed
+  local is_cached = false
+
+  if ctx.options.use_cache and mapblock_cache[cache_key] then
     -- reuse from cache
-    mapblock = cache[cache_key]
+    mapblock = mapblock_cache[cache_key]
+    is_cached = true
 
-  elseif ctx.manifest.version == 1 then
-    -- plain json
-    mapblock = read_json_file(
-      ctx.schema_dir .. "/mapblock_" .. ctx.mapblock_index .. ".json"
-    )
-
-  elseif ctx.manifest.version == 2 then
-    -- compressed binary
+  else
+    -- read compressed binary mapblock
     mapblock = read_compressed_binary(
       ctx.schema_dir .. "/mapblock_" .. ctx.mapblock_index .. ".bin"
     )
 
-  else
-    error("unknown manifest version: " .. ctx.manifest.version)
   end
 
-  if ctx.options.use_cache and not cache[cache_key] then
+  if ctx.options.use_cache and not mapblock_cache[cache_key] then
     -- populate cache
-    cache[cache_key] = mapblock
+    mapblock_cache[cache_key] = mapblock
   end
 
-  local metadata = read_json_file(
-    ctx.schema_dir .. "/mapblock_" .. ctx.mapblock_index .. ".metadata.json",
-    ctx.options.use_cache
-  )
+  -- cache metadata access
+  local metadata
+  if ctx.options.use_cache and metadata_cache[cache_key] ~= nil then
+    metadata = metadata_cache[cache_key]
+  else
+    metadata = read_json_file(
+      ctx.schema_dir .. "/mapblock_" .. ctx.mapblock_index .. ".metadata.json",
+      ctx.options.use_cache
+    )
+    metadata_cache[cache_key] = metadata or false
+  end
 
-  if ctx.options.transform then
-    -- apply transformation
-    -- TODO: clone mapblock and metadata and cache them afterwards
-    -- TODO: OR: disable cache if transformation enabled
+  if ctx.options.transform and not is_cached then
+    -- apply transformation only on uncached data
     eco_serialize.transform(ctx.options.transform, mapblock, metadata)
   end
 
@@ -119,7 +119,18 @@ options = {
 --]]
 function eco_serialize.deserialize(pos, schema_dir, options)
   options = options or {}
-  local manifest = read_json_file(schema_dir .. "/manifest.json", options.use_cache)
+
+  local manifest_file = schema_dir .. "/manifest.json"
+  local manifest
+
+  -- cached manifest access
+  if options.use_cache and manifest_cache[manifest_file] then
+    manifest = manifest_cache[manifest_file]
+  else
+    manifest = read_json_file(manifest_file)
+    manifest_cache[manifest_file] = manifest
+  end
+
   local min = eco_util.get_mapblock_bounds(pos)
 
   local ctx = {
