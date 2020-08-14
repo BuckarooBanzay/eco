@@ -19,3 +19,16 @@ function eco_grid.load()
     eco_grid.grid = minetest.parse_json(json) or {}
   end
 end
+
+eco_grid.load()
+
+local function save_worker()
+  if eco_grid.modified then
+    eco_grid.save()
+    eco_grid.modified = false
+  end
+  minetest.after(10, save_worker)
+end
+
+minetest.register_on_shutdown(save_worker)
+minetest.after(10, save_worker)
