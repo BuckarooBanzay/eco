@@ -1,7 +1,8 @@
 local MP = minetest.get_modpath("eco_grid")
 
 eco_grid = {
-  grid = {}
+  grid = {},
+  modified = false
 }
 
 dofile(MP .. "/api.lua")
@@ -10,7 +11,10 @@ dofile(MP .. "/persistence.lua")
 eco_grid.load()
 
 local function save_worker()
-  eco_grid.save()
+  if eco_grid.modified then
+    eco_grid.save()
+    eco_grid.modified = false
+  end
   minetest.after(10, save_worker)
 end
 

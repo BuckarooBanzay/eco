@@ -1,7 +1,11 @@
+local function getkey(mapblock)
+  return mapblock.x .. "/" .. mapblock.y .. "/" .. mapblock.z
+end
 
 function eco_grid.set_mapblock(mapblock, data)
-  local hash = minetest.hash_node_position(mapblock)
-  eco_grid.grid[hash] = data
+  local key = getkey(mapblock)
+  eco_grid.modified = true
+  eco_grid.grid[key] = data
 end
 
 function eco_grid.set(pos, data)
@@ -10,8 +14,8 @@ function eco_grid.set(pos, data)
 end
 
 function eco_grid.get_mapblock(mapblock)
-  local hash = minetest.hash_node_position(mapblock)
-  return eco_grid.grid[hash]
+  local key = getkey(mapblock)
+  return eco_grid.grid[key]
 end
 
 function eco_grid.get(pos)
