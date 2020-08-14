@@ -8,3 +8,7 @@ end
 function eco_api.get_buildings()
   return buildings
 end
+
+function eco_api.get_building(key)
+  return buildings[key]
+end

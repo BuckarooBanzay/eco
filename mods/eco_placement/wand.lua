@@ -52,7 +52,11 @@ minetest.register_craftitem("eco_placement:wand", {
 
 				if distance < 1 then
 					-- build here
-					eco_placement.place_street(mapblock, build_key, true)
+					if build_type == "street" then
+						eco_placement.place_street(mapblock, build_key, true)
+					elseif build_type == "building" then
+						eco_placement.place_building(mapblock, build_key)
+					end
 
 					last_pos[playername] = nil
 					return itemstack

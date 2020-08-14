@@ -26,7 +26,10 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 	local playername = player:get_player_name()
 
   print(FORMNAME, playername, dump(fields))
+
   if fields.streets then
     minetest.after(0.1, eco_placement.show_streets_formspec, playername)
+  elseif fields.buildings then
+    minetest.after(0.1, eco_placement.show_buildings_formspec, playername)
   end
 end)
