@@ -2,6 +2,9 @@ local MP = minetest.get_modpath("eco_buildings")
 
 local replacements = {
   {
+    -- default
+  },
+  {
     -- aspen house
     ["default:pine_wood"] = "default:aspen_wood",
     ["default:pine_tree"] = "default:aspen_tree",
@@ -64,6 +67,27 @@ eco_api.register_building({
     {
       directory = MP .. "/schematics/simple_house_high_density",
       replacements = replacements
+    }
+  }
+})
+
+eco_api.register_building({
+  key = "eco_buildings:simple_school",
+  name = "Simple school",
+  description = "Simple school",
+  cost = 150000,
+  schemas = {
+    {
+      directory = MP .. "/schematics/simple_school",
+      replacements = {
+        {},
+        {
+          ["default:brick"] = "moreblocks:cactus_brick",
+          ["moreblocks:slope_brick"] = "moreblocks:slope_cactus_brick",
+          ["moreblocks:slope_brick_outer"] = "moreblocks:slope_cactus_brick_outer",
+          ["moreblocks:slope_brick_inner"] = "moreblocks:slope_cactus_brick_inner"
+        }
+      }
     }
   }
 })
