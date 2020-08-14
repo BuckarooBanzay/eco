@@ -83,12 +83,27 @@ eco_api.register_building({
       replacements = {
         {},
         {
+          -- sandstone
           ["default:stone_block"] = "default:desert_sandstone_block",
           ["moreblocks:slab_stonebrick"] = "moreblocks:slab_desert_sandstone_brick",
           ["default:bush_leaves"] = "default:acacia_bush_leaves",
           ["default:dirt_with_grass"] = "default:dirt_with_dry_grass",
           ["default:tree"] = "default:acacia_tree",
           ["default:leaves"] = "default:acacia_leaves"
+        },
+        {
+          -- desert sandstone
+          ["default:stone_block"] = "default:desert_stone_block",
+          ["moreblocks:slab_stonebrick"] = "moreblocks:slab_desert_stonebrick",
+          ["default:bush_leaves"] = "default:acacia_bush_leaves",
+          ["default:dirt_with_grass"] = "default:dirt_with_dry_grass",
+          ["default:tree"] = "default:acacia_tree",
+          ["default:leaves"] = "default:acacia_leaves"
+        },
+        {
+          -- silver sandstone
+          ["default:stone_block"] = "default:silver_sandstone_block",
+          ["moreblocks:slab_stonebrick"] = "moreblocks:slab_silver_sandstone_brick"
         }
       }
     }
