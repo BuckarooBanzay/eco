@@ -13,6 +13,10 @@ end
 
 function eco_serialize.transform(options, mapblock, metadata)
 
+	if options.replace then
+		eco_serialize.replace(options.replace, mapblock)
+	end
+
   if options.rotate then
     local axis = options.rotate.axis
     local angle = options.rotate.angle

@@ -1,45 +1,10 @@
-local air_content_id = minetest.get_content_id("air")
 
--- local nodename->id cache
-local local_nodename_to_id_mapping = {} -- name -> id
-
-function eco_serialize.deserialize_part(pos1, node_mapping, data, metadata)
-  local foreign_nodeid_to_name_mapping = {} -- id -> name
-  if not data.node_ids_localized then
-    for k, v in pairs(node_mapping) do
-      foreign_nodeid_to_name_mapping[v] = k
-    end
-  end
-
+function eco_serialize.deserialize_part(pos1, data, metadata)
   local pos2 = vector.add(pos1, 15)
 
   local manip = minetest.get_voxel_manip()
   local e1, e2 = manip:read_from_map(pos1, pos2)
   local area = VoxelArea:new({MinEdge=e1, MaxEdge=e2})
-
-  if not data.node_ids_localized then
-    for i, node_id in ipairs(data.node_ids) do
-      local node_name = foreign_nodeid_to_name_mapping[node_id]
-      local local_node_id = local_nodename_to_id_mapping[node_name]
-      if not local_node_id then
-        if minetest.registered_nodes[node_name] then
-          -- node is locally available
-          local_node_id = minetest.get_content_id(node_name)
-        else
-          -- node is not available here
-          -- TODO: make replacements configurable
-          local_node_id = air_content_id
-        end
-        local_nodename_to_id_mapping[node_name] = local_node_id
-
-      end
-
-      data.node_ids[i] = local_node_id
-    end
-
-    -- set marker for cached call afterwards
-    data.node_ids_localized = true
-  end
 
   local node_data = manip:get_data()
   local param1 = manip:get_light_data()

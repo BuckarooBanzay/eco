@@ -183,7 +183,26 @@ function eco_placement.place_building(mapblock, build_key)
   assert(building_def)
 
   local min = eco_util.get_mapblock_bounds_from_mapblock(mapblock)
-  eco_serialize.deserialize(min, building_def.schemas[1])
+
+  -- randomize schemas if multiple available
+  local schema_entry = building_def.schemas[math.random(#building_def.schemas)]
+
+  local rotations = {0, 90, 180, 270}
+
+  local options = {
+    transform = {
+      rotate = {
+        axis = "y",
+        angle = rotations[math.random(#rotations)]
+      }
+    }
+  }
+
+
+  if schema_entry.replacements then
+    options.transform.replace = schema_entry.replacements[math.random(#schema_entry.replacements)]
+  end
+  eco_serialize.deserialize(min, schema_entry.directory, options)
 
   eco_grid.set_mapblock(mapblock, {
     type = "building",

@@ -91,12 +91,18 @@ local function worker(ctx)
     metadata_cache[cache_key] = metadata or false
   end
 
+  -- localize node ids before transformation
+  if not mapblock.node_ids_localized then
+    eco_serialize.localize_nodeids(ctx.manifest.node_mapping, mapblock.node_ids)
+    mapblock.node_ids_localized = true
+  end
+
   if ctx.options.transform and not is_cached then
     -- apply transformation only on uncached data
     eco_serialize.transform(ctx.options.transform, mapblock, metadata)
   end
 
-  eco_serialize.deserialize_part(ctx.pos, ctx.manifest.node_mapping, mapblock, metadata)
+  eco_serialize.deserialize_part(ctx.pos, mapblock, metadata)
 
   -- shift context
   ctx.mapblock_index = ctx.mapblock_index + 1
