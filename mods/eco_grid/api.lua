@@ -1,9 +1,7 @@
 
-local grid = {}
-
 function eco_grid.set_mapblock(mapblock, data)
   local hash = minetest.hash_node_position(mapblock)
-  grid[hash] = data
+  eco_grid.grid[hash] = data
 end
 
 function eco_grid.set(pos, data)
@@ -13,7 +11,7 @@ end
 
 function eco_grid.get_mapblock(mapblock)
   local hash = minetest.hash_node_position(mapblock)
-  return grid[hash]
+  return eco_grid.grid[hash]
 end
 
 function eco_grid.get(pos)
