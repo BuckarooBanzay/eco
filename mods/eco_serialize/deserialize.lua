@@ -127,15 +127,14 @@ options = {
 function eco_serialize.deserialize(pos, schema_dir, options)
   options = options or {}
 
-  local manifest_file = schema_dir .. "/manifest.json"
   local manifest
 
   -- cached manifest access
-  if options.use_cache and manifest_cache[manifest_file] then
-    manifest = manifest_cache[manifest_file]
+  if options.use_cache and manifest_cache[schema_dir] then
+    manifest = manifest_cache[schema_dir]
   else
-    manifest = read_json_file(manifest_file)
-    manifest_cache[manifest_file] = manifest
+    manifest = eco_serialize.get_manifest(schema_dir)
+    manifest_cache[schema_dir] = manifest
   end
 
   local min = eco_util.get_mapblock_bounds(pos)

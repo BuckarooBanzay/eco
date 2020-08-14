@@ -65,6 +65,7 @@ minetest.register_craftitem("eco_placement:wand", {
 			end
 
 			if info.type == "flat" or info.type == "slope" then
+				-- TODO: show all mapblocks
 				eco_util.display_mapblock_at_pos(pos, description, timeout)
 				last_pos[playername] = {
 					mapblock = eco_util.get_mapblock(pos),

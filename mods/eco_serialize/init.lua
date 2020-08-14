@@ -10,6 +10,7 @@ dofile(MP .. "/localize_nodeids.lua")
 dofile(MP .. "/deserialize.lua")
 dofile(MP .. "/deserialize_part.lua")
 dofile(MP .. "/chat_commands.lua")
+dofile(MP .. "/manifest.lua")
 
 dofile(MP .. "/transform.lua")
 dofile(MP .. "/transform_flip.lua")
