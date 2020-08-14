@@ -22,9 +22,13 @@ function eco_mapgen.get_mapblock_height(mapblock)
   height_perlin:get_2d_map_flat({x=mapblock.x, y=mapblock.z}, height_perlin_map)
 
   local height_perlin_factor = math.abs( height_perlin_map[1] )
-  local height = math.floor(height_perlin_factor * 5)
+  local height = math.floor(height_perlin_factor * 6) - 1
 
 	cache[hash] = height
 
   return height
+end
+
+function eco_mapgen.get_water_height()
+	return -1
 end

@@ -16,8 +16,10 @@ minetest.register_on_generated(function(minp, maxp)
 		local info = eco_mapgen.get_info(mapblock)
 		local pos = eco_util.get_mapblock_bounds_from_mapblock(mapblock)
 
+		local schema_prefix = MP .. "/schematics/" .. info.biome .. "_"
+
 		if info.type == "flat" then
-			eco_serialize.deserialize(pos, MP .. "/schematics/grass_flat", {
+			eco_serialize.deserialize(pos, schema_prefix .. "flat", {
 				use_cache = true
 			})
 
@@ -32,7 +34,7 @@ minetest.register_on_generated(function(minp, maxp)
 				rotate = { axis = "y", angle = 270 }
 			end
 
-			eco_serialize.deserialize(pos, MP .. "/schematics/grass_slope", {
+			eco_serialize.deserialize(pos, schema_prefix .. "slope", {
 				use_cache = true,
 				sync = true,
 				transform = {
@@ -51,7 +53,7 @@ minetest.register_on_generated(function(minp, maxp)
 				rotate = { axis = "y", angle = 90 }
 			end
 
-			eco_serialize.deserialize(pos, MP .. "/schematics/grass_slope_inner_corner", {
+			eco_serialize.deserialize(pos, schema_prefix .. "slope_inner_corner", {
 				use_cache = true,
 				sync = true,
 				transform = {
@@ -70,13 +72,19 @@ minetest.register_on_generated(function(minp, maxp)
 				rotate = { axis = "y", angle = 90 }
 			end
 
-			eco_serialize.deserialize(pos, MP .. "/schematics/grass_slope_outer_corner", {
+			eco_serialize.deserialize(pos, schema_prefix .. "slope_outer_corner", {
 				use_cache = true,
 				sync = true,
 				transform = {
 					rotate = rotate
 				}
 			})
+		elseif info.type == "none" and info.biome == "water" then
+			eco_serialize.deserialize(pos, MP .. "/schematics/water_full", {
+				use_cache = true,
+				sync = true
+			})
+
 		end
 
 		end --y
