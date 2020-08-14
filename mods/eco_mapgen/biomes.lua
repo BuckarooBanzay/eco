@@ -27,7 +27,19 @@ eco_mapgen.register_biome({
     return mapblock.y == map_height and not is_in_water
   end,
   schemas = {
-    flat = MP .. "/schematics/grass_flat",
+    flat = {
+      -- TODO: randomize distribution properly
+      MP .. "/schematics/grass_flat",
+      MP .. "/schematics/grass_flat",
+      MP .. "/schematics/grass_flat",
+      MP .. "/schematics/grass_flat",
+      MP .. "/schematics/grass_flat",
+      MP .. "/schematics/grass_with_trees_1",
+      MP .. "/schematics/grass_with_trees_2",
+      MP .. "/schematics/grass_with_trees_3",
+      MP .. "/schematics/grass_with_trees_4",
+      MP .. "/schematics/grass_with_trees_5",
+    },
     slope = MP .. "/schematics/grass_slope",
     slope_inner = MP .."/schematics/grass_slope_inner_corner",
     slope_outer = MP .."/schematics/grass_slope_outer_corner"

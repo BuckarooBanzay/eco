@@ -1,11 +1,26 @@
 
+local function select_schematic(schema_def)
+	if type(schema_def) == "string" then
+		return schema_def
+	elseif type(schema_def) == "table" then
+		return schema_def[math.random(#schema_def)]
+	end
+end
+
 local function place_biome_mapblock(mapblock, biome)
 	local info = eco_mapgen.get_info(mapblock)
 	local pos = eco_util.get_mapblock_bounds_from_mapblock(mapblock)
 
 	if info.type == "flat" and biome.schemas.flat then
-		eco_serialize.deserialize(pos, biome.schemas.flat, {
-			use_cache = true
+		local rotations = {0, 90, 180, 270}
+		eco_serialize.deserialize(pos, select_schematic(biome.schemas.flat), {
+			use_cache = true,
+			transform = {
+				rotate = {
+		      axis = "y",
+		      angle = rotations[math.random(#rotations)]
+		    }
+			}
 		})
 
 	elseif info.type == "slope" and biome.schemas.slope then
