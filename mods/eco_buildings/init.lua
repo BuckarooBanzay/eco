@@ -72,6 +72,30 @@ eco_api.register_building({
 })
 
 eco_api.register_building({
+  key = "eco_buildings:simple_park",
+  name = "Simple park",
+  description = "Simple park with water and trees",
+  cost = 120000,
+  schemas = {
+    {
+      directory = MP .. "/schematics/simple_park",
+      disable_rotation = true,
+      replacements = {
+        {},
+        {
+          ["default:stone_block"] = "default:desert_sandstone_block",
+          ["moreblocks:slab_stonebrick"] = "moreblocks:slab_desert_sandstone_brick",
+          ["default:bush_leaves"] = "default:acacia_bush_leaves",
+          ["default:dirt_with_grass"] = "default:dirt_with_dry_grass",
+          ["default:tree"] = "default:acacia_tree",
+          ["default:leaves"] = "default:acacia_leaves"
+        }
+      }
+    }
+  }
+})
+
+eco_api.register_building({
   key = "eco_buildings:simple_school",
   name = "Simple school",
   description = "Simple school",

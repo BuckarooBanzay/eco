@@ -26,6 +26,7 @@ minetest.register_craftitem("eco_placement:wand", {
 		local meta = itemstack:get_meta()
 		local build_type = meta:get_string("build_type")
 		local build_key = meta:get_string("build_key")
+		local description = meta:get_string("description") or ""
 
 		if not build_type or build_type == "" then
 			build_type = "street"
@@ -64,7 +65,7 @@ minetest.register_craftitem("eco_placement:wand", {
 			end
 
 			if info.type == "flat" or info.type == "slope" then
-				eco_util.display_mapblock_at_pos(pos, "Something, something", timeout)
+				eco_util.display_mapblock_at_pos(pos, description, timeout)
 				last_pos[playername] = {
 					mapblock = eco_util.get_mapblock(pos),
 					time = os.time()
