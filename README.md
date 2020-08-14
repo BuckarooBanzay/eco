@@ -4,6 +4,9 @@ A game for minetest
 
 State: **WIP**
 
+![](https://github.com/eco-game/eco/workflows/luacheck/badge.svg)
+![](https://github.com/eco-game/eco/workflows/integration-test/badge.svg)
+
 
 # Licenses
 
