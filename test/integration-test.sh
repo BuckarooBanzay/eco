@@ -19,6 +19,6 @@ docker run --rm -i \
 	-v $(pwd)/:/var/lib/minetest/.minetest/games/eco \
   -v $(pwd)/test/test_mod/:/var/lib/minetest/.minetest/worlds/world/worldmods/eco_test \
   --network host \
-	registry.gitlab.com/minetest/minetest/server:5.2.0
+	registry.gitlab.com/minetest/minetest/server:5.3.0
 
 test -f ${WORLDDIR}/integration_test.json && exit 0 || exit 1
