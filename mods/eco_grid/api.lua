@@ -40,6 +40,32 @@ function eco_grid.set(pos, data)
   eco_grid.set_mapblock(mapblock, data)
 end
 
+--[[
+
+data = {
+  type = "street",
+  build_key = "simple_street:dirt_road",
+  connections = {
+    xplus = true,
+    xminus = true
+  }
+}
+
+data = {
+  type = "link",
+  ref = {
+    x = 0,
+    y = -1,
+    z = 0
+  }
+}
+
+data = {
+  type = "building",
+  build_key = "simple_house:xyz"
+}
+
+--]]
 function eco_grid.get_mapblock(mapblock)
   local key = getkey(mapblock)
   local data = eco_grid.grid[key]

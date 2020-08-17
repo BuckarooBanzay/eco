@@ -8,7 +8,15 @@ minetest.register_chatcommand("grid_info", {
 
     if info then
       txt = "grid: " .. minetest.pos_to_string(mapblock) ..
-        " type: " .. info.type .. " key: " .. info.build_key
+        " type: " .. info.type
+
+			if info.build_key then
+				txt = txt .. " key: " .. info.build_key
+			end
+
+			if info.ref then
+				txt = txt .. " ref: " .. minetest.pos_to_string(info.ref)
+			end
     else
       txt = "no grid data available"
     end
