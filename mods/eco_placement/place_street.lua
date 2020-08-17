@@ -61,7 +61,7 @@ local function place_flat_street(mapblock, street_def, _, connections)
       rotate = {
         axis = "y",
         angle = rotate,
-        -- disable_orientation = true
+        disable_orientation = street_def.disable_orientation
       }
     }
   end

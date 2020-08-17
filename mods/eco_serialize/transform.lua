@@ -20,7 +20,7 @@ function eco_serialize.transform(options, mapblock, metadata)
   if options.rotate then
     local axis = options.rotate.axis
     local angle = options.rotate.angle
-		local disable_orientation = options.disable_orientation
+		local disable_orientation = options.rotate.disable_orientation
 
     local other1, other2 = get_axis_others(axis)
 

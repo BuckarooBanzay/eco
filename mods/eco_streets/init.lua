@@ -27,5 +27,6 @@ eco_api.register_street({
     all_sides = MP .. "/schematics/street_all_sides",
     slope = MP .. "/schematics/street_slope",
     three_sides = MP .. "/schematics/street_three_sides"
-  }
+  },
+  disable_orientation = true
 })
