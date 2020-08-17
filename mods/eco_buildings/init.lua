@@ -76,6 +76,10 @@ eco_api.register_building({
   name = "Simple park",
   description = "Simple park with water and trees",
   cost = 120000,
+  size = {
+    x = 2,
+    z = 2
+  },
   schemas = {
     {
       directory = MP .. "/schematics/simple_park",

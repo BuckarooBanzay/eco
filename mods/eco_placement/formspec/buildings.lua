@@ -72,6 +72,13 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 
     local meta = itemstack:get_meta()
     meta:set_string("description", "Placement: " .. def.name)
+    if def.size then
+      meta:set_string("size_x", def.size.x)
+      meta:set_string("size_z", def.size.z)
+    else
+      meta:set_string("size_x", 1)
+      meta:set_string("size_z", 1)
+    end
     meta:set_string("build_type", "building")
     meta:set_string("build_key", def.key)
 

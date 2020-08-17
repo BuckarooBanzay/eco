@@ -65,8 +65,6 @@ minetest.register_entity("eco_util:display", {
 	end
 })
 
-
-
 function eco_util.display_mapblock_at_pos(pos, text, timeout)
   local mapblock_center = eco_util.get_mapblock_center(pos)
 	local data = {
@@ -74,4 +72,9 @@ function eco_util.display_mapblock_at_pos(pos, text, timeout)
 		text = text
 	}
   return minetest.add_entity(mapblock_center, "eco_util:display", minetest.serialize(data))
+end
+
+function eco_util.display_mapblock(mapblock, text, timeout)
+	local min = eco_util.get_mapblock_bounds_from_mapblock(mapblock)
+	return eco_util.display_mapblock_at_pos(min, text, timeout)
 end
