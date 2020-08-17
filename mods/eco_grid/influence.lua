@@ -10,7 +10,7 @@ function eco_grid.get_influence(mapblock, range)
       }
 
       local grid = eco_grid.get_mapblock(current_mapblock)
-      if grid and grid.type == "building" and grid.build_key then
+      if grid and grid.build_key then
         local building_def = eco_api.get_building(grid.build_key)
         if building_def and building_def.influence then
           for k, v in pairs(building_def.influence) do

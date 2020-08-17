@@ -69,7 +69,7 @@ minetest.register_craftitem("eco_placement:wand", {
 					check_pos.z = check_pos.z + (z - 1)
 					local extended_grid = eco_grid.get_mapblock(check_pos)
 
-					if extended_grid and (extended_grid.type == "street" or extended_grid.type == "building") then
+					if extended_grid and extended_grid.type then
 						is_occupied = true
 						break
 					end

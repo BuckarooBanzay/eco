@@ -23,6 +23,9 @@ eco_api.register_building({
   description = "A simple street, made out of gravel and stone",
   cost = 15000,
   destroy_cost = 5000,
+  influence = {
+    noise = 0.1
+  },
   schemas = {
     straight = MP .. "/schematics/street_straight",
     corner = MP .. "/schematics/street_corner",

@@ -74,7 +74,13 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
     meta:set_string("description", "Placement: " .. def.name)
     meta:set_string("build_type", "street")
     meta:set_string("build_key", def.key)
-
+    if def.size then
+      meta:set_string("size_x", def.size.x)
+      meta:set_string("size_z", def.size.z)
+    else
+      meta:set_string("size_x", 1)
+      meta:set_string("size_z", 1)
+    end
     player:set_wielded_item(itemstack)
   end
 end)
