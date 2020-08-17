@@ -28,6 +28,7 @@ State: **WIP**
 ## Far away
 
 * [ ] Proper logo
+* [ ] ContentDB (https://content.minetest.net/help/package_config/)
 * [ ] Discord server
 
 # Licenses
