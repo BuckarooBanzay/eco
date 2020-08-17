@@ -16,11 +16,13 @@ State: **WIP**
 
 * [ ] initial items on first join (placement wand)
 * [ ] Money display on hud
+* [ ] Influence stats on hud
 * [ ] Money entity +/- on placement
 * [ ] "Destroy building" wand
 * [ ] Building upgrades (depending on influence)
 * [ ] Tax income
 * [ ] More buildings
+* [ ] Town center and name display on hud
 * [ ] Transportation concept (carts/rails?)
 
 ## Far away
