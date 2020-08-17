@@ -44,6 +44,7 @@ minetest.register_craftitem("eco_placement:wand", {
 		if pos then
 			local mapblock = eco_util.get_mapblock(pos)
 			local info = eco_mapgen.get_info(mapblock)
+			local grid = eco_grid.get_mapblock(mapblock)
 
 			-- check previous click
 			local previous_pos = last_pos[playername]
@@ -64,15 +65,20 @@ minetest.register_craftitem("eco_placement:wand", {
 				end
 			end
 
-			if info.type == "flat" or info.type == "slope" then
+			if grid and (grid.type == "street" or grid.type == "building") then
+				eco_util.display_mapblock_at_pos(pos, "Already occupied!", timeout)
+
+			elseif info.type == "flat" or info.type == "slope" then
 				-- TODO: show all mapblocks
 				eco_util.display_mapblock_at_pos(pos, description, timeout)
 				last_pos[playername] = {
 					mapblock = eco_util.get_mapblock(pos),
 					time = os.time()
 				}
+
 			else
-				eco_util.display_mapblock_at_pos(pos, "Can't build here!", timeout)
+				eco_util.display_mapblock_at_pos(pos, "Can't build here, terrain not suitable!", timeout)
+
 			end
 
 		end
