@@ -1,9 +1,11 @@
 
-local function select_schematic(schema_def)
+local function select_schematic(schema_def, mapblock)
 	if type(schema_def) == "string" then
 		return schema_def
 	elseif type(schema_def) == "table" then
 		return schema_def[math.random(#schema_def)]
+	elseif type(schema_def) == "function" then
+		return schema_def(mapblock)
 	end
 end
 
@@ -13,7 +15,7 @@ local function place_biome_mapblock(mapblock, biome)
 
 	if info.type == "flat" and biome.schemas.flat then
 		local rotations = {0, 90, 180, 270}
-		eco_serialize.deserialize(pos, select_schematic(biome.schemas.flat), {
+		eco_serialize.deserialize(pos, select_schematic(biome.schemas.flat, mapblock), {
 			use_cache = true,
 			transform = {
 				rotate = {
@@ -34,7 +36,7 @@ local function place_biome_mapblock(mapblock, biome)
 			rotate = { axis = "y", angle = 270 }
 		end
 
-		eco_serialize.deserialize(pos, biome.schemas.slope, {
+		eco_serialize.deserialize(pos, select_schematic(biome.schemas.slope, mapblock), {
 			use_cache = true,
 			sync = true,
 			transform = {
@@ -53,7 +55,7 @@ local function place_biome_mapblock(mapblock, biome)
 			rotate = { axis = "y", angle = 90 }
 		end
 
-		eco_serialize.deserialize(pos, biome.schemas.slope_inner, {
+		eco_serialize.deserialize(pos, select_schematic(biome.schemas.slope_inner, mapblock), {
 			use_cache = true,
 			sync = true,
 			transform = {
@@ -72,7 +74,7 @@ local function place_biome_mapblock(mapblock, biome)
 			rotate = { axis = "y", angle = 90 }
 		end
 
-		eco_serialize.deserialize(pos, biome.schemas.slope_outer, {
+		eco_serialize.deserialize(pos, select_schematic(biome.schemas.slope_outer, mapblock), {
 			use_cache = true,
 			sync = true,
 			transform = {
@@ -81,7 +83,7 @@ local function place_biome_mapblock(mapblock, biome)
 		})
 
 	elseif info.type == "none" and biome.schemas.empty then
-		eco_serialize.deserialize(pos, biome.schemas.empty, {
+		eco_serialize.deserialize(pos, select_schematic(biome.schemas.empty, mapblock), {
 			use_cache = true,
 			sync = true
 		})

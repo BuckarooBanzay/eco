@@ -1,3 +1,4 @@
+-- TODO priority / unregistering
 
 local biomes = {}
 
