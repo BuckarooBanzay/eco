@@ -11,6 +11,22 @@ State: **WIP**
 
 <img src="./screenshot.png"/>
 
+# TODO
+
+
+* [ ] initial items on first join (placement wand)
+* [ ] Money display on hud
+* [ ] Money entity +/- on placement
+* [ ] "Destroy building" wand
+* [ ] Building upgrades (depending on influence)
+* [ ] Tax income
+* [ ] More buildings
+* [ ] Transportation concept (carts/rails?)
+
+## Far away
+
+* [ ] Proper logo
+* [ ] Discord server
 
 # Licenses
 
