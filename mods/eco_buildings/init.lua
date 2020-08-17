@@ -63,6 +63,9 @@ eco_api.register_building({
   name = "Simple house with high density population",
   description = "Simple house with high density population",
   cost = 75000,
+  influence = {
+    noise = 1
+  },
   schemas = {
     {
       directory = MP .. "/schematics/simple_house_high_density",
@@ -76,6 +79,10 @@ eco_api.register_building({
   name = "Simple park",
   description = "Simple park with water and trees",
   cost = 120000,
+  influence = {
+    health = 3,
+    noise = -1
+  },
   size = {
     x = 2,
     z = 2
@@ -119,6 +126,10 @@ eco_api.register_building({
   name = "Simple school",
   description = "Simple school",
   cost = 150000,
+  influence = {
+    education = 2,
+    noise = 1
+  },
   schemas = {
     {
       directory = MP .. "/schematics/simple_school",
