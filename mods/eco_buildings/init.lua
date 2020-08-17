@@ -33,6 +33,7 @@ local replacements = {
 }
 
 eco_api.register_building({
+  type = "building",
   key = "eco_buildings:simple_house_low_density",
   name = "Simple house with low density population",
   description = "Simple house with low density population",
@@ -46,6 +47,7 @@ eco_api.register_building({
 })
 
 eco_api.register_building({
+  type = "building",
   key = "eco_buildings:simple_house_average_density",
   name = "Simple house with average density population",
   description = "Simple house with average density population",
@@ -59,6 +61,7 @@ eco_api.register_building({
 })
 
 eco_api.register_building({
+  type = "building",
   key = "eco_buildings:simple_house_high_density",
   name = "Simple house with high density population",
   description = "Simple house with high density population",
@@ -75,6 +78,7 @@ eco_api.register_building({
 })
 
 eco_api.register_building({
+  type = "building",
   key = "eco_buildings:simple_park",
   name = "Simple park",
   description = "Simple park with water and trees",
@@ -122,6 +126,7 @@ eco_api.register_building({
 })
 
 eco_api.register_building({
+  type = "building",
   key = "eco_buildings:simple_school",
   name = "Simple school",
   description = "Simple school",

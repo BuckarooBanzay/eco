@@ -12,3 +12,15 @@ end
 function eco_api.get_building(key)
   return buildings[key]
 end
+
+function eco_api.get_building_by_type(type)
+  local list = {}
+  for _, def in pairs(buildings) do
+    if def.type == type then
+      table.insert(list, def)
+    end
+  end
+
+  -- TODO cache result
+  return list
+end

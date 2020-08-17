@@ -1,6 +1,7 @@
 local MP = minetest.get_modpath("eco_streets")
 
-eco_api.register_street({
+eco_api.register_building({
+  type = "street",
   key = "eco_streets:dirt_road",
   name = "Dirt road",
   description = "Fast and cheap dirt road",
@@ -15,7 +16,8 @@ eco_api.register_street({
   }
 })
 
-eco_api.register_street({
+eco_api.register_building({
+  type = "street",
   key = "eco_streets:stone_street",
   name = "Stone street",
   description = "A simple street, made out of gravel and stone",

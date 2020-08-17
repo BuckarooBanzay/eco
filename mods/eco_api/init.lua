@@ -4,4 +4,3 @@ eco_api = {}
 
 dofile(MP .. "/privs.lua")
 dofile(MP .. "/buildings.lua")
-dofile(MP .. "/streets.lua")

@@ -15,7 +15,7 @@ function eco_placement.show_buildings_formspec(playername)
   selection_lists[playername] = {}
   local i = 1
 
-  for _, def in pairs(eco_api.get_buildings()) do
+  for _, def in pairs(eco_api.get_building_by_type("building")) do
     selection_lists[playername][i] = def
     i = i + 1
 
