@@ -7,3 +7,4 @@ eco_grid = {
 }
 
 dofile(MP .. "/api.lua")
+dofile(MP .. "/info.lua")
