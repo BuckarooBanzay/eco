@@ -29,14 +29,14 @@ minetest.register_craftitem("eco_placement:wand", {
 		local description = meta:get_string("description") or ""
 		local size_x = meta:get_int("size_x") or 1
 		local size_z = meta:get_int("size_z") or 1
+		local playername = player:get_player_name()
 
-		if not build_type or not build_key then
-			minetest.chat_send_player(player:get_player_name(), "Wand unconfigured, use 'right-click' to select a building")
+		if not build_type or build_type == "" or not build_key or build_key == "" then
+			minetest.chat_send_player(playername, "Wand unconfigured, use 'right-click' to select a building")
 			return itemstack
 		end
 
 		local timeout = 2
-		local playername = player:get_player_name()
 		local pos = get_pointed_nodepos(player)
 		if pos then
 			local mapblock = eco_util.get_mapblock(pos)
