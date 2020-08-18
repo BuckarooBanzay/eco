@@ -1,5 +1,5 @@
 
-Schematic serialization and placement library
+Schematic serialization and placement library with mapblock alignment
 
 # Api
 

@@ -57,9 +57,8 @@ minetest.register_chatcommand("save_schema", {
   end
 })
 
-minetest.register_chatcommand("load_schema", {
-  privs = { eco_dev = true },
-	func = function(name, params)
+local function load_schema_fn(options)
+  return function(name, params)
     local pos1 = pos1_player_map[name]
     if not pos1 then
       return false, "set pos1 before loading"
@@ -69,9 +68,19 @@ minetest.register_chatcommand("load_schema", {
       return false, "specify a name for the schema"
     end
 
-    eco_serialize.deserialize(pos1, minetest.get_worldpath() .. "/eco_schems/" .. params)
+    eco_serialize.deserialize(pos1, minetest.get_worldpath() .. "/eco_schems/" .. params, options)
 		return true
   end
+end
+
+minetest.register_chatcommand("load_schema", {
+  privs = { eco_dev = true },
+	func = load_schema_fn()
+})
+
+minetest.register_chatcommand("load_schema_add", {
+  privs = { eco_dev = true },
+	func = load_schema_fn({ mode = "add" })
 })
 
 -- cleanup
