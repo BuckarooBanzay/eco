@@ -18,6 +18,7 @@ local tree_schematics = {
 }
 
 local grass_schematic = MP .. "/schematics/grass_flat"
+local ore_deposit_schematic = MP .. "/schematics/ore_deposit"
 
 eco_mapgen.register_biome({
   key = "grass",
@@ -29,6 +30,10 @@ eco_mapgen.register_biome({
   end,
   schemas = {
     flat = function(mapblock)
+			if math.random(10) == 1 then
+				return ore_deposit_schematic
+			end
+
       local map_lengths_xyz = {x=1, y=1, z=1}
       local perlin = minetest.get_perlin_map(noise_params, map_lengths_xyz)
       local perlin_map = {}
