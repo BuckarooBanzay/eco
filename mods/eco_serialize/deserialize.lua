@@ -102,7 +102,14 @@ local function worker(ctx)
     eco_serialize.transform(ctx.options.transform, mapblock, metadata)
   end
 
-  eco_serialize.deserialize_part(ctx.pos, mapblock, metadata)
+  -- default to replace mode
+  local replace = true
+
+  if ctx.options.mode == "add" then
+    replace = false
+  end
+
+  eco_serialize.deserialize_part(ctx.pos, mapblock, metadata, replace)
 
   -- shift context
   ctx.mapblock_index = ctx.mapblock_index + 1
@@ -117,13 +124,7 @@ local function worker(ctx)
   end
 end
 
---[[
-options = {
-  use_cache = false,
-  transform = {}
-}
 
---]]
 function eco_serialize.deserialize(pos, schema_dir, options)
   options = options or {}
 

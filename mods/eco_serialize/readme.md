@@ -21,6 +21,9 @@ options = {
   -- async/sync mode (mapgen = sync)
   sync = false,
 
+  -- mode
+  mode = "replace", -- replace/add
+
   -- transformations
   transform = {
     rotate = {

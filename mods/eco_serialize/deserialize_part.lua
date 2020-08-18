@@ -1,5 +1,6 @@
+local air_content_id = minetest.get_content_id("air")
 
-function eco_serialize.deserialize_part(pos1, data, metadata)
+function eco_serialize.deserialize_part(pos1, data, metadata, replace)
   local pos2 = vector.add(pos1, 15)
 
   local manip = minetest.get_voxel_manip()
@@ -15,9 +16,11 @@ function eco_serialize.deserialize_part(pos1, data, metadata)
   for y=pos1.y,pos2.y do
   for x=pos1.x,pos2.x do
     local i = area:index(x,y,z)
-    node_data[i] = data.node_ids[j]
-    param1[i] = data.param1[j]
-    param2[i] = data.param2[j]
+    if replace or node_data[i] == air_content_id then
+      node_data[i] = data.node_ids[j]
+      param1[i] = data.param1[j]
+      param2[i] = data.param2[j]
+    end
     j = j + 1
   end
   end
