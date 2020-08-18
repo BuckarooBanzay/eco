@@ -15,7 +15,8 @@ local function place_biome_mapblock(mapblock, biome)
 
 	if info.type == "flat" and biome.schemas.flat then
 		local rotations = {0, 90, 180, 270}
-		eco_serialize.deserialize(pos, select_schematic(biome.schemas.flat, mapblock), {
+		local schematic_dir, options = select_schematic(biome.schemas.flat, mapblock)
+		options = options or {
 			use_cache = true,
 			transform = {
 				rotate = {
@@ -23,7 +24,9 @@ local function place_biome_mapblock(mapblock, biome)
 		      angle = rotations[math.random(#rotations)]
 		    }
 			}
-		})
+		}
+
+		eco_serialize.deserialize(pos, schematic_dir, options)
 
 	elseif info.type == "slope" and biome.schemas.slope then
 		-- slope looks into z+ direction

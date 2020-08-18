@@ -31,7 +31,13 @@ eco_mapgen.register_biome({
   schemas = {
     flat = function(mapblock)
 			if math.random(10) == 1 then
-				return ore_deposit_schematic
+				return ore_deposit_schematic, {
+					transform = {
+						replace = {
+							["default:diamondblock"] = "default:stone_with_iron"
+						}
+					}
+				}
 			end
 
       local map_lengths_xyz = {x=1, y=1, z=1}
