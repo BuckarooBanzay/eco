@@ -7,7 +7,7 @@ eco_api.register_building({
   description = "Fast and cheap dirt road",
   cost = 5000,
   destroy_cost = 1000,
-  placement_type = "connected_roads",
+  placement_type = "connected_street",
   connects_to = {
     "eco_streets:dirt_road",
     "eco_streets:stone_street",
