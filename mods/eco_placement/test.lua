@@ -63,10 +63,12 @@ local function rotate_schema_directions(schema_directions, angle)
 end
 
 local check_connections = {
+  -- flat plane cross
   { x=1, y=0, z=0 },
   { x=-1, y=0, z=0 },
   { x=0, y=0, z=1 },
   { x=0, y=0, z=-1 },
+  -- upper cross
   { x=1, y=1, z=0 },
   { x=-1, y=1, z=0 },
   { x=0, y=1, z=1 },
