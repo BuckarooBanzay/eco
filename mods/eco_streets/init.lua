@@ -30,15 +30,6 @@ eco_api.register_building({
     },
     {
       directions = {
-        { x = 1, y = 0, z = 0 },
-        { x = 0, y = 0, z = 1 },
-        { x = -1, y = 0, z = 0 },
-        { x = 0, y = 0, z =-1 }
-      },
-      schema = MP .. "/schematics/dirt_road_all_sides"
-    },
-    {
-      directions = {
         { x = 0, y = 0, z = -1 },
         { x = 0, y = 1, z = 1 }
       },
@@ -48,9 +39,18 @@ eco_api.register_building({
       directions = {
         { x = 1, y = 0, z = 0 },
         { x = -1, y = 0, z = 0 },
-        { x = 0, y = 1, z = -1 }
+        { x = 0, y = 0, z = -1 }
       },
       schema = MP .. "/schematics/dirt_road_three_sides"
+    },
+    {
+      directions = {
+        { x = 1, y = 0, z = 0 },
+        { x = 0, y = 0, z = 1 },
+        { x = -1, y = 0, z = 0 },
+        { x = 0, y = 0, z =-1 }
+      },
+      schema = MP .. "/schematics/dirt_road_all_sides"
     }
   },
   schemas = {
@@ -67,6 +67,7 @@ eco_api.register_building({
   }
 })
 
+--[[
 eco_api.register_building({
   type = "street",
   key = "eco_streets:stone_street",
@@ -113,3 +114,4 @@ eco_api.register_building({
   -- TODO: configurable orientation
   -- disable_orientation = true
 })
+--]]
