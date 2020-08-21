@@ -7,11 +7,62 @@ eco_api.register_building({
   description = "Fast and cheap dirt road",
   cost = 5000,
   destroy_cost = 1000,
+  placement_type = "connected_roads",
+  connects_to = {
+    "eco_streets:dirt_road",
+    "eco_streets:stone_street",
+    "eco_streets:stone_street_rails"
+  },
+  schemas_ = {
+    {
+      directions = {
+        { x = 1, y = 0, z = 0 },
+        { x = -1, y = 0, z = 0 }
+      },
+      schema = MP .. "/schematics/dirt_road_straight"
+    },
+    {
+      directions = {
+        { x = 1, y = 0, z = 0 },
+        { x = 0, y = 0, z = 1 }
+      },
+      schema = MP .. "/schematics/dirt_road_corner"
+    },
+    {
+      directions = {
+        { x = 1, y = 0, z = 0 },
+        { x = 0, y = 0, z = 1 },
+        { x = -1, y = 0, z = 0 },
+        { x = 0, y = 0, z =-1 }
+      },
+      schema = MP .. "/schematics/dirt_road_all_sides"
+    },
+    {
+      directions = {
+        { x = 0, y = 0, z = -1 },
+        { x = 0, y = 1, z = 1 }
+      },
+      schema = MP .. "/schematics/dirt_road_slope"
+    },
+    {
+      directions = {
+        { x = 1, y = 0, z = 0 },
+        { x = -1, y = 0, z = 0 },
+        { x = 0, y = 1, z = -1 }
+      },
+      schema = MP .. "/schematics/dirt_road_three_sides"
+    }
+  },
   schemas = {
+    -- +x, -x
     straight = MP .. "/schematics/dirt_road_straight",
+    -- +x, +z
     corner = MP .. "/schematics/dirt_road_corner",
+    -- *
     all_sides = MP .. "/schematics/dirt_road_all_sides",
+    -- +z (upper), -z
     slope = MP .. "/schematics/dirt_road_slope",
+    -- +x, -x, -z
     three_sides = MP .. "/schematics/dirt_road_three_sides"
   }
 })
