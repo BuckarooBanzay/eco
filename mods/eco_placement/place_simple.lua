@@ -33,9 +33,14 @@ function eco_placement.place_simple(place_def)
       end
     end
 
+    -- set inworld blocks
     local min = eco_util.get_mapblock_bounds_from_mapblock(mapblock)
     eco_serialize.deserialize(min, schema_entry.directory, options)
 
+    -- populate grid data
+    -- TODO: move to util function
+
+    -- "root" grid node
     eco_grid.set_mapblock(mapblock, {
       type = "building",
       build_key = building_def.key
@@ -49,6 +54,7 @@ function eco_placement.place_simple(place_def)
       size_z = building_def.size.z
     end
 
+    -- every other mapblock (if any)
     for x=1,size_x do
       for z=1,size_z do
         if x>1 or z>1 then
