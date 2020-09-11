@@ -16,6 +16,19 @@ Features:
 * **/load_schema [name]** loads the schema at current pos1
 * **/load_schema_add [name]** loads the schema at current pos1 but only replaces existing air nodes
 
+# On-disk format
+
+Structure of the on-disk schema format:
+
+```
+ + <worlddir>
+  + eco_schems
+   + <name>
+    + manifest.json (schema metadata, size, nodeids)
+    + mapblock_<num>.bin (compressed binary data of nodeids/param1 and param2)
+    + mapblock_<num>.metadata.json (block metadata/inventories in json format)
+```
+
 # Lua api
 
 **Note**: positions are in block coordinates (from -31000 to 31000 x/y/z) and are rounded internally to mapblocks
