@@ -1,15 +1,33 @@
 
-Schematic serialization and placement library with mapblock alignment
+Schematic serialization and placement library with mapblock granularity
 
-# Api
+Features:
+* Mapblock granular schemas
+* Async saving/loading
+* Transformations (rotate/replace)
+* Additive/Overwrite mode (replace everything on load or just air)
+
+# Chat commands
+
+* **/pos1 [set|show]** sets or shows the current position1
+* **/pos2 [set|show]** sets or shows the current position2
+* **/save_schema [name]** saves the marked region under `<worlddir>/eco_schems/<name>`
+* **/load_schema [name]** loads the schema at current pos1
+* **/load_schema_add [name]** loads the schema at current pos1 but only replaces existing air nodes
+
+# Lua api
 
 ## eco_serialize.serialize
+
+Writes the selected world nodes to disk
 
 ```lua
 eco_serialize.serialize(pos1, pos2, schema_dir)
 ```
 
 ## eco_serialize.deserialize
+
+Reads from the disk and places schematics inworld
 
 ```lua
 eco_serialize.deserialize(pos, schema_dir, options)
