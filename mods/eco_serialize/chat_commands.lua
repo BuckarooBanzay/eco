@@ -68,8 +68,7 @@ local function load_schema_fn(options)
       return false, "specify a name for the schema"
     end
 
-    eco_serialize.deserialize(pos1, minetest.get_worldpath() .. "/eco_schems/" .. params, options)
-		return true
+    return eco_serialize.deserialize(pos1, minetest.get_worldpath() .. "/eco_schems/" .. params, options)
   end
 end
 

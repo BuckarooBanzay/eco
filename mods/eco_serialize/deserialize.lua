@@ -138,6 +138,10 @@ function eco_serialize.deserialize(pos, schema_dir, options)
     manifest_cache[schema_dir] = manifest
   end
 
+  if not manifest then
+    return false, "Schema manifest not found: " .. schema_dir
+  end
+
   local min = eco_util.get_mapblock_bounds(pos)
 
   local ctx = {
@@ -160,4 +164,6 @@ function eco_serialize.deserialize(pos, schema_dir, options)
     -- schedule async work
     minetest.after(0, worker, ctx)
   end
+
+  return true
 end
