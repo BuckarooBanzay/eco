@@ -17,6 +17,8 @@ Features:
 
 # Lua api
 
+**Note**: positions are in block coordinates (from -31000 to 31000 x/y/z) and are rounded internally to mapblocks
+
 ## eco_serialize.serialize
 
 Writes the selected world nodes to disk
