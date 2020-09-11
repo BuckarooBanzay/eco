@@ -9,8 +9,7 @@ eco_api.register_building({
   destroy_cost = 1000,
   connects_to = {
     "eco_streets:dirt_road",
-    "eco_streets:stone_street",
-    "eco_streets:stone_street_rails"
+    "eco_streets:stone_street"
   },
   on_place = eco_placement.place_connected_street({
     {
@@ -54,7 +53,6 @@ eco_api.register_building({
   })
 })
 
---[[
 eco_api.register_building({
   type = "street",
   key = "eco_streets:stone_street",
@@ -65,16 +63,55 @@ eco_api.register_building({
   influence = {
     noise = 0.1
   },
-  schemas = {
-    straight = MP .. "/schematics/street_straight",
-    corner = MP .. "/schematics/street_corner",
-    all_sides = MP .. "/schematics/street_all_sides",
-    slope = MP .. "/schematics/street_slope",
-    three_sides = MP .. "/schematics/street_three_sides"
+  connects_to = {
+    "eco_streets:dirt_road",
+    "eco_streets:stone_street"
   },
-  disable_orientation = true
+  on_place = eco_placement.place_connected_street({
+    {
+      directions = {
+        { x = 1, y = 0, z = 0 },
+        { x = -1, y = 0, z = 0 }
+      },
+      schema = MP .. "/schematics/street_straight",
+      disable_orientation = true
+    },
+    {
+      directions = {
+        { x = 1, y = 0, z = 0 },
+        { x = 0, y = 0, z = 1 }
+      },
+      schema = MP .. "/schematics/street_corner"
+    },
+    {
+      directions = {
+        { x = 0, y = 0, z = -1 },
+        { x = 0, y = 1, z = 1 }
+      },
+      schema = MP .. "/schematics/street_slope"
+    },
+    {
+      directions = {
+        { x = 1, y = 0, z = 0 },
+        { x = -1, y = 0, z = 0 },
+        { x = 0, y = 0, z = -1 }
+      },
+      schema = MP .. "/schematics/street_three_sides"
+    },
+    {
+      directions = {
+        { x = 1, y = 0, z = 0 },
+        { x = 0, y = 0, z = 1 },
+        { x = -1, y = 0, z = 0 },
+        { x = 0, y = 0, z =-1 }
+      },
+      schema = MP .. "/schematics/street_all_sides"
+    }
+  })
 })
 
+
+--[[
 eco_api.register_building({
   type = "street",
   key = "eco_streets:stone_street_rails",
