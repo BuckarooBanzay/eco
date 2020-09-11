@@ -1,10 +1,10 @@
-local FORMNAME = "eco_placement_formspec_buildings"
+local FORMNAME = "eco_wand_formspec_streets"
 
 -- playername -> list
 local selection_lists = {}
 local selected_item = {}
 
-function eco_placement.show_buildings_formspec(playername)
+function eco_placement.show_streets_formspec(playername)
   local player = minetest.get_player_by_name(playername)
 
   if not player then
@@ -15,7 +15,7 @@ function eco_placement.show_buildings_formspec(playername)
   selection_lists[playername] = {}
   local i = 1
 
-  for _, def in pairs(eco_api.get_building_by_type("building")) do
+  for _, def in pairs(eco_api.get_building_by_type("street")) do
     selection_lists[playername][i] = def
     i = i + 1
 
@@ -66,12 +66,14 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
     end
 
     local itemstack = player:get_wielded_item()
-    if itemstack:get_name() ~= "eco_placement:wand" then
+    if itemstack:get_name() ~= "eco_wand:wand" then
       return
     end
 
     local meta = itemstack:get_meta()
     meta:set_string("description", "Placement: " .. def.name)
+    meta:set_string("build_type", "street")
+    meta:set_string("build_key", def.key)
     if def.size then
       meta:set_string("size_x", def.size.x)
       meta:set_string("size_z", def.size.z)
@@ -79,9 +81,6 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
       meta:set_string("size_x", 1)
       meta:set_string("size_z", 1)
     end
-    meta:set_string("build_type", "building")
-    meta:set_string("build_key", def.key)
-
     player:set_wielded_item(itemstack)
   end
 end)

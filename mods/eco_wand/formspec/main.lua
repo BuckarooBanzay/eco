@@ -1,4 +1,4 @@
-local FORMNAME = "eco_placement_formspec"
+local FORMNAME = "eco_wand_formspec"
 
 function eco_placement.show_placement_formspec(playername)
   local player = minetest.get_player_by_name(playername)

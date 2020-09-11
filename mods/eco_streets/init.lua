@@ -13,7 +13,7 @@ eco_api.register_building({
     "eco_streets:stone_street",
     "eco_streets:stone_street_rails"
   },
-  schemas_ = {
+  on_place = eco_placement.place_connected_street({
     {
       directions = {
         { x = 1, y = 0, z = 0 },
@@ -52,19 +52,7 @@ eco_api.register_building({
       },
       schema = MP .. "/schematics/dirt_road_all_sides"
     }
-  },
-  schemas = {
-    -- +x, -x
-    straight = MP .. "/schematics/dirt_road_straight",
-    -- +x, +z
-    corner = MP .. "/schematics/dirt_road_corner",
-    -- *
-    all_sides = MP .. "/schematics/dirt_road_all_sides",
-    -- +z (upper), -z
-    slope = MP .. "/schematics/dirt_road_slope",
-    -- +x, -x, -z
-    three_sides = MP .. "/schematics/dirt_road_three_sides"
-  }
+  })
 })
 
 --[[

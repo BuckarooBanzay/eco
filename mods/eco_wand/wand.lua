@@ -18,7 +18,7 @@ end
 
 local last_pos = {}
 
-minetest.register_craftitem("eco_placement:wand", {
+minetest.register_craftitem("eco_wand:wand", {
 	description = "Placement wand",
 	inventory_image = "eco_placement_wand.png",
 	range = 0,
@@ -50,10 +50,9 @@ minetest.register_craftitem("eco_placement:wand", {
 
 				if distance < 1 then
 					-- build here
-					if build_type == "street" then
-						eco_placement.place_street(mapblock, build_key, true)
-					elseif build_type == "building" then
-						eco_placement.place_building(mapblock, build_key)
+					local build_def = eco_api.get_building(build_key)
+					if type(build_def.on_place) == "function" then
+						build_def.on_place(build_def, mapblock, playername)
 					end
 
 					last_pos[playername] = nil

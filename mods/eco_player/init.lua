@@ -11,8 +11,19 @@ minetest.register_on_joinplayer(function(player)
   local inv = player:get_inventory()
   local main_list = inv:get_list("main")
 
-  main_list[1] = ItemStack("eco_placement:wand")
-  inv:set_list("main", main_list)
+  local wand_found = false
+
+  for _, stack in ipairs(main_list) do
+    if stack:get_name() == "eco_wand:wand" then
+      wand_found = true
+      break
+    end
+  end
+
+  if not wand_found then
+    main_list[1] = ItemStack("eco_wand:wand")
+    inv:set_list("main", main_list)
+  end
 
 
 end)
