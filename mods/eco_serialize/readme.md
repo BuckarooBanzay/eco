@@ -3,6 +3,7 @@ Schematic serialization and placement library with mapblock granularity
 
 Features:
 * Mapblock granular schemas
+* Efficient and complete schema format (nodeid/param1/param2/nodetimer/inventory and metadata are saved)
 * Async saving/loading
 * Transformations (rotate/replace)
 * Additive/Overwrite mode (replace everything on load or just air)
