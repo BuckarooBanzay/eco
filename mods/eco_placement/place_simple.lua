@@ -24,7 +24,13 @@ function eco_placement.place_simple(place_def)
     end
 
     if schema_entry.replacements then
-      options.transform.replace = schema_entry.replacements[math.random(#schema_entry.replacements)]
+      if #schema_entry.replacements > 0 then
+        -- multiple, choose one randomly
+        options.transform.replace = schema_entry.replacements[math.random(#schema_entry.replacements)]
+      else
+        -- only one, use that
+        options.transform.replace = schema_entry.replacements
+      end
     end
 
     local min = eco_util.get_mapblock_bounds_from_mapblock(mapblock)
