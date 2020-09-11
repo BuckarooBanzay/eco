@@ -31,6 +31,15 @@ State: **WIP**
 * [ ] ContentDB (https://content.minetest.net/help/package_config/)
 * [ ] Discord server
 
+# Development
+
+Mod docs:
+
+* [eco_grid](./mods/eco_grid/readme.md) per mapblock data storage
+* [eco_mapgen](./mods/eco_mapgen/readme.md) map generation
+* [eco_placement](./mods/eco_placement/readme.md) placement functions
+* [eco_serialize](./mods/eco_serialize/readme.md) serialization commands and functions
+
 # Licenses
 
 ## Code
