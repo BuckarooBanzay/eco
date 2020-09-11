@@ -73,12 +73,9 @@ local check_connections = {
   { x=0, y=1, z=-1 },
 }
 
-function eco_placement.place_connected_street(place_def)
-  return function(building_def, mapblock, playername)
-    print(playername .. " places connected street '" .. building_def.name .. "' to " ..
-      minetest.pos_to_string(mapblock) ..
-      " Schema: " .. dump(place_def))
+local propagate = true
 
+local function place_or_update_street(place_def, building_def, mapblock)
     -- rearrange data
     local connects_to = {}
     for _, key in ipairs(building_def.connects_to) do
@@ -86,41 +83,73 @@ function eco_placement.place_connected_street(place_def)
     end
 
     -- gather foreign connections
- -- { {x=1, y=0, z=0}, {} }
- local foreign_connections = {}
- for _, offset in ipairs(check_connections) do
-   local offset_mapblock = vector.add(mapblock, offset)
-   local grid_info = eco_grid.get_mapblock(offset_mapblock)
+   -- { {x=1, y=0, z=0}, {} }
+   local foreign_connections = {}
+   for _, offset in ipairs(check_connections) do
+     local offset_mapblock = vector.add(mapblock, offset)
+     local grid_info = eco_grid.get_mapblock(offset_mapblock)
 
-   if grid_info and connects_to[grid_info.build_key] then
-     table.insert(foreign_connections, offset)
-   end
- end
-
- for _, schema_variant in ipairs(place_def) do
-   -- every schema variant
-   for _, angle in ipairs({0, 90, 180, 270}) do
-     -- every angle
-     local rotated_directions = rotate_schema_directions(schema_variant.directions, angle)
-     local match = check_placement(foreign_connections, rotated_directions)
-     print(match, angle, dump(rotated_directions), dump(foreign_connections))
-
-     if match then
-       -- set inworld blocks
-       local min = eco_util.get_mapblock_bounds_from_mapblock(mapblock)
-       eco_serialize.deserialize(min, schema_variant.schema, {
-         transform = {
-           rotate = {
-             axis = "y",
-             angle = angle
-           }
-         }
-       })
-
-       -- TODO: set grid data
-
+     if grid_info and connects_to[grid_info.build_key] then
+       table.insert(foreign_connections, offset)
      end
    end
- end
+
+   local match_placed = false
+
+   for _, schema_variant in ipairs(place_def) do
+     -- every schema variant
+     for _, angle in ipairs({0, 90, 180, 270}) do
+       -- every angle
+       local rotated_directions = rotate_schema_directions(schema_variant.directions, angle)
+       local match = check_placement(foreign_connections, rotated_directions)
+
+       if match then
+         -- set inworld blocks
+         local min = eco_util.get_mapblock_bounds_from_mapblock(mapblock)
+         eco_serialize.deserialize(min, schema_variant.schema, {
+           transform = {
+             rotate = {
+               axis = "y",
+               angle = angle
+             }
+           }
+         })
+         match_placed = true
+
+         -- set grid data
+         eco_grid.set_mapblock(mapblock, {
+           type = "building",
+           build_key = building_def.key
+         })
+
+         if propagate then
+           -- disable propagation while updating neighbors
+           propagate = false
+           -- update surrounding streets
+           for _, offset in ipairs(foreign_connections) do
+             local foreign_mapblock = vector.add(mapblock, offset)
+             local foreign_data = eco_grid.get_mapblock(foreign_mapblock)
+             local foreign_building_def = eco_api.get_building(foreign_data.build_key)
+             foreign_building_def.on_place(foreign_building_def, foreign_mapblock)
+           end
+
+           -- re-enable propagation
+           propagate = true
+         end
+
+         break
+       end -- match
+     end -- angle
+
+     if match_placed then
+       break
+     end
+
+   end -- schema_variant
+end
+
+function eco_placement.place_connected_street(place_def)
+  return function(building_def, mapblock)
+    return place_or_update_street(place_def, building_def, mapblock)
   end
 end
