@@ -31,6 +31,7 @@ eco_api.register_building({
         { x = 0, y = 0, z = -1 },
         { x = 0, y = 1, z = 1 }
       },
+      slope = true,
       schema = MP .. "/schematics/dirt_road_slope"
     },
     {
@@ -88,6 +89,7 @@ eco_api.register_building({
         { x = 0, y = 0, z = -1 },
         { x = 0, y = 1, z = 1 }
       },
+      slope = true,
       schema = MP .. "/schematics/street_slope"
     },
     {

@@ -71,8 +71,14 @@ local check_connections = {
   { x=-1, y=1, z=0 },
   { x=0, y=1, z=1 },
   { x=0, y=1, z=-1 },
+  -- lower cross
+  { x=1, y=-1, z=0 },
+  { x=-1, y=-1, z=0 },
+  { x=0, y=-1, z=1 },
+  { x=0, y=-1, z=-1 }
 }
 
+-- propagation flag for recursive updates
 local propagate = true
 
 local function place_or_update_street(place_def, building_def, mapblock)
@@ -94,6 +100,7 @@ local function place_or_update_street(place_def, building_def, mapblock)
      end
    end
 
+   -- true if a match got already placed
    local match_placed = false
 
    for _, schema_variant in ipairs(place_def) do
@@ -122,6 +129,14 @@ local function place_or_update_street(place_def, building_def, mapblock)
            build_key = building_def.key
          })
 
+         if schema_variant.slope then
+           -- set upper half of the slope data
+           eco_grid.set_mapblock(vector.add(mapblock, {x=0, y=1, z=0}), {
+             type = "slope_top_half",
+             build_key = building_def.key
+           })
+         end
+
          if propagate then
            -- disable propagation while updating neighbors
            propagate = false
@@ -129,8 +144,11 @@ local function place_or_update_street(place_def, building_def, mapblock)
            for _, offset in ipairs(foreign_connections) do
              local foreign_mapblock = vector.add(mapblock, offset)
              local foreign_data = eco_grid.get_mapblock(foreign_mapblock)
-             local foreign_building_def = eco_api.get_building(foreign_data.build_key)
-             foreign_building_def.on_place(foreign_building_def, foreign_mapblock)
+             if foreign_data.type ~= "slope_top_half" then
+               local foreign_building_def = eco_api.get_building(foreign_data.build_key)
+               print("calling on_place", dump(foreign_mapblock), dump(foreign_data))
+               foreign_building_def.on_place(foreign_building_def, foreign_mapblock)
+             end
            end
 
            -- re-enable propagation
