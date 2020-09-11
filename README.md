@@ -9,6 +9,8 @@ State: **WIP**
 ![](https://github.com/eco-game/eco/workflows/luacheck/badge.svg)
 ![](https://github.com/eco-game/eco/workflows/integration-test/badge.svg)
 
+Discord: https://discord.gg/fECUHdu
+
 <img src="./screenshot.png"/>
 
 # TODO
@@ -29,7 +31,6 @@ State: **WIP**
 
 * [ ] Proper logo
 * [ ] ContentDB (https://content.minetest.net/help/package_config/)
-* [ ] Discord server
 
 # Development
 
