@@ -39,33 +39,3 @@ eco_api.register_building({
     disable_orientation = true
   })
 })
-
-
---[[
-eco_api.register_building({
-  type = "street",
-  key = "eco_streets:stone_street_rails",
-  name = "Stone street with rails",
-  description = "A simple street, made out of gravel and stone with rails on it",
-  cost = 25000,
-  destroy_cost = 7500,
-  rails = {
-    -- TODO: rails definition
-    x = 6,
-    y = 2,
-    z = 0
-  },
-  influence = {
-    noise = 0.1
-  },
-  schemas = {
-    straight = MP .. "/schematics/street_with_rails_straight",
-    corner = MP .. "/schematics/street_with_rails_corner",
-    all_sides = MP .. "/schematics/street_with_rails_all_sides",
-    slope = MP .. "/schematics/street_with_rails_slope",
-    three_sides = MP .. "/schematics/street_with_rails_three_sides"
-  },
-  -- TODO: configurable orientation
-  -- disable_orientation = true
-})
---]]
