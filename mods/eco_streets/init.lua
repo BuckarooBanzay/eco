@@ -7,49 +7,13 @@ eco_api.register_building({
   description = "Fast and cheap dirt road",
   cost = 5000,
   destroy_cost = 1000,
-  connects_to = {
-    "eco_streets:dirt_road",
-    "eco_streets:stone_street"
-  },
   on_place = eco_placement.place_connected_street({
-    {
-      directions = {
-        { x = 1, y = 0, z = 0 },
-        { x = -1, y = 0, z = 0 }
-      },
-      schema = MP .. "/schematics/dirt_road_straight"
-    },
-    {
-      directions = {
-        { x = 1, y = 0, z = 0 },
-        { x = 0, y = 0, z = 1 }
-      },
-      schema = MP .. "/schematics/dirt_road_corner"
-    },
-    {
-      directions = {
-        { x = 0, y = 0, z = -1 },
-        { x = 0, y = 1, z = 1 }
-      },
-      slope = true,
-      schema = MP .. "/schematics/dirt_road_slope"
-    },
-    {
-      directions = {
-        { x = 1, y = 0, z = 0 },
-        { x = -1, y = 0, z = 0 },
-        { x = 0, y = 0, z = -1 }
-      },
-      schema = MP .. "/schematics/dirt_road_three_sides"
-    },
-    {
-      directions = {
-        { x = 1, y = 0, z = 0 },
-        { x = 0, y = 0, z = 1 },
-        { x = -1, y = 0, z = 0 },
-        { x = 0, y = 0, z =-1 }
-      },
-      schema = MP .. "/schematics/dirt_road_all_sides"
+    schematics = {
+      straight = MP .. "/schematics/dirt_road_straight",
+      corner = MP .. "/schematics/dirt_road_corner",
+      slope = MP .. "/schematics/dirt_road_slope",
+      three_sides = MP .. "/schematics/dirt_road_three_sides",
+      all_sides = MP .. "/schematics/dirt_road_all_sides"
     }
   })
 })
@@ -64,51 +28,15 @@ eco_api.register_building({
   influence = {
     noise = 0.1
   },
-  connects_to = {
-    "eco_streets:dirt_road",
-    "eco_streets:stone_street"
-  },
   on_place = eco_placement.place_connected_street({
-    {
-      directions = {
-        { x = 1, y = 0, z = 0 },
-        { x = -1, y = 0, z = 0 }
-      },
-      schema = MP .. "/schematics/street_straight",
-      disable_orientation = true
+    schematics = {
+      straight = MP .. "/schematics/street_straight",
+      corner = MP .. "/schematics/street_corner",
+      slope = MP .. "/schematics/street_slope",
+      three_sides = MP .. "/schematics/street_three_sides",
+      all_sides = MP .. "/schematics/street_all_sides"
     },
-    {
-      directions = {
-        { x = 1, y = 0, z = 0 },
-        { x = 0, y = 0, z = 1 }
-      },
-      schema = MP .. "/schematics/street_corner"
-    },
-    {
-      directions = {
-        { x = 0, y = 0, z = -1 },
-        { x = 0, y = 1, z = 1 }
-      },
-      slope = true,
-      schema = MP .. "/schematics/street_slope"
-    },
-    {
-      directions = {
-        { x = 1, y = 0, z = 0 },
-        { x = -1, y = 0, z = 0 },
-        { x = 0, y = 0, z = -1 }
-      },
-      schema = MP .. "/schematics/street_three_sides"
-    },
-    {
-      directions = {
-        { x = 1, y = 0, z = 0 },
-        { x = 0, y = 0, z = 1 },
-        { x = -1, y = 0, z = 0 },
-        { x = 0, y = 0, z =-1 }
-      },
-      schema = MP .. "/schematics/street_all_sides"
-    }
+    disable_orientation = true
   })
 })
 
