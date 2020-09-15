@@ -1,1 +1,1 @@
-{"max_x":15.0,"max_y":31.0,"max_z":15.0,"node_mapping":{"air":126.0,"default:dirt":22.0,"default:stone":1.0,"default:water_source":121.0,"mypaths:slope_grass_inner_cut":3938.0,"mypaths:slope_grass_outer_cut":3934.0},"total_parts":2.0,"version":2.0}
+{"max_x":15.0,"max_y":31.0,"max_z":15.0,"node_mapping":{"air":126.0,"default:dirt":22.0,"default:stone":1.0,"default:water_source":121.0,"eco_stairsplus:slope_dirt_with_grass_inner_cut":3938.0,"eco_stairsplus:slope_dirt_with_grass_outer_cut":3934.0},"total_parts":2.0,"version":2.0}
