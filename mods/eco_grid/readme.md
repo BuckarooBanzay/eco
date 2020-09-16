@@ -13,3 +13,17 @@ eco_grid.set_mapblock({ x=0, y=2, z=0 }, {
 })
 
 ```
+
+
+# Default grid data
+
+```lua
+local grid_data = {
+  -- mapgen infos
+  mapgen = {
+    biome_key = "grass",
+    terrain_type = "flat", -- "flat" / "slope" / "slope_inner" / "slope_outer"
+    terrain_direction = "x+" -- "x+z-" etc in slope_inner/slope_outer case
+  }
+}
+```

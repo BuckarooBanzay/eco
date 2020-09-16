@@ -13,6 +13,18 @@ local function place_biome_mapblock(mapblock, biome)
 	local info = eco_mapgen.get_info(mapblock)
 	local pos = eco_util.get_mapblock_bounds_from_mapblock(mapblock)
 
+	-- add mapgen info (if available) to grid data
+	if info.type ~= "none" then
+		-- only save if data available
+		eco_grid.set_mapblock(mapblock, {
+			mapgen = {
+				biome_key = biome.key,
+				terrain_type = info.type,
+				terrain_direction = info.direction
+			}
+		})
+	end
+
 	if info.type == "flat" and biome.schemas.flat then
 		local rotations = {0, 90, 180, 270}
 		local schematic_dir, options = select_schematic(biome.schemas.flat, mapblock)
