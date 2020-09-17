@@ -25,8 +25,8 @@ local function is_connected(mapblock)
 end
 
 local function place_street(place_def, building_def, mapblock)
-  local info = eco_mapgen.get_info(mapblock)
-  if info.type == "slope" then
+  local grid_info = eco_grid.get_mapblock(mapblock)
+  if grid_info.mapgen.terrain_type == "slope" then
     -- place slope
     assert(place_def.schematics.slope)
 
@@ -40,11 +40,11 @@ local function place_street(place_def, building_def, mapblock)
     }
 
     -- rotate (z+ is default)
-    if info.direction == "x+" then
+    if grid_info.mapgen.terrain_direction == "x+" then
       options.transform.rotate.angle = 90
-    elseif info.direction == "z-" then
+    elseif grid_info.mapgen.terrain_direction == "z-" then
       options.transform.rotate.angle = 180
-    elseif info.direction == "x-" then
+    elseif grid_info.mapgen.terrain_direction == "x-" then
       options.transform.rotate.angle = 270
     end
 
@@ -61,7 +61,7 @@ local function place_street(place_def, building_def, mapblock)
       build_key = building_def.key
     })
 
-  elseif info.type == "flat" then
+  elseif grid_info.mapgen.terrain_type == "flat" then
     -- place flat
 
     -- check connections on flat surface and one layer below

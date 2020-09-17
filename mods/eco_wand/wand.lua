@@ -40,7 +40,7 @@ minetest.register_craftitem("eco_wand:wand", {
 		local pos = get_pointed_nodepos(player)
 		if pos then
 			local mapblock = eco_util.get_mapblock(pos)
-			local info = eco_mapgen.get_info(mapblock)
+			local grid_info = eco_grid.get_mapblock(mapblock)
 
 			-- check previous click
 			local previous_pos = last_pos[playername]
@@ -78,7 +78,7 @@ minetest.register_craftitem("eco_wand:wand", {
 			if is_occupied then
 				eco_util.display_mapblock_at_pos(pos, "Already occupied!", timeout)
 
-			elseif info.type == "flat" or info.type == "slope" then
+			elseif grid_info.mapgen.terrain_type == "flat" or grid_info.mapgen.terrain_type == "slope" then
 
 				-- show all affected mapblocks
 				for x=1,size_x do
