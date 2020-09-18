@@ -107,6 +107,21 @@ local function place_biome_mapblock(mapblock, biome)
 
 end
 
+function eco_mapgen.place_mapblock(mapblock)
+	local biome = nil
+	for _, biome_def in pairs(eco_mapgen.get_biomes()) do
+		if biome_def.match(mapblock) then
+			biome = biome_def
+			break
+		end
+	end
+
+	if biome then
+		place_biome_mapblock(mapblock, biome)
+	end
+	-- TODO: overwrite non-mapgen blocks with air
+end
+
 minetest.register_on_generated(function(minp, maxp)
 
 	-- 5x5x5 mapblocks per chunk
@@ -120,20 +135,9 @@ minetest.register_on_generated(function(minp, maxp)
 	for y=min_mapblock.y,max_mapblock.y do
 
 		local mapblock = { x=x, y=y, z=z }
+		eco_mapgen.place_mapblock(mapblock)
 
-		local biome = nil
-		for _, biome_def in pairs(eco_mapgen.get_biomes()) do
-			if biome_def.match(mapblock) then
-				biome = biome_def
-				break
-			end
-		end
-
-		if biome then
-			place_biome_mapblock(mapblock, biome)
-		end
-
-		end --y
+	end --y
 	end --x
 	end --z
 

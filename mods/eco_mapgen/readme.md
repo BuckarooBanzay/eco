@@ -7,6 +7,14 @@ mapgen for the eco game
 
 # Lua api
 
+## place_mapblock
+
+Places or restores the specified mapblock at the position
+
+```lua
+eco_mapgen.place_mapblock({ x=0, y=3, z=0 })
+```
+
 ## get_info
 
 ```lua
