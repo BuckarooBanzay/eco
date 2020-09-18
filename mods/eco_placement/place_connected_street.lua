@@ -52,11 +52,11 @@ local function place_street(place_def, building_def, mapblock)
     eco_serialize.deserialize(min, place_def.schematics.slope, options)
 
     -- set grid data
-    eco_grid.set_mapblock(mapblock, {
+    eco_grid.merge_mapblock(mapblock, {
       type = "street",
       build_key = building_def.key
     })
-    eco_grid.set_mapblock(vector.add(mapblock, {x=0, y=1, z=0}), {
+    eco_grid.merge_mapblock(vector.add(mapblock, {x=0, y=1, z=0}), {
       type = "street_slope_top",
       build_key = building_def.key
     })
@@ -145,7 +145,7 @@ local function place_street(place_def, building_def, mapblock)
     eco_serialize.deserialize(min, schematic, options)
 
     -- set grid data
-    eco_grid.set_mapblock(mapblock, {
+    eco_grid.merge_mapblock(mapblock, {
       type = "street",
       build_key = building_def.key
     })

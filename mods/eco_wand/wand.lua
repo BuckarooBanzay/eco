@@ -75,10 +75,13 @@ minetest.register_craftitem("eco_wand:wand", {
 				end
 			end
 
+			local is_slope_or_flat = grid_info and grid_info.mapgen and
+				(grid_info.mapgen.terrain_type == "flat" or grid_info.mapgen.terrain_type == "slope")
+
 			if is_occupied then
 				eco_util.display_mapblock_at_pos(pos, "Already occupied!", timeout)
 
-			elseif grid_info.mapgen.terrain_type == "flat" or grid_info.mapgen.terrain_type == "slope" then
+			elseif is_slope_or_flat then
 
 				-- show all affected mapblocks
 				for x=1,size_x do

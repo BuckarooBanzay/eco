@@ -29,6 +29,14 @@ local function load_from_world(mapblock)
   end
 end
 
+function eco_grid.merge_mapblock(mapblock, data)
+  local info = eco_grid.get_mapblock(mapblock) or {}
+  for key, value in pairs(data) do
+    info[key] = value
+  end
+  eco_grid.set_mapblock(mapblock, info)
+end
+
 function eco_grid.set_mapblock(mapblock, data)
   local key = getkey(mapblock)
   eco_grid.grid[key] = data

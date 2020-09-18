@@ -12,6 +12,11 @@ eco_grid.set_mapblock({ x=0, y=2, z=0 }, {
   here_be_dragons = true
 })
 
+-- merge data (add additional keys to storage)
+eco_grid.merge_mapblock({ x=0, y=2, z=0 }, {
+  something_else = 10
+})
+
 ```
 
 
