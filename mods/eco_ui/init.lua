@@ -1,20 +1,10 @@
 
-local money_hud = {}
-
-minetest.register_on_joinplayer(function(player)
-  money_hud[player:get_player_name()] = player:hud_add({
-    hud_elem_type = "text",
-    position = {
-      x = 0.5,
-      y = 0.5
-    },
-    text = ""
-  })
+minetest.register_on_joinplayer(function()
+  -- TODO: setu phud items here
 end)
 
-local function update_player(player)
-  local meta = player:get_meta()
-  player:hud_change(money_hud[player:get_player_name()], "text", meta:get_int("money"))
+local function update_player()
+  -- TODO: update hud items here
 end
 
 local function update()

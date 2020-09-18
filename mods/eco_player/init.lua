@@ -1,13 +1,6 @@
 
 minetest.register_on_joinplayer(function(player)
-  local meta = player:get_meta()
-  local eco_onboarding = meta:get_int("eco_onboarding")
-
-  if eco_onboarding == 0 then
-    -- give initial money to player
-    meta:set_int("money", 150000)
-  end
-
+  -- ensure that vertain inventory items are always available
   local inv = player:get_inventory()
   local main_list = inv:get_list("main")
 
