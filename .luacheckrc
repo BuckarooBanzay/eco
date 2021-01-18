@@ -1,12 +1,6 @@
 globals = {
 	"default",
 	"player_api",
-	"eco_api",
-	"eco_util",
-	"eco_serialize",
-	"eco_grid",
-	"eco_placement",
-	"eco_mapgen",
 	"circular_saw",
 	"stairsplus"
 }
