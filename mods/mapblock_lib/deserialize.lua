@@ -67,21 +67,50 @@ local function deserialize_part(min, max, data, metadata, replace)
 	end
 end
 
+local mapblock_cache = {}
+local manifest_cache = {}
+
 function mapblock_lib.deserialize(mapblock_pos, filename, options)
 	local min, max = mapblock_lib.get_mapblock_bounds_from_mapblock(mapblock_pos)
+	local cache_key = filename
 
-	local mapblock = mapblock_lib.read_mapblock(filename .. ".bin")
-	local manifest = mapblock_lib.read_manifest(filename .. ".manifest.json")
+	if options.transform and options.transform.rotate then
+		-- add rotation info to cache key if specified
+		cache_key = cache_key .. "/" .. options.transform.rotate.axis .. "/" .. options.transform.rotate.angle
+  end
+
+	-- true if the mapblock and metadata are read from cache
+	-- they are already transformed
+	local is_cached = false
+	local mapblock, manifest
+
+	if options.use_cache and mapblock_cache[cache_key] then
+		mapblock = mapblock_cache[cache_key]
+		manifest = manifest_cache[cache_key]
+		is_cached = true
+	else
+		mapblock = mapblock_lib.read_mapblock(filename .. ".bin")
+		manifest = mapblock_lib.read_manifest(filename .. ".manifest.json")
+	end
 
 	if not mapblock then
 		return false, "mapblock data not found"
 	end
 
-	-- localize node-ids
-	localize_nodeids(manifest.node_mapping, mapblock.node_ids)
+	if options.use_cache then
+		-- populate cache
+		mapblock_cache[cache_key] = mapblock
+		manifest_cache[cache_key] = manifest
+	end
 
-	-- apply transformations
-	if options.transform then
+	-- localize node-ids
+	if not mapblock.node_ids_localized then
+		localize_nodeids(manifest.node_mapping, mapblock.node_ids)
+		mapblock.node_ids_localized = true
+	end
+
+	-- apply transformation only on uncached data
+	if options.transform and not is_cached then
 		mapblock_lib.transform(options.transform, mapblock, manifest.metadata)
 	end
 
