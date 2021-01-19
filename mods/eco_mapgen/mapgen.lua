@@ -1,5 +1,3 @@
-local height_generator = eco_mapgen.height_generator()
-local landscape_generator = eco_mapgen.landscape_generator(height_generator)
 
 minetest.register_on_generated(function(minp, maxp)
 
@@ -14,8 +12,8 @@ minetest.register_on_generated(function(minp, maxp)
 	for y=min_mapblock.y,max_mapblock.y do
 
 		local mapblock_pos = { x=x, y=y, z=z }
-		local info = landscape_generator.get_info(mapblock_pos)
-		local height = height_generator.get_mapblock_height(mapblock_pos)
+		local info = eco_mapgen.get_info(mapblock_pos)
+		local height = eco_mapgen.get_mapblock_height(mapblock_pos)
 		local biome = eco_mapgen.get_biome(mapblock_pos, info, height)
 
 		eco_mapgen.place_mapblock(mapblock_pos, info, biome)
@@ -25,3 +23,18 @@ minetest.register_on_generated(function(minp, maxp)
 	end --z
 
 end)
+
+minetest.register_chatcommand("mapgen_info", {
+	func = function(name)
+		local player = minetest.get_player_by_name(name)
+		if not player then
+			return false, "player not found"
+		end
+
+		local pos = player:get_pos()
+		local mapblock_pos = mapblock_lib.get_mapblock(pos)
+		local info = eco_mapgen.get_info(mapblock_pos)
+
+		return true, dump(info)
+	end
+})
