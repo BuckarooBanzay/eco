@@ -1,15 +1,40 @@
-
-function eco_mapgen.get_info(mapblock)
-	local height = eco_mapgen.get_mapblock_height(mapblock)
-
-	if mapblock.y < height then
-		return { type = "underground" }
+local function get_slope_direction(hm)
+	if hm[-1][0] and not hm[1][0] and not hm[0][-1] and not hm[0][1] then
+		return "x-"
+	elseif not hm[-1][0] and hm[1][0] and not hm[0][-1] and not hm[0][1] then
+		return "x+"
+	elseif not hm[-1][0] and not hm[1][0] and hm[0][-1] and not hm[0][1] then
+		return "z-"
+	elseif not hm[-1][0] and not hm[1][0] and not hm[0][-1] and hm[0][1] then
+		return "z+"
 	end
+end
 
-	if mapblock.y > height then
-		return { type = "none" }
+local function get_slope_inner_direction(hm)
+	if hm[0][-1] and hm[-1][0] and not hm[0][1] and not hm[1][0] then
+		return "x-z-"
+	elseif not hm[0][-1] and hm[-1][0] and hm[0][1] and not hm[1][0] then
+		return "x-z+"
+	elseif not hm[0][-1] and not hm[-1][0] and hm[0][1] and hm[1][0] then
+		return "x+z+"
+	elseif hm[0][-1] and not hm[-1][0] and not hm[0][1] and hm[1][0] then
+		return "x+z-"
 	end
+end
 
+local function get_slope_outer_direction(hm)
+	if hm[-1][-1] and not hm[-1][1] and not hm[1][1] and not hm[1][-1] then
+		return "x-z-"
+	elseif not hm[-1][-1] and hm[-1][1] and not hm[1][1] and not hm[1][-1] then
+		return "x-z+"
+	elseif not hm[-1][-1] and not hm[-1][1] and hm[1][1] and not hm[1][-1] then
+		return "x+z+"
+	elseif not hm[-1][-1] and not hm[-1][1] and not hm[1][1] and hm[1][-1] then
+		return "x+z-"
+	end
+end
+
+local function get_height_map(mapblock, mapblock_height)
 	-- collect neighbor elevations and count
 	local hm = {}
 	local elevated_neighbor_count = 0
@@ -18,7 +43,7 @@ function eco_mapgen.get_info(mapblock)
 		for z=-1,1 do
 			local neighbor_height = eco_mapgen.get_mapblock_height({ x=mapblock.x+x, z=mapblock.z+z })
 
-			if neighbor_height > height then
+			if neighbor_height > mapblock_height then
 				-- neighbor is higher
 				hm[x][z] = true
 				elevated_neighbor_count = elevated_neighbor_count + 1
@@ -26,41 +51,81 @@ function eco_mapgen.get_info(mapblock)
 		end
 	end
 
-	if elevated_neighbor_count == 0 then
+	return hm, elevated_neighbor_count
+end
+
+local function get_info(mapblock)
+	local lower_mapblock = { x=mapblock.x, y=mapblock.y-1, z=mapblock.z }
+	local height = eco_mapgen.get_mapblock_height(mapblock)
+
+	if mapblock.y < height then
+		return { type = "underground" }
+	end
+
+	if mapblock.y == height then
+		-- collect neighbor elevations and count
+		local hm, elevated_neighbor_count = get_height_map(mapblock, height)
+
+		if elevated_neighbor_count == 0 then
+			return { type = "flat" }
+		end
+
+		-- straight slopes
+		local direction = get_slope_direction(hm)
+		if direction then
+			return { type = "slope_lower", direction = direction }
+		end
+
+		-- z- / x- / z+ / x+
+		direction = get_slope_inner_direction(hm)
+		if direction then
+			return { type = "slope_inner_lower", direction = direction }
+		end
+
+		direction = get_slope_outer_direction(hm)
+		if direction then
+			return { type = "slope_outer_lower", direction = direction }
+		end
+
+		-- no direction
 		return { type = "flat" }
 	end
 
-	-- straight slopes
-	if hm[-1][0] and not hm[1][0] and not hm[0][-1] and not hm[0][1] then
-		return { type = "slope", direction = "x-" }
-	elseif not hm[-1][0] and hm[1][0] and not hm[0][-1] and not hm[0][1] then
-		return { type = "slope", direction = "x+" }
-	elseif not hm[-1][0] and not hm[1][0] and hm[0][-1] and not hm[0][1] then
-		return { type = "slope", direction = "z-" }
-	elseif not hm[-1][0] and not hm[1][0] and not hm[0][-1] and hm[0][1] then
-		return { type = "slope", direction = "z+" }
+	if mapblock.y == (height + 1) then
+		-- check upper slopes
+
+		-- collect neighbor elevations and count
+		local hm = get_height_map(lower_mapblock, height)
+
+		-- straight slopes
+		local direction = get_slope_direction(hm)
+		if direction then
+			return { type = "slope_upper", direction = direction }
+		end
+
+		-- z- / x- / z+ / x+
+		direction = get_slope_inner_direction(hm)
+		if direction then
+			return { type = "slope_inner_upper", direction = direction }
+		end
+
+		direction = get_slope_outer_direction(hm)
+		if direction then
+			return { type = "slope_outer_upper", direction = direction }
+		end
 	end
 
-	-- z- / x- / z+ / x+
-	if hm[0][-1] and hm[-1][0] and not hm[0][1] and not hm[1][0] then
-		return { type = "slope_inner", direction = "x-z-" }
-	elseif not hm[0][-1] and hm[-1][0] and hm[0][1] and not hm[1][0] then
-		return { type = "slope_inner", direction = "x-z+" }
-	elseif not hm[0][-1] and not hm[-1][0] and hm[0][1] and hm[1][0] then
-		return { type = "slope_inner", direction = "x+z+" }
-	elseif hm[0][-1] and not hm[-1][0] and not hm[0][1] and hm[1][0] then
-		return { type = "slope_inner", direction = "x+z-" }
+	return { type = "none" }
+end
+
+local cache = {}
+
+-- cached access
+function eco_mapgen.get_info(mapblock_pos)
+	local key = minetest.pos_to_string(mapblock_pos)
+	if not cache[key] then
+		cache[key] = get_info(mapblock_pos)
 	end
 
-	if hm[-1][-1] and not hm[-1][1] and not hm[1][1] and not hm[1][-1] then
-		return { type = "slope_outer", direction = "x-z-" }
-	elseif not hm[-1][-1] and hm[-1][1] and not hm[1][1] and not hm[1][-1] then
-		return { type = "slope_outer", direction = "x-z+" }
-	elseif not hm[-1][-1] and not hm[-1][1] and hm[1][1] and not hm[1][-1] then
-		return { type = "slope_outer", direction = "x+z+" }
-	elseif not hm[-1][-1] and not hm[-1][1] and not hm[1][1] and hm[1][-1] then
-		return { type = "slope_outer", direction = "x+z-" }
-	end
-
-	return { type = "flat" }
+	return cache[key]
 end

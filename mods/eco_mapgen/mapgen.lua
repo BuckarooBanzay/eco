@@ -12,11 +12,7 @@ minetest.register_on_generated(function(minp, maxp)
 	for y=min_mapblock.y,max_mapblock.y do
 
 		local mapblock_pos = { x=x, y=y, z=z }
-		local info = eco_mapgen.get_info(mapblock_pos)
-		local height = eco_mapgen.get_mapblock_height(mapblock_pos)
-		local biome = eco_mapgen.get_biome(mapblock_pos, info, height)
-
-		eco_mapgen.place_mapblock(mapblock_pos, info, biome)
+		eco_mapgen.place_mapblock(mapblock_pos)
 
 	end --y
 	end --x

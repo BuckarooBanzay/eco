@@ -21,8 +21,10 @@ local function rotate_slope_inner(direction)
 	end
 end
 
-function eco_mapgen.place_mapblock(mapblock_pos, info, biome)
-	local upper_mapblock_pos = { x=mapblock_pos.x, y=mapblock_pos.y+1, z=mapblock_pos.z }
+function eco_mapgen.place_mapblock(mapblock_pos)
+	local info = eco_mapgen.get_info(mapblock_pos)
+	local height = eco_mapgen.get_mapblock_height(mapblock_pos)
+	local biome = eco_mapgen.get_biome(mapblock_pos, info, height)
 
 	-- add mapgen info (if available) to grid data
 	if info.type ~= "none" then
@@ -43,56 +45,57 @@ function eco_mapgen.place_mapblock(mapblock_pos, info, biome)
 		mapblock_lib.deserialize(mapblock_pos, biome.full, options)
 
 	elseif info.type == "flat" and biome.flat then
-		local options = {
+		mapblock_lib.deserialize(mapblock_pos, biome.flat, {
 			use_cache = true,
-		}
+		})
 
-		mapblock_lib.deserialize(mapblock_pos, biome.flat, options)
-
-	elseif info.type == "slope" then
-		local options = {
+	elseif info.type == "slope_lower" and biome.slope_lower then
+		mapblock_lib.deserialize(mapblock_pos, biome.slope_lower, {
 			use_cache = true,
 			transform = {
 				rotate = rotate_slope(info.direction)
 			}
-		}
+		})
 
-		if biome.slope_lower then
-			mapblock_lib.deserialize(mapblock_pos, biome.slope_lower, options)
-		end
-		if biome.slope_upper then
-			mapblock_lib.deserialize(upper_mapblock_pos, biome.slope_upper, options)
-		end
+	elseif info.type == "slope_upper" and biome.slope_upper then
+		mapblock_lib.deserialize(mapblock_pos, biome.slope_upper, {
+			use_cache = true,
+			transform = {
+				rotate = rotate_slope(info.direction)
+			}
+		})
 
-	elseif info.type == "slope_inner" then
-		local options = {
+	elseif info.type == "slope_inner_lower" and biome.slope_inner_lower then
+		mapblock_lib.deserialize(mapblock_pos, biome.slope_inner_lower, {
 			use_cache = true,
 			transform = {
 				rotate = rotate_slope_inner(info.direction)
 			}
-		}
+		})
 
-		if biome.slope_inner_lower then
-			mapblock_lib.deserialize(mapblock_pos, biome.slope_inner_lower, options)
-		end
-		if biome.slope_inner_upper then
-			mapblock_lib.deserialize(upper_mapblock_pos, biome.slope_inner_upper, options)
-		end
-
-	elseif info.type == "slope_outer" then
-		local options = {
+	elseif info.type == "slope_inner_upper" and biome.slope_inner_upper then
+		mapblock_lib.deserialize(mapblock_pos, biome.slope_inner_upper, {
 			use_cache = true,
 			transform = {
 				rotate = rotate_slope_inner(info.direction)
 			}
-		}
+		})
 
-		if biome.slope_outer_lower then
-			mapblock_lib.deserialize(mapblock_pos, biome.slope_outer_lower, options)
-		end
-		if biome.slope_outer_upper then
-			mapblock_lib.deserialize(upper_mapblock_pos, biome.slope_outer_upper, options)
-		end
+	elseif info.type == "slope_outer_lower" and biome.slope_outer_lower then
+		mapblock_lib.deserialize(mapblock_pos, biome.slope_outer_lower, {
+			use_cache = true,
+			transform = {
+				rotate = rotate_slope_inner(info.direction)
+			}
+		})
+
+	elseif info.type == "slope_outer_upper" and biome.slope_outer_upper then
+		mapblock_lib.deserialize(mapblock_pos, biome.slope_outer_upper, {
+			use_cache = true,
+			transform = {
+				rotate = rotate_slope_inner(info.direction)
+			}
+		})
 
 	--elseif info.type == "none" then
 		-- nothing here
