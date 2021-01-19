@@ -77,7 +77,15 @@ function mapblock_lib.deserialize(mapblock_pos, filename, options)
 		return false, "mapblock data not found"
 	end
 
+	-- localize node-ids
 	localize_nodeids(manifest.node_mapping, mapblock.node_ids)
+
+	-- apply transformations
+	if options.transform then
+		mapblock_lib.transform(options.transform, mapblock, manifest.metadata)
+	end
+
+	-- write to map
 	deserialize_part(min, max, mapblock, manifest.metadata, options.replace)
 
 	return true
