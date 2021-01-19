@@ -63,6 +63,7 @@ local function get_info(mapblock)
 	end
 
 	if mapblock.y == height then
+		-- check slopes on flat terrain
 		-- collect neighbor elevations and count
 		local hm, elevated_neighbor_count = get_height_map(mapblock, height)
 
@@ -92,7 +93,7 @@ local function get_info(mapblock)
 	end
 
 	if mapblock.y == (height + 1) then
-		-- check upper slopes
+		-- check upper slopes just one mapblock above the flat terrain
 
 		-- collect neighbor elevations and count
 		local hm = get_height_map(lower_mapblock, height)
