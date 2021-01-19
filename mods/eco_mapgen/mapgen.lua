@@ -23,7 +23,14 @@ local function place_mapblock(mapblock_pos, info)
 		schematic_prefix = schematic_dir .. "/water_"
 	end
 
-	if info.type == "flat" then
+	if info.type == "underground" then
+		local options = {
+			use_cache = true,
+		}
+
+		mapblock_lib.deserialize(mapblock_pos, schematic_dir .. "/stone_full", options)
+
+	elseif info.type == "flat" then
 		local options = {
 			use_cache = true,
 		}

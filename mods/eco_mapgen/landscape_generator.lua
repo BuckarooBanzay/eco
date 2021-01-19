@@ -4,7 +4,11 @@ function eco_mapgen.landscape_generator(height_generator)
 		get_info = function(mapblock)
 			local height = height_generator.get_mapblock_height(mapblock)
 
-			if mapblock.y ~= height then
+			if mapblock.y < height then
+				return { type = "underground" }
+			end
+
+			if mapblock.y > height then
 				return { type = "none" }
 			end
 
