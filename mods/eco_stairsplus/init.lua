@@ -10,6 +10,12 @@ stairsplus:register_all("eco_stairsplus", "dirt_with_grass", "default:dirt_with_
   tiles={"default_grass.png"},
 })
 
+stairsplus:register_all("eco_stairsplus", "dirt_with_snow", "default:dirt_with_snow", {
+  description="Dirt with snow",
+  groups={cracky=1, not_in_creative_inventory=1},
+  tiles={"default_snow.png"},
+})
+
 stairsplus:register_all("eco_stairsplus", "gravel", "default:gravel", {
   description="Gravel",
   groups={cracky=1, not_in_creative_inventory=1},

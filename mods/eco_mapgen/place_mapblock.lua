@@ -47,13 +47,17 @@ function eco_mapgen.place_mapblock(mapblock_pos)
 	elseif info.type == "flat" and biome.flat then
 		mapblock_lib.deserialize(mapblock_pos, biome.flat, {
 			use_cache = true,
+			transform = {
+				replace = biome.replace
+			}
 		})
 
 	elseif info.type == "slope_lower" and biome.slope_lower then
 		mapblock_lib.deserialize(mapblock_pos, biome.slope_lower, {
 			use_cache = true,
 			transform = {
-				rotate = rotate_slope(info.direction)
+				rotate = rotate_slope(info.direction),
+				replace = biome.replace
 			}
 		})
 
@@ -61,7 +65,8 @@ function eco_mapgen.place_mapblock(mapblock_pos)
 		mapblock_lib.deserialize(mapblock_pos, biome.slope_upper, {
 			use_cache = true,
 			transform = {
-				rotate = rotate_slope(info.direction)
+				rotate = rotate_slope(info.direction),
+				replace = biome.replace
 			}
 		})
 
@@ -69,7 +74,8 @@ function eco_mapgen.place_mapblock(mapblock_pos)
 		mapblock_lib.deserialize(mapblock_pos, biome.slope_inner_lower, {
 			use_cache = true,
 			transform = {
-				rotate = rotate_slope_inner(info.direction)
+				rotate = rotate_slope_inner(info.direction),
+				replace = biome.replace
 			}
 		})
 
@@ -77,7 +83,8 @@ function eco_mapgen.place_mapblock(mapblock_pos)
 		mapblock_lib.deserialize(mapblock_pos, biome.slope_inner_upper, {
 			use_cache = true,
 			transform = {
-				rotate = rotate_slope_inner(info.direction)
+				rotate = rotate_slope_inner(info.direction),
+				replace = biome.replace
 			}
 		})
 
@@ -85,7 +92,8 @@ function eco_mapgen.place_mapblock(mapblock_pos)
 		mapblock_lib.deserialize(mapblock_pos, biome.slope_outer_lower, {
 			use_cache = true,
 			transform = {
-				rotate = rotate_slope_inner(info.direction)
+				rotate = rotate_slope_inner(info.direction),
+				replace = biome.replace
 			}
 		})
 
@@ -93,7 +101,8 @@ function eco_mapgen.place_mapblock(mapblock_pos)
 		mapblock_lib.deserialize(mapblock_pos, biome.slope_outer_upper, {
 			use_cache = true,
 			transform = {
-				rotate = rotate_slope_inner(info.direction)
+				rotate = rotate_slope_inner(info.direction),
+				replace = biome.replace
 			}
 		})
 

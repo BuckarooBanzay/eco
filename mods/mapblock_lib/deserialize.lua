@@ -79,6 +79,12 @@ function mapblock_lib.deserialize(mapblock_pos, filename, options)
 		cache_key = cache_key .. "/" .. options.transform.rotate.axis .. "/" .. options.transform.rotate.angle
   end
 
+	if options.transform and options.transform.replace then
+		-- disable caching when replacements are active
+		-- TODO: implement replacement key for cache
+		options.use_cache = false
+	end
+
 	-- true if the mapblock and metadata are read from cache
 	-- they are already transformed
 	local is_cached = false
