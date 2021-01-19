@@ -1,111 +1,6 @@
 local height_generator = eco_mapgen.height_generator()
 local landscape_generator = eco_mapgen.landscape_generator(height_generator)
 
-local MP = minetest.get_modpath("eco_mapgen")
-local schematic_dir = MP .. "/schematics"
-
-local function place_mapblock(mapblock_pos, info)
-	local upper_mapblock_pos = { x=mapblock_pos.x, y=mapblock_pos.y+1, z=mapblock_pos.z }
-
-	-- add mapgen info (if available) to grid data
-	if info.type ~= "none" then
-		-- only save if data available
-		mapblock_lib.set_mapblock_data(mapblock_pos, {
-			mapgen = {
-				terrain_type = info.type,
-				terrain_direction = info.direction
-			}
-		})
-	end
-
-	local schematic_prefix = schematic_dir .. "/grass_"
-	if mapblock_pos.y <= height_generator.get_water_height() then
-		schematic_prefix = schematic_dir .. "/water_"
-	end
-
-	if info.type == "underground" then
-		local options = {
-			use_cache = true,
-		}
-
-		mapblock_lib.deserialize(mapblock_pos, schematic_dir .. "/stone_full", options)
-
-	elseif info.type == "flat" then
-		local options = {
-			use_cache = true,
-		}
-
-		mapblock_lib.deserialize(mapblock_pos, schematic_prefix .. "flat", options)
-
-	elseif info.type == "slope" then
-		-- slope looks into z+ direction
-		local rotate = nil
-		if info.direction == "z-" then
-			rotate = { axis = "y", angle = 180 }
-		elseif info.direction == "x+" then
-			rotate = { axis = "y", angle = 90 }
-		elseif info.direction == "x-" then
-			rotate = { axis = "y", angle = 270 }
-		end
-
-		local options = {
-			use_cache = true,
-			transform = {
-				rotate = rotate
-			}
-		}
-
-		mapblock_lib.deserialize(mapblock_pos, schematic_prefix .. "slope_lower", options)
-		mapblock_lib.deserialize(upper_mapblock_pos, schematic_prefix .. "slope_upper", options)
-
-	elseif info.type == "slope_inner" then
-		-- slope looks into x-z+ direction
-		local rotate = nil
-		if info.direction == "x-z-" then
-			rotate = { axis = "y", angle = 270 }
-		elseif info.direction == "x+z-" then
-			rotate = { axis = "y", angle = 180 }
-		elseif info.direction == "x+z+" then
-			rotate = { axis = "y", angle = 90 }
-		end
-
-		local options = {
-			use_cache = true,
-			transform = {
-				rotate = rotate
-			}
-		}
-
-		mapblock_lib.deserialize(mapblock_pos, schematic_prefix .. "slope_inner_corner_lower", options)
-		mapblock_lib.deserialize(upper_mapblock_pos, schematic_prefix .. "slope_inner_corner_upper", options)
-
-	elseif info.type == "slope_outer" then
-		-- slope looks into x-z+ direction
-		local rotate = nil
-		if info.direction == "x-z-" then
-			rotate = { axis = "y", angle = 270 }
-		elseif info.direction == "x+z-" then
-			rotate = { axis = "y", angle = 180 }
-		elseif info.direction == "x+z+" then
-			rotate = { axis = "y", angle = 90 }
-		end
-
-		local options = {
-			use_cache = true,
-			transform = {
-				rotate = rotate
-			}
-		}
-
-		mapblock_lib.deserialize(mapblock_pos, schematic_prefix .. "slope_outer_corner_lower", options)
-		mapblock_lib.deserialize(upper_mapblock_pos, schematic_prefix .. "slope_outer_corner_upper", options)
-
-	--elseif info.type == "none" then
-		-- nothing here
-	end
-
-end
-
 minetest.register_on_generated(function(minp, maxp)
 
 	-- 5x5x5 mapblocks per chunk
@@ -120,7 +15,10 @@ minetest.register_on_generated(function(minp, maxp)
 
 		local mapblock_pos = { x=x, y=y, z=z }
 		local info = landscape_generator.get_info(mapblock_pos)
-		place_mapblock(mapblock_pos, info)
+		local height = height_generator.get_mapblock_height(mapblock_pos)
+		local biome = eco_mapgen.get_biome(mapblock_pos, info, height)
+
+		eco_mapgen.place_mapblock(mapblock_pos, info, biome)
 
 	end --y
 	end --x
