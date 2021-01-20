@@ -5,5 +5,5 @@ eco_mapgen.register_biome("underground", {
 		return info.type == "underground"
 	end,
 
-	full = MP .. "/schematics/stone_full"
+	full = MP .. "/schematics/base/stone_full"
 })
