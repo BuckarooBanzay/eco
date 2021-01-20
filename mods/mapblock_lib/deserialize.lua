@@ -42,19 +42,26 @@ local function deserialize_part(min, max, data, metadata, options)
 	local param2 = manip:get_param2_data()
 
 	-- overwrite flag
-	local replace = options.mode == "replace"
-
-	local j = 1
-	for z=min.z,max.z do
-		for y=min.y,max.y do
-			for x=min.x,max.x do
-				local i = area:index(x,y,z)
-				if replace or node_data[i] == air_content_id then
-					node_data[i] = data.node_ids[j]
-					param1[i] = data.param1[j]
-					param2[i] = data.param2[j]
+	local replace = options.mode ~= "add"
+	if replace then
+		-- replace node data 1:1
+		node_data = data.node_ids
+		param1 = data.param1
+		param2 = data.param2
+	else
+		-- overwrite with air check one by one
+		local j = 1
+		for z=min.z,max.z do
+			for y=min.y,max.y do
+				for x=min.x,max.x do
+					local i = area:index(x,y,z)
+					if node_data[i] == air_content_id then
+						node_data[i] = data.node_ids[j]
+						param1[i] = data.param1[j]
+						param2[i] = data.param2[j]
+					end
+					j = j + 1
 				end
-				j = j + 1
 			end
 		end
 	end
@@ -114,7 +121,7 @@ function mapblock_lib.deserialize(mapblock_pos, filename, options)
 		return false, "mapblock data not found"
 	end
 
-	if options.use_cache then
+	if options.use_cache and not is_cached then
 		-- populate cache
 		mapblock_cache[cache_key] = mapblock
 		manifest_cache[cache_key] = manifest

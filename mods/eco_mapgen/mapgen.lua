@@ -1,6 +1,6 @@
 
 minetest.register_on_generated(function(minp, maxp)
-
+	local start = os.clock()
 	-- 5x5x5 mapblocks per chunk
 	assert((maxp.x - minp.x + 1) == 80)
 
@@ -17,6 +17,9 @@ minetest.register_on_generated(function(minp, maxp)
 	end --y
 	end --x
 	end --z
+
+	local diff = os.clock() - start
+	print("[eco_mapgen] chunk@minp " .. minetest.pos_to_string(minp) .. " took " .. diff .. " seconds")
 
 end)
 
