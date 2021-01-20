@@ -1,4 +1,9 @@
 
+## Chatcommands
+
+* **/mapblock_show**
+* **/mapblock_save [name]**
+* **/mapblock_load [name]**
 
 ## Api
 
@@ -37,6 +42,7 @@ mapblock_lib.get_mapblock(pos)
 mapblock_lib.get_mapblock_bounds_from_mapblock(block_pos)
 mapblock_lib.get_mapblock_bounds(pos)
 mapblock_lib.get_mapblock_center(pos)
+mapblock_lib.sort_pos(pos1, pos2)
 
 -- display
 mapblock_lib.display_mapblock_at_pos(pos, text, timeout)
