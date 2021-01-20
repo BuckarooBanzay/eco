@@ -20,3 +20,22 @@ eco_mapgen.register_decoration({
 		end
 	end
 })
+
+eco_mapgen.register_decoration({
+	render = function(mapblock_pos, info, _, biome)
+		if biome and biome.name == "snow" and info.type == "flat" then
+
+			local path = MP .. "/schematics/decorations/grass_with_pinetree_" .. math.random(4)
+			mapblock_lib.deserialize(mapblock_pos, path, {
+				use_cache = true,
+				mode = "add",
+				transform = {
+					rotate = {
+						axis = "y",
+						angle = angles[math.random(#angles)]
+					}
+				}
+			})
+		end
+	end
+})
