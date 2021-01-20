@@ -81,6 +81,7 @@ function mapblock_lib.deserialize(mapblock_pos, filename, options)
 	local min, max = mapblock_lib.get_mapblock_bounds_from_mapblock(mapblock_pos)
 	local cache_key = filename
 
+	options = options or {}
 	options.transform = options.transform or {}
 
 	if options.transform.rotate then

@@ -53,3 +53,53 @@ minetest.register_chatcommand("building_save", {
 		return true, "started saving as " .. filename
 	end
 })
+
+minetest.register_chatcommand("building_allocate", {
+	privs = { mapblock_lib = true },
+	func = function(name, params)
+		local player = minetest.get_player_by_name(name)
+		if not player then
+			return false, "player not found"
+		end
+
+		local pos1 = building_lib.mapblock_positions_1[name]
+		if not pos1 then
+			return false, "set /building_pos1 first"
+		end
+
+		if not params or params == "" then
+			return false, "specify the schema name"
+		end
+
+		local pos = player:get_pos()
+		local mapblock_pos = mapblock_lib.get_mapblock(pos)
+
+		building_lib.allocate(mapblock_pos, params)
+		return true
+	end
+})
+
+minetest.register_chatcommand("building_load", {
+	privs = { mapblock_lib = true },
+	func = function(name, params)
+		local player = minetest.get_player_by_name(name)
+		if not player then
+			return false, "player not found"
+		end
+
+		local pos1 = building_lib.mapblock_positions_1[name]
+		if not pos1 then
+			return false, "set /building_pos1 first"
+		end
+
+		if not params or params == "" then
+			return false, "specify the schema name"
+		end
+
+		local pos = player:get_pos()
+		local mapblock_pos = mapblock_lib.get_mapblock(pos)
+
+		local filename = building_lib.schema_path .. "/" .. params
+		return building_lib.load(mapblock_pos, filename)
+	end
+})

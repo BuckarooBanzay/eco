@@ -19,6 +19,13 @@ function building_lib.save(mapblock_pos1, mapblock_pos2, path, playername)
 	-- sort positions
 	mapblock_pos1, mapblock_pos2 = mapblock_lib.sort_pos(mapblock_pos1, mapblock_pos2)
 
+	local manifest = {
+		extends = vector.subtract(mapblock_pos2, mapblock_pos1),
+		version = 1
+	}
+
+	building_lib.write_manifest(manifest, path)
+
 	local ctx = {
 		playername = playername,
 		pos1 = mapblock_pos1,

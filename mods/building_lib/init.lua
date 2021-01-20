@@ -10,6 +10,9 @@ minetest.mkdir(mapblock_lib.schema_path)
 
 local MP = minetest.get_modpath("building_lib")
 
+dofile(MP .. "/manifest.lua")
 dofile(MP .. "/iterator_next.lua")
+dofile(MP .. "/load.lua")
 dofile(MP .. "/save.lua")
+dofile(MP .. "/allocate.lua")
 dofile(MP .. "/chatcommands.lua")
