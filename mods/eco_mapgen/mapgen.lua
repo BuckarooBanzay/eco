@@ -12,7 +12,7 @@ minetest.register_on_generated(function(minp, maxp)
 	for y=min_mapblock.y,max_mapblock.y do
 
 		local mapblock_pos = { x=x, y=y, z=z }
-		eco_mapgen.place_mapblock(mapblock_pos)
+		eco_mapgen.render_mapblock(mapblock_pos)
 
 	end --y
 	end --x

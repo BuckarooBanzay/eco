@@ -21,7 +21,7 @@ local function rotate_slope_inner(direction)
 	end
 end
 
-function eco_mapgen.place_mapblock(mapblock_pos)
+function eco_mapgen.render_mapblock(mapblock_pos)
 	local info = eco_mapgen.get_info(mapblock_pos)
 	local height = eco_mapgen.get_mapblock_height(mapblock_pos)
 	local biome = eco_mapgen.get_biome(mapblock_pos, info, height)
@@ -108,4 +108,5 @@ function eco_mapgen.place_mapblock(mapblock_pos)
 		-- nothing here
 	end
 
+	eco_mapgen.render_decorations(mapblock_pos, info, height, biome)
 end
