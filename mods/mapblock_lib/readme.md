@@ -14,13 +14,17 @@ options = {
 		-- rotate the mapblock around the given axis with the angle (90, 180, 270)
 		rotate = {
 			angle = 90,
-			axis = "y"
+			axis = "y",
+			-- disables param2 orientation
+			disable_orientation = false
 		},
 		-- replace certain nodes with others
 		replace = {
 			["default:dirt"] = "default:mese"
 		}
 	}
+	-- placement mode "replace": replace the whole mapblock, "add": replace only air nodes
+	mode = "replace"
 }
 
 -- mapblock data storage

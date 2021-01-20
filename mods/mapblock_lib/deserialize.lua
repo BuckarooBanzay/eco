@@ -32,7 +32,7 @@ local function localize_nodeids(node_mapping, node_ids)
 	end
 end
 
-local function deserialize_part(min, max, data, metadata, replace)
+local function deserialize_part(min, max, data, metadata, options)
 	local manip = minetest.get_voxel_manip()
 	local e1, e2 = manip:read_from_map(min, max)
 	local area = VoxelArea:new({MinEdge=e1, MaxEdge=e2})
@@ -40,6 +40,9 @@ local function deserialize_part(min, max, data, metadata, replace)
 	local node_data = manip:get_data()
 	local param1 = manip:get_light_data()
 	local param2 = manip:get_param2_data()
+
+	-- overwrite flag
+	local replace = options.mode == "replace"
 
 	local j = 1
 	for z=min.z,max.z do
@@ -78,12 +81,14 @@ function mapblock_lib.deserialize(mapblock_pos, filename, options)
 	local min, max = mapblock_lib.get_mapblock_bounds_from_mapblock(mapblock_pos)
 	local cache_key = filename
 
-	if options.transform and options.transform.rotate then
+	options.transform = options.transform or {}
+
+	if options.transform.rotate then
 		-- add rotation info to cache key if specified
 		cache_key = cache_key .. "/" .. options.transform.rotate.axis .. "/" .. options.transform.rotate.angle
   end
 
-	if options.transform and options.transform.replace then
+	if options.transform.replace then
 		-- add nodeids to cache-key
 		for k, v in pairs(options.transform.replace) do
 			cache_key = cache_key .. "/" .. get_nodeid(k) .. "=" .. get_nodeid(v)
@@ -121,12 +126,12 @@ function mapblock_lib.deserialize(mapblock_pos, filename, options)
 	end
 
 	-- apply transformation only on uncached data
-	if options.transform and not is_cached then
+	if not is_cached then
 		mapblock_lib.transform(options.transform, mapblock, manifest.metadata)
 	end
 
 	-- write to map
-	deserialize_part(min, max, mapblock, manifest.metadata, options.replace)
+	deserialize_part(min, max, mapblock, manifest.metadata, options)
 
 	return true
 end

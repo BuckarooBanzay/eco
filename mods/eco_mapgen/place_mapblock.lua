@@ -38,11 +38,9 @@ function eco_mapgen.place_mapblock(mapblock_pos)
 	end
 
 	if info.type == "underground" and biome.full then
-		local options = {
+		mapblock_lib.deserialize(mapblock_pos, biome.full, {
 			use_cache = true,
-		}
-
-		mapblock_lib.deserialize(mapblock_pos, biome.full, options)
+		})
 
 	elseif info.type == "flat" and biome.flat then
 		mapblock_lib.deserialize(mapblock_pos, biome.flat, {

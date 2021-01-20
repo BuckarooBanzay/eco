@@ -11,16 +11,16 @@ local function get_axis_others(axis)
 end
 
 
-function mapblock_lib.transform(options, mapblock, metadata)
+function mapblock_lib.transform(transform, mapblock, metadata)
 
-	if options.replace then
-		mapblock_lib.replace(options.replace, mapblock)
+	if transform.replace then
+		mapblock_lib.replace(transform.replace, mapblock)
 	end
 
-	if options.rotate then
-		local axis = options.rotate.axis
-		local angle = options.rotate.angle
-		local disable_orientation = options.rotate.disable_orientation
+	if transform.rotate then
+		local axis = transform.rotate.axis
+		local angle = transform.rotate.angle
+		local disable_orientation = transform.rotate.disable_orientation
 
 		local other1, other2 = get_axis_others(axis)
 
