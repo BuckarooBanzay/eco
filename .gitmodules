@@ -4,3 +4,9 @@
 [submodule "mods/default"]
 	path = mods/default
 	url = https://github.com/minetest-game/default.git
+[submodule "mods/player_api"]
+	path = mods/player_api
+	url = https://github.com/minetest-game/player_api.git
+[submodule "mods/flowers"]
+	path = mods/flowers
+	url = https://github.com/minetest-game/flowers.git
