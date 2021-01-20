@@ -3,6 +3,23 @@ local air_content_id = minetest.get_content_id("air")
 -- local nodename->id cache
 local local_nodename_to_id_mapping = {} -- name -> id
 
+local function get_nodeid(node_name)
+	local local_node_id = local_nodename_to_id_mapping[node_name]
+	if not local_node_id then
+		if minetest.registered_nodes[node_name] then
+			-- node is locally available
+			local_node_id = minetest.get_content_id(node_name)
+		else
+			-- node is not available here
+			local_node_id = air_content_id
+		end
+		local_nodename_to_id_mapping[node_name] = local_node_id
+	end
+
+	return local_node_id
+end
+
+-- map foreign node-ids to local node-ids
 local function localize_nodeids(node_mapping, node_ids)
 	local foreign_nodeid_to_name_mapping = {} -- id -> name
 	for k, v in pairs(node_mapping) do
@@ -11,20 +28,7 @@ local function localize_nodeids(node_mapping, node_ids)
 
 	for i, node_id in ipairs(node_ids) do
 		local node_name = foreign_nodeid_to_name_mapping[node_id]
-		local local_node_id = local_nodename_to_id_mapping[node_name]
-		if not local_node_id then
-			if minetest.registered_nodes[node_name] then
-				-- node is locally available
-				local_node_id = minetest.get_content_id(node_name)
-			else
-				-- node is not available here
-				local_node_id = air_content_id
-			end
-			local_nodename_to_id_mapping[node_name] = local_node_id
-
-		end
-
-		node_ids[i] = local_node_id
+		node_ids[i] = get_nodeid(node_name)
 	end
 end
 
@@ -80,9 +84,10 @@ function mapblock_lib.deserialize(mapblock_pos, filename, options)
   end
 
 	if options.transform and options.transform.replace then
-		-- disable caching when replacements are active
-		-- TODO: implement replacement key for cache
-		options.use_cache = false
+		-- add nodeids to cache-key
+		for k, v in pairs(options.transform.replace) do
+			cache_key = cache_key .. "/" .. get_nodeid(k) .. "=" .. get_nodeid(v)
+		end
 	end
 
 	-- true if the mapblock and metadata are read from cache
