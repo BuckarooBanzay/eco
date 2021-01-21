@@ -15,6 +15,7 @@ mapblock_lib.deserialize(mapblock_pos, filename, options)
 options = {
 	-- caches the on-disk file, useful for repetitive mapgen events
 	use_cache = false,
+	-- various transformation to apply to the loaded mapblock
 	transform = {
 		-- rotate the mapblock around the given axis with the angle (90, 180, 270)
 		rotate = {
