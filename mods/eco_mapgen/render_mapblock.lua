@@ -26,18 +26,13 @@ function eco_mapgen.render_mapblock(mapblock_pos)
 	local height = eco_mapgen.get_mapblock_height(mapblock_pos)
 	local biome = eco_mapgen.get_biome(mapblock_pos, info, height)
 
-	--[[
 	-- add mapgen info (if available) to grid data
 	if info.type ~= "none" then
 		-- only save if data available
 		mapblock_lib.set_mapblock_data(mapblock_pos, {
-			mapgen = {
-				terrain_type = info.type,
-				terrain_direction = info.direction
-			}
+			mapgen_info = info
 		})
 	end
-	]]--
 
 	if info.type == "underground" and biome.full then
 		mapblock_lib.deserialize(mapblock_pos, biome.full, {

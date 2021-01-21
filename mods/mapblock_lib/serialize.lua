@@ -83,7 +83,8 @@ function mapblock_lib.serialize(block_pos, filename)
 
 	local manifest = {
 		node_mapping = node_mapping,
-		metadata = data.metadata
+		metadata = data.metadata,
+		version = 2
 	}
 
 	mapblock_lib.write_manifest(manifest, filename .. ".manifest.json")
