@@ -10,3 +10,6 @@
 [submodule "mods/flowers"]
 	path = mods/flowers
 	url = https://github.com/minetest-game/flowers.git
+[submodule "mods/mapblock_lib"]
+	path = mods/mapblock_lib
+	url = https://github.com/BuckarooBanzay/mapblock_lib.git
