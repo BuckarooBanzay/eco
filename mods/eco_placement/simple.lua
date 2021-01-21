@@ -3,7 +3,7 @@
 -- simple mapblock schematic placement
 function eco_placement.place_simple(def)
 	return {
-		on_use = eco_placement.on_use_preview(def.description),
+		on_use = eco_placement.on_use_preview(def),
 
 		on_secondary_use = function(itemstack, player)
 			-- build

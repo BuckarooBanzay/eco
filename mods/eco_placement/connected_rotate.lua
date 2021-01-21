@@ -161,7 +161,7 @@ end
 -- place a connected and rotated schematic
 function eco_placement.place_connected_rotate(def)
 	return {
-		on_use = eco_placement.on_use_preview(def.description),
+		on_use = eco_placement.on_use_preview(def),
 		on_secondary_use = function(itemstack, player)
 			-- build
 			local mapblock_pos = eco_placement.get_pointed_mapblock_pos(player)

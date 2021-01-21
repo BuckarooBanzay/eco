@@ -18,14 +18,19 @@ function eco_placement.get_pointed_mapblock_pos(player)
 end
 
 -- preview mapblock on_use
-function eco_placement.on_use_preview(description)
+function eco_placement.on_use_preview(def)
 	return function(_, player)
 		-- preview
 		local mapblock_pos = eco_placement.get_pointed_mapblock_pos(player)
-		if mapblock_pos then
-			mapblock_lib.display_mapblock(mapblock_pos, description, 2)
-		else
+		if not mapblock_pos then
 			minetest.chat_send_player(player:get_player_name(), "Too far away")
+		end
+
+		local can_build = eco_placement.can_build(mapblock_pos, def.eco)
+		if can_build then
+			mapblock_lib.display_mapblock(mapblock_pos, def.description, 2)
+		else
+			minetest.chat_send_player(player:get_player_name(), "Underground not suitable")
 		end
 	end
 end
