@@ -21,6 +21,16 @@ function eco_placement.place_simple(def)
 				-- write data back
 				mapblock_lib.set_mapblock_data(mapblock_pos, mapblock_data)
 
+				if def.eco.is_support then
+					-- mark upper mapblock as "flat"
+					local mapblock_pos_upper = { x=mapblock_pos.x, y=mapblock_pos.y+1, z=mapblock_pos.z }
+					mapblock_lib.set_mapblock_data(mapblock_pos_upper, {
+						mapgen_info = {
+							type = "flat"
+						}
+					})
+				end
+
 				itemstack:take_item()
 				return itemstack
 			else
