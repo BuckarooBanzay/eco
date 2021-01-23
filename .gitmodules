@@ -13,3 +13,6 @@
 [submodule "mods/mapblock_lib"]
 	path = mods/mapblock_lib
 	url = https://github.com/BuckarooBanzay/mapblock_lib.git
+[submodule "mods/farming"]
+	path = mods/farming
+	url = https://github.com/minetest-mirrors/farming.git
