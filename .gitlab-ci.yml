@@ -1,0 +1,17 @@
+image: registry.rudin.io/ci/deploy-runner
+
+variables:
+ GIT_SUBMODULE_STRATEGY: recursive
+
+stages:
+  - lint
+  - test
+
+interplanetary:
+ stage: lint
+ script:
+  - cd mods/eco_buildings && luacheck .
+  - cd mods/eco_mapgen && luacheck .
+  - cd mods/eco_placement && luacheck .
+  - cd mods/eco_stairsplus && luacheck .
+  - cd mods/building_lib && luacheck .
