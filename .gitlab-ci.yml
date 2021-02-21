@@ -7,7 +7,7 @@ stages:
   - lint
   - test
 
-interplanetary:
+luacheck:
  stage: lint
  script:
   - cd mods/eco_buildings && luacheck .
