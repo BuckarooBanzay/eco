@@ -6,6 +6,10 @@ minetest.register_craftitem("eco_buildings:timber_plantation", {
 	eco = {
 		place_on = { "flat" },
 		mode = "simple",
-		schematic = MP .. "/schematics/timber_plantation"
+		schematic = MP .. "/schematics/timber_plantation",
+		on_step = function(mapblock_pos)
+			print("eco_buildings:timber_plantation on_step(" .. minetest.pos_to_string(mapblock_pos) .. ")")
+		end,
+		on_step_interval = 5
 	}
 })

@@ -14,4 +14,5 @@ luacheck:
   - cd ../eco_mapgen && luacheck .
   - cd ../eco_placement && luacheck .
   - cd ../eco_stairsplus && luacheck .
+  - cd ../eco_activity && luacheck .
   - cd ../builtin_disable && luacheck .
