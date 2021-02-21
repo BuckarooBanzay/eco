@@ -17,6 +17,10 @@ eco_mapgen.register_decoration({
 					}
 				}
 			})
+			local mapblock_data = mapblock_lib.get_mapblock_data(mapblock_pos)
+			mapblock_data.resources = mapblock_data.resources or {}
+			mapblock_data.resources.trees = 1
+			mapblock_lib.set_mapblock_data(mapblock_pos, mapblock_data)
 		end
 	end
 })
@@ -36,6 +40,10 @@ eco_mapgen.register_decoration({
 					}
 				}
 			})
+			local mapblock_data = mapblock_lib.get_mapblock_data(mapblock_pos)
+			mapblock_data.resources = mapblock_data.resources or {}
+			mapblock_data.resources.trees = 1
+			mapblock_lib.set_mapblock_data(mapblock_pos, mapblock_data)
 		end
 	end
 })
