@@ -10,8 +10,9 @@ stages:
 luacheck:
  stage: lint
  script:
-  - cd mods/eco_buildings && luacheck .
-  - cd mods/eco_mapgen && luacheck .
-  - cd mods/eco_placement && luacheck .
-  - cd mods/eco_stairsplus && luacheck .
-  - cd mods/building_lib && luacheck .
+  - cd mods
+  - cd ../eco_buildings && luacheck .
+  - cd ../eco_mapgen && luacheck .
+  - cd ../eco_placement && luacheck .
+  - cd ../eco_stairsplus && luacheck .
+  - cd ../building_lib && luacheck .
