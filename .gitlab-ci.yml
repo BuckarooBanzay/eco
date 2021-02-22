@@ -16,3 +16,4 @@ luacheck:
   - cd ../eco_stairsplus && luacheck .
   - cd ../eco_activity && luacheck .
   - cd ../builtin_disable && luacheck .
+  - cd ../building_lib && luacheck .

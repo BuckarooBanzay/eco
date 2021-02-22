@@ -1,5 +1,5 @@
 globals = {
-	"eco_buildings"
+	"building_lib"
 }
 
 read_globals = {
@@ -8,12 +8,11 @@ read_globals = {
 	table = {fields = {"copy", "getn"}},
 
 	-- Minetest
-	"minetest",
 	"vector", "ItemStack",
 	"dump", "dump2",
 	"VoxelArea",
+	"minetest",
 
 	-- mods
-	"mapblock_lib",
-	"building_lib"
+	"mapblock_lib"
 }
