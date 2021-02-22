@@ -5,6 +5,9 @@
 local success, message = building_lib.do_build(mapblock_pos, building_def)
 local success, message = building_lib.can_build(mapblock_pos, building_def)
 
+local size = building_lib.get_size(building_def)
+-- single mapblock size: { x=0, y=0, z=0 }
+
 building_lib.register({
 	name = "buildings:my_building",
 	placement = "simple",
