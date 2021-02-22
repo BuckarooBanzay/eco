@@ -7,7 +7,8 @@ building_lib = {
 }
 
 local MP = minetest.get_modpath("building_lib")
-dofile(MP .. "/util.lua")
 dofile(MP .. "/register.lua")
 dofile(MP .. "/placements/simple.lua")
-dofile(MP .. "/place_override.lua")
+dofile(MP .. "/placements/connected.lua")
+dofile(MP .. "/can_build.lua")
+dofile(MP .. "/do_build.lua")

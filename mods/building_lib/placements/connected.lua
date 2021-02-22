@@ -1,11 +1,10 @@
 
 
-
-
 local function is_connected(mapblock_pos, name)
 	local mapblock_data = mapblock_lib.get_mapblock_data(mapblock_pos)
 	return mapblock_data and mapblock_data.building and mapblock_data.building.name == name
 end
+
 
 local function place_street(name, mapblock_pos, schematics)
 	local mapblock_pos_upper = { x=mapblock_pos.x, y=mapblock_pos.y+1, z=mapblock_pos.z }
@@ -160,21 +159,17 @@ local function update_neighbor_streets(name, mapblock_pos, schematics)
 end
 
 
--- place a connected and rotated schematic
-function eco_placement.place_connected_rotate(def)
-	return {
-		on_use = eco_placement.on_use_preview(def),
-		on_secondary_use = function(itemstack, player)
-			-- build
-			local mapblock_pos = eco_placement.get_pointed_mapblock_pos(player)
-			if mapblock_pos then
-				place_street(def.name, mapblock_pos, def.eco.schematics)
-				update_neighbor_streets(def.name, mapblock_pos, def.eco.schematics)
-				itemstack:take_item()
-				return itemstack
-			else
-				minetest.chat_send_player(player:get_player_name(), "Too far away")
-			end
+building_lib.register_placement({
+	name = "connected",
+	check = function(mapblock_pos)
+		local mapblock_data = mapblock_lib.get_mapblock_data(mapblock_pos)
+		if mapblock_data and mapblock_data.building and mapblock_data.building.name then
+			return false, "already occupied"
 		end
-	}
-end
+		return true
+	end,
+	place = function(mapblock_pos, building_def)
+		place_street(building_def.name, mapblock_pos, building_def.schematics)
+		update_neighbor_streets(building_def.name, mapblock_pos, building_def.schematics)
+	end
+})

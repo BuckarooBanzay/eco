@@ -1,27 +1,44 @@
--- go over all items and register eco functions if the definition is found
+
+local function show_preview(player, def, building_def)
+	-- preview
+	local mapblock_pos = eco_placement.get_pointed_mapblock_pos(player)
+	if not mapblock_pos then
+		minetest.chat_send_player(player:get_player_name(), "Too far away")
+		return
+	end
+
+	local success, message = building_lib.can_build(mapblock_pos, building_def)
+	if not success then
+		minetest.chat_send_player(player:get_player_name(), message or "can't build here!")
+		return
+	end
+
+	mapblock_lib.display_mapblock(mapblock_pos, def.description, 2)
+end
+
+
+
 minetest.register_on_mods_loaded(function()
 	for name, def in pairs(minetest.registered_items) do
 		if def.eco then
-			if def.eco.mode == "simple" then
-				minetest.override_item(name, eco_placement.place_simple(def))
-			elseif def.eco.mode == "connected_rotate" then
-				minetest.override_item(name, eco_placement.place_connected_rotate(def))
-			end
+			assert(def.eco.place_building, "eco.place_building not found in " .. name)
+
+			local building_def = building_lib.buildings[def.eco.place_building]
+			assert(building_def, "place_building not found for " .. def.eco.place_building)
+			assert(building_lib.placements[building_def.placement], "placement not found for " .. building_def.placement)
+
+			minetest.override_item(name, {
+				on_use = function(_, player)
+					show_preview(player, def, building_def)
+				end,
+				on_secondary_use = function(itemstack, player)
+					local mapblock_pos = eco_placement.get_pointed_mapblock_pos(player)
+					if mapblock_pos and building_lib.do_build(mapblock_pos, building_def) then
+						itemstack:take_item()
+						return itemstack
+					end
+				end
+			})
 		end
 	end
 end)
-
-minetest.override_item("", {
-	on_use = function()
-		print("on_use")
-	end,
-	on_secondary_use = function(_, player)
-		print("on_secondary_use")
-		local mapblock_pos = eco_placement.get_pointed_mapblock_pos(player)
-		if mapblock_pos then
-			mapblock_lib.display_mapblock(mapblock_pos, minetest.pos_to_string(mapblock_pos), 4)
-			local mapblock_data = mapblock_lib.get_mapblock_data(mapblock_pos)
-			print(dump(mapblock_pos), dump(mapblock_data))
-		end
-	end
-})

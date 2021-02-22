@@ -4,12 +4,12 @@ minetest.register_craftitem("eco_buildings:timber_plantation", {
 	description = "Timer plantation",
 	inventory_image = "default_wood.png",
 	eco = {
-		place_on = { "flat" },
-		mode = "simple",
-		schematic = MP .. "/schematics/timber_plantation",
-		on_step = function(mapblock_pos)
-			print("eco_buildings:timber_plantation on_step(" .. minetest.pos_to_string(mapblock_pos) .. ")")
-		end,
-		on_step_interval = 5
+		place_building = "eco_buildings:timber_plantation"
 	}
+})
+
+building_lib.register({
+	name = "eco_buildings:timber_plantation",
+	placement = "simple",
+	schematic = MP .. "/schematics/timber_plantation"
 })
