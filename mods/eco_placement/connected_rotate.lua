@@ -31,7 +31,9 @@ local function place_street(name, mapblock_pos, schematics)
 				rotate = {
 					axis = "y",
 					angle = 0,
-					disable_orientation = true
+					disable_orientation = {
+						["default:stonebrick"] = true
+					}
 				}
 			}
 		}
