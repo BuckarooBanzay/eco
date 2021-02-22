@@ -11,11 +11,15 @@ function building_lib.do_build(mapblock_pos, building_def)
 	mapblock_data.building = {
 		name = building_def.name
 	}
+	-- write data before placing schematic
 	mapblock_lib.set_mapblock_data(mapblock_pos, mapblock_data)
 
 	-- place into world
 	local placement = building_lib.placements[building_def.placement]
 	placement.place(mapblock_pos, building_def)
+
+	-- write again with new data
+	mapblock_lib.set_mapblock_data(mapblock_pos, mapblock_data)
 
 	-- start timer, if defined
 	if building_def.timer then

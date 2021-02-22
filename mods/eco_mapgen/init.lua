@@ -7,6 +7,7 @@ dofile(MP .. "/info.lua")
 dofile(MP .. "/mapgen.lua")
 dofile(MP .. "/decorations.lua")
 dofile(MP .. "/render_mapblock.lua")
+dofile(MP .. "/count_resources.lua")
 
 dofile(MP .. "/biome.lua")
 dofile(MP .. "/biome_grass.lua")

@@ -17,8 +17,10 @@ building_lib.register({
 	schematic = MP .. "/schematics/timber_plantation",
 	timer = {
 		interval = 2,
-		run = function(mapblock_pos, building_def)
-			print(os.time(), dump(mapblock_pos), dump(building_def))
+		run = function(mapblock_pos)
+			local resources = eco_mapgen.count_resources(mapblock_pos, 1)
+			local trees = resources.trees or 0
+			print(dump(mapblock_pos), trees)
 		end
 	}
 })
