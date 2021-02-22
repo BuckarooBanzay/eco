@@ -20,7 +20,8 @@ building_lib.register({
 		run = function(mapblock_pos)
 			local resources = eco_mapgen.count_resources(mapblock_pos, 1)
 			local trees = resources.trees or 0
-			print(dump(mapblock_pos), trees)
+			local inv = building_lib.get_inventory(mapblock_pos)
+			inv.add("tree", trees)
 		end
 	}
 })
