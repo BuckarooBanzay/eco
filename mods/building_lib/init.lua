@@ -8,6 +8,8 @@ building_lib = {
 
 local MP = minetest.get_modpath("building_lib")
 dofile(MP .. "/register.lua")
+dofile(MP .. "/get_building_at_pos.lua")
+dofile(MP .. "/timer.lua")
 dofile(MP .. "/placements/simple.lua")
 dofile(MP .. "/placements/connected.lua")
 dofile(MP .. "/get_size.lua")

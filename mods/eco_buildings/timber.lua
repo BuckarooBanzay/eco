@@ -14,5 +14,11 @@ minetest.register_craftitem("eco_buildings:timber_plantation", {
 building_lib.register({
 	name = "eco_buildings:timber_plantation",
 	placement = "simple",
-	schematic = MP .. "/schematics/timber_plantation"
+	schematic = MP .. "/schematics/timber_plantation",
+	timer = {
+		interval = 2,
+		run = function(mapblock_pos, building_def)
+			print(os.time(), dump(mapblock_pos), dump(building_def))
+		end
+	}
 })

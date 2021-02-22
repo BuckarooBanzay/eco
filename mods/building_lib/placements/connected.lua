@@ -1,8 +1,8 @@
 
 
 local function is_connected(mapblock_pos, name)
-	local mapblock_data = mapblock_lib.get_mapblock_data(mapblock_pos)
-	return mapblock_data and mapblock_data.building and mapblock_data.building.name == name
+	local building_def = building_lib.get_building_at_pos(mapblock_pos)
+	return building_def and building_def.name == name
 end
 
 
@@ -10,7 +10,6 @@ local function place_street(name, mapblock_pos, schematics)
 	local mapblock_pos_upper = { x=mapblock_pos.x, y=mapblock_pos.y+1, z=mapblock_pos.z }
 	local mapblock_data = mapblock_lib.get_mapblock_data(mapblock_pos)
 	local mapgen_info = mapblock_data.mapgen_info
-	local building_info = mapblock_data.building or {}
 
 	if mapgen_info.type == "flat" then
 		-- check connections on flat surface and one layer below
@@ -122,10 +121,6 @@ local function place_street(name, mapblock_pos, schematics)
 		return
 	end
 
-	building_info.name = name
-	mapblock_data.building = building_info
-	-- write data back
-	mapblock_lib.set_mapblock_data(mapblock_pos, mapblock_data)
 end
 
 
@@ -150,9 +145,8 @@ local function update_neighbor_streets(name, mapblock_pos, schematics)
 	-- iterate through possible connections
 	for _, offset in ipairs(street_neighbor_updates) do
 		local neighbor_mapblock = vector.add(mapblock_pos, offset)
-		local mapblock_data = mapblock_lib.get_mapblock_data(neighbor_mapblock)
-		local building_info = mapblock_data and mapblock_data.building
-		if building_info and building_info.name == name then
+		local neighbor_building_def = building_lib.get_building_at_pos(neighbor_mapblock)
+		if neighbor_building_def and neighbor_building_def.name == name then
 			place_street(name, neighbor_mapblock, schematics)
 		end
 	end
@@ -162,8 +156,7 @@ end
 building_lib.register_placement({
 	name = "connected",
 	check = function(mapblock_pos)
-		local mapblock_data = mapblock_lib.get_mapblock_data(mapblock_pos)
-		if mapblock_data and mapblock_data.building and mapblock_data.building.name then
+		if building_lib.get_building_at_pos(mapblock_pos) then
 			return false, "already occupied"
 		end
 		return true
