@@ -2,7 +2,7 @@
 ## Api
 
 ```lua
-building_lib.do_build(mapblock_pos, building_def)
+local success, message = building_lib.do_build(mapblock_pos, building_def)
 local success, message = building_lib.can_build(mapblock_pos, building_def)
 
 building_lib.register({

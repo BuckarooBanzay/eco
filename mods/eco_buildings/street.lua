@@ -4,7 +4,10 @@ minetest.register_craftitem("eco_buildings:street", {
 	description = "Simple street",
 	inventory_image = "default_mese_crystal.png",
 	eco = {
-		place_building = "eco_buildings:street"
+		place_building = "eco_buildings:street",
+		place_on = {
+			mapgen_type = {"flat", "slope_lower"}
+		}
 	}
 })
 

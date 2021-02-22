@@ -1,4 +1,39 @@
 
+local function check_place_on(mapblock_pos, def)
+	if not def or not def.eco or not def.eco.place_on then
+		return true
+	end
+
+	local mapblock_data = mapblock_lib.get_mapblock_data(mapblock_pos)
+	if not mapblock_data then
+		return false, "nothing to build on!"
+	end
+
+	local mapgen_info = mapblock_data.mapgen_info
+	if not mapgen_info then
+		return false, "nothing to build on!"
+	end
+
+	local info_matches = false
+	if def.eco.place_on.mapgen_type then
+		for _, name in ipairs(def.eco.place_on.mapgen_type) do
+			if name == mapgen_info.type then
+				info_matches = true
+				break
+			end
+		end
+	else
+		info_matches = true
+	end
+
+	if info_matches then
+		return true
+	else
+		return false, "unsuited terrain!"
+	end
+end
+
+
 local function show_preview(player, def, building_def)
 	-- preview
 	local mapblock_pos = eco_placement.get_pointed_mapblock_pos(player)
@@ -7,7 +42,11 @@ local function show_preview(player, def, building_def)
 		return
 	end
 
-	local success, message = building_lib.can_build(mapblock_pos, building_def)
+	local success, message = check_place_on(mapblock_pos, def)
+	if success then
+		success, message = building_lib.can_build(mapblock_pos, building_def)
+	end
+
 	if not success then
 		minetest.chat_send_player(player:get_player_name(), message or "can't build here!")
 		return
@@ -15,7 +54,6 @@ local function show_preview(player, def, building_def)
 
 	mapblock_lib.display_mapblock(mapblock_pos, def.description, 2)
 end
-
 
 
 minetest.register_on_mods_loaded(function()
@@ -33,9 +71,14 @@ minetest.register_on_mods_loaded(function()
 				end,
 				on_secondary_use = function(itemstack, player)
 					local mapblock_pos = eco_placement.get_pointed_mapblock_pos(player)
-					if mapblock_pos and building_lib.do_build(mapblock_pos, building_def) then
-						itemstack:take_item()
-						return itemstack
+					if mapblock_pos then
+						if not check_place_on(mapblock_pos, def) then
+							return
+						end
+						if building_lib.do_build(mapblock_pos, building_def) then
+							itemstack:take_item()
+							return itemstack
+						end
 					end
 				end
 			})

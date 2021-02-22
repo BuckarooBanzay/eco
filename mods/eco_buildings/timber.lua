@@ -4,7 +4,10 @@ minetest.register_craftitem("eco_buildings:timber_plantation", {
 	description = "Timer plantation",
 	inventory_image = "default_wood.png",
 	eco = {
-		place_building = "eco_buildings:timber_plantation"
+		place_building = "eco_buildings:timber_plantation",
+		place_on = {
+			mapgen_type = {"flat"}
+		}
 	}
 })
 

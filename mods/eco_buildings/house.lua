@@ -4,7 +4,10 @@ minetest.register_craftitem("eco_buildings:house", {
 	description = "Simple house",
 	inventory_image = "default_mese_crystal.png",
 	eco = {
-		place_building = "eco_buildings:house"
+		place_building = "eco_buildings:house",
+		place_on = {
+			mapgen_type = {"flat"}
+		}
 	}
 })
 
