@@ -76,8 +76,14 @@ minetest.register_on_mods_loaded(function()
 							return
 						end
 						if building_lib.do_build(mapblock_pos, building_def) then
-							itemstack:take_item()
-							return itemstack
+							if minetest.check_player_privs(player, "privs") then
+								-- creative mode, no item consumption
+								return
+							else
+								-- consume one item
+								itemstack:take_item()
+								return itemstack
+							end
 						end
 					end
 				end
