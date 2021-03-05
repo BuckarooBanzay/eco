@@ -5,17 +5,10 @@ local function check_place_on(mapblock_pos, def)
 	end
 
 	local mapblock_data = mapblock_lib.get_mapblock_data(mapblock_pos)
-	if not mapblock_data then
-		return false, "nothing to build on!"
-	end
-
-	local mapgen_info = mapblock_data.mapgen_info
-	if not mapgen_info then
-		return false, "nothing to build on!"
-	end
+	local mapgen_info = mapblock_data and mapblock_data.mapgen_info
 
 	local info_matches = false
-	if def.eco.place_on.mapgen_type then
+	if def.eco.place_on.mapgen_type and mapgen_info then
 		-- check if the mapgen_type matches (slope, flat, etc)
 		for _, name in ipairs(def.eco.place_on.mapgen_type) do
 			if name == mapgen_info.type then
