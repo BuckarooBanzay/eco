@@ -1,7 +1,7 @@
 local MP = minetest.get_modpath("eco_buildings")
 
 minetest.register_craftitem("eco_buildings:timber_plantation", {
-	description = "Timer plantation",
+	description = "Timber plantation",
 	inventory_image = "default_wood.png",
 	eco = {
 		place_building = "eco_buildings:timber_plantation",
