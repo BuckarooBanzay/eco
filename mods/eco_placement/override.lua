@@ -16,6 +16,7 @@ local function check_place_on(mapblock_pos, def)
 
 	local info_matches = false
 	if def.eco.place_on.mapgen_type then
+		-- check if the mapgen_type matches (slope, flat, etc)
 		for _, name in ipairs(def.eco.place_on.mapgen_type) do
 			if name == mapgen_info.type then
 				info_matches = true
@@ -23,13 +24,33 @@ local function check_place_on(mapblock_pos, def)
 			end
 		end
 	else
+		-- no mapblock info specified
 		info_matches = true
 	end
 
-	if info_matches then
-		return true
+	local biome_matches = false
+	if def.eco.place_on.biome then
+		-- check if a biome matches
+		local _, biome_name = eco_mapgen.get_biome(mapblock_pos)
+		if biome_name then
+			for _, name in ipairs(def.eco.place_on.biome) do
+				if name == biome_name then
+					biome_matches = true
+					break
+				end
+			end
+		end
 	else
+		-- no biome specified
+		biome_matches = true
+	end
+
+	if not biome_matches then
+		return false, "Wrong biome"
+	elseif not info_matches then
 		return false, "unsuited terrain!"
+	else
+		return true
 	end
 end
 

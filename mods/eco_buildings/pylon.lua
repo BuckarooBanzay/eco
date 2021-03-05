@@ -6,7 +6,8 @@ minetest.register_craftitem("eco_buildings:pylon", {
 	eco = {
 		place_building = "eco_buildings:pylon",
 		place_on = {
-			mapgen_type = {"flat"}
+			mapgen_type = {"flat"},
+			biome = {"grass", "snow"}
 		}
 	}
 })

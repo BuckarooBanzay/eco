@@ -6,7 +6,8 @@ minetest.register_craftitem("eco_buildings:house", {
 	eco = {
 		place_building = "eco_buildings:house",
 		place_on = {
-			mapgen_type = {"flat"}
+			mapgen_type = {"flat"},
+			biome = {"grass", "snow"}
 		}
 	}
 })
