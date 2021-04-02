@@ -16,17 +16,3 @@ jobs:
     - name: luacheck run
       run: $HOME/.luarocks/bin/luacheck mods/eco_* mods/default
 
-    - name: 📧 Discord success notification
-      env:
-        DISCORD_WEBHOOK: ${{ secrets.discord_webhook }}
-      uses: Ilshidur/action-discord@master
-      with:
-        args: '☑️ luacheck passed for branch `${{ github.ref }}` and commit `${{ github.sha }}`'
-
-    - name: 📧 Discord failure notification
-      if: failure()
-      env:
-        DISCORD_WEBHOOK: ${{ secrets.discord_webhook }}
-      uses: Ilshidur/action-discord@master
-      with:
-        args: '🚫 luacheck failed for branch `${{ github.ref }}` and commit `${{ github.sha }}`'
