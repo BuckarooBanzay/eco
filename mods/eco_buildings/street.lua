@@ -16,11 +16,11 @@ building_lib.register({
 	name = "eco_buildings:street",
 	placement = "connected",
 	schematics = {
-		straight = MP .. "/schematics/street_straight",
-		all_sides = MP .. "/schematics/street_all_sides",
-		corner = MP .. "/schematics/street_corner",
-		three_sides = MP .. "/schematics/street_three_sides",
-		slope_lower = MP .. "/schematics/street_slope_lower",
-		slope_upper = MP .. "/schematics/street_slope_upper",
+		straight = MP .. "/schematics/street/street_straight",
+		all_sides = MP .. "/schematics/street/street_all_sides",
+		corner = MP .. "/schematics/street/street_corner",
+		three_sides = MP .. "/schematics/street/street_three_sides",
+		slope_lower = MP .. "/schematics/street/street_slope_lower",
+		slope_upper = MP .. "/schematics/street/street_slope_upper",
 	}
 })
