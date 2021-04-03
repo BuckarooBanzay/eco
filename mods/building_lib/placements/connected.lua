@@ -21,7 +21,7 @@ local function place_street(mapblock_pos, building_def)
 	local schematics = building_def.schematics
 	local connects_to = building_def.connects_to
 
-	if not mapgen_info or mapgen_info.type == "flat" then
+	if not mapgen_info or mapgen_info.type == "flat" or mapgen_info.type == "slope_upper" then
 		-- check connections on flat surface and one layer below
 		local xplus = is_connected(vector.add(mapblock_pos, {x=1, y=0, z=0}), connects_to) or
 			is_connected(vector.add(mapblock_pos, {x=1, y=-1, z=0}), connects_to)
