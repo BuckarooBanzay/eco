@@ -5,7 +5,15 @@ minetest.register_craftitem("eco_buildings:house", {
 	inventory_image = "default_mese_crystal.png",
 	eco = {
 		place_building = "eco_buildings:house",
+		place_checks = {
+			eco_checks.mapgen_type("flat"),
+			eco_checks.some(
+				eco_checks.biome("grass"),
+				eco_checks.biome("snow")
+			)
+		},
 		place_on = {
+			-- DEPRECATED
 			mapgen_type = {"flat"},
 			biome = {"grass", "snow"}
 		}
