@@ -7,6 +7,11 @@ local function check_place_on(mapblock_pos, def)
 	local mapblock_data = mapblock_lib.get_mapblock_data(mapblock_pos)
 	local mapgen_info = mapblock_data and mapblock_data.mapgen_info
 
+	if type(def.eco.place_on) == "function" then
+		-- "manual" function check
+		return def.eco.place_on(mapblock_pos, mapblock_data, mapgen_info)
+	end
+
 	local info_matches = false
 	if def.eco.place_on.mapgen_type and mapgen_info then
 		-- check if the mapgen_type matches (slope, flat, etc)

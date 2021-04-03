@@ -15,5 +15,8 @@ minetest.register_craftitem("eco_buildings:stone_platform", {
 building_lib.register({
 	name = "eco_buildings:stone_platform",
 	placement = "simple",
+	groups = {
+		support = true
+	},
 	schematic = MP .. "/schematics/stone_platform"
 })

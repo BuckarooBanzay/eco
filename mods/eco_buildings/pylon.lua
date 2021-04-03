@@ -13,7 +13,7 @@ building_lib.register({
 	placement = "simple",
 	schematic = MP .. "/schematics/pylon",
 	groups = {
-		support_street = true,
+		support = true,
 		stackable = true
 	},
 	can_build = function(mapblock_pos)
