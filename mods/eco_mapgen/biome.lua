@@ -29,6 +29,6 @@ minetest.register_chatcommand("biome_info", {
 		local _, biome_name = eco_mapgen.get_biome(mapblock_pos)
 
 		return true, "Biome at mapblock " ..
-			minetest.pos_to_string(mapblock_pos) .. ": " .. biome_name
+			minetest.pos_to_string(mapblock_pos) .. ": " .. (biome_name or "<none>")
 	end
 })
