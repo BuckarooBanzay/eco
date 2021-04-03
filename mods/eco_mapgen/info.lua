@@ -123,7 +123,7 @@ local cache = {}
 
 -- cached access
 function eco_mapgen.get_info(mapblock_pos)
-	local key = minetest.pos_to_string(mapblock_pos)
+	local key = minetest.hash_node_position(mapblock_pos)
 	if not cache[key] then
 		cache[key] = get_info(mapblock_pos)
 	end
