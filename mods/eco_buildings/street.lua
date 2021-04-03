@@ -2,7 +2,7 @@ local MP = minetest.get_modpath("eco_buildings")
 
 minetest.register_craftitem("eco_buildings:street", {
 	description = "Simple street",
-	inventory_image = "default_mese_crystal.png",
+	inventory_image = "eco_buildings_inv_street.png",
 	eco = {
 		place_building = "eco_buildings:street",
 		place_on = {
