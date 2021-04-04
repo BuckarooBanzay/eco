@@ -8,6 +8,7 @@ minetest.register_craftitem("eco_buildings:street", {
 	}
 })
 
+-- TODO: move into util / lower layer
 local below_neighbor_support_offsets = {
 	{x=0, y=-1, z=0},
 	{x=1, y=-1, z=0},
