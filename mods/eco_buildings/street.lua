@@ -28,7 +28,7 @@ building_lib.register({
 		local _, biome_name = eco_mapgen.get_biome(mapblock_pos)
 		local mapgen_info = eco_mapgen.get_info(mapblock_pos)
 
-		local mapgen_matches = mapgen_info and (mapgen_info.type == "flat" or mapgen_info.type == "slope_lower")
+		local mapgen_matches = mapgen_info and mapgen_info.type == "flat"
 		local biome_matches = biome_name == "grass" or biome_name == "snow"
 		if not mapgen_matches then
 			return false, "landscape not supported"
@@ -42,8 +42,6 @@ building_lib.register({
 		straight = MP .. "/schematics/street/street_straight",
 		all_sides = MP .. "/schematics/street/street_all_sides",
 		corner = MP .. "/schematics/street/street_corner",
-		three_sides = MP .. "/schematics/street/street_three_sides",
-		slope_lower = MP .. "/schematics/street/street_slope_lower",
-		slope_upper = MP .. "/schematics/street/street_slope_upper",
+		three_sides = MP .. "/schematics/street/street_three_sides"
 	}
 })

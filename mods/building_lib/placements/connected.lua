@@ -15,22 +15,17 @@ end
 
 
 local function place_street(mapblock_pos, building_def)
-	local mapblock_pos_upper = { x=mapblock_pos.x, y=mapblock_pos.y+1, z=mapblock_pos.z }
 	local mapblock_data = mapblock_lib.get_mapblock_data(mapblock_pos)
 	local mapgen_info = mapblock_data.mapgen_info
 	local schematics = building_def.schematics
 	local connects_to = building_def.connects_to
 
-	if not mapgen_info or mapgen_info.type == "flat" or mapgen_info.type == "slope_upper" then
+	if not mapgen_info or mapgen_info.type == "flat" then
 		-- check connections on flat surface and one layer below
-		local xplus = is_connected(vector.add(mapblock_pos, {x=1, y=0, z=0}), connects_to) or
-			is_connected(vector.add(mapblock_pos, {x=1, y=-1, z=0}), connects_to)
-		local xminus = is_connected(vector.add(mapblock_pos, {x=-1, y=0, z=0}), connects_to) or
-			is_connected(vector.add(mapblock_pos, {x=-1, y=-1, z=0}), connects_to)
-		local zplus = is_connected(vector.add(mapblock_pos, {x=0, y=0, z=1}), connects_to) or
-			is_connected(vector.add(mapblock_pos, {x=0, y=-1, z=1}), connects_to)
-		local zminus = is_connected(vector.add(mapblock_pos, {x=0, y=0, z=-1}), connects_to) or
-			is_connected(vector.add(mapblock_pos, {x=0, y=-1, z=-1}), connects_to)
+		local xplus = is_connected(vector.add(mapblock_pos, {x=1, y=0, z=0}), connects_to)
+		local xminus = is_connected(vector.add(mapblock_pos, {x=-1, y=0, z=0}), connects_to)
+		local zplus = is_connected(vector.add(mapblock_pos, {x=0, y=0, z=1}), connects_to)
+		local zminus = is_connected(vector.add(mapblock_pos, {x=0, y=0, z=-1}), connects_to)
 
 		local schematic = schematics.straight
 		local options = {
@@ -104,28 +99,6 @@ local function place_street(mapblock_pos, building_def)
 
 		mapblock_lib.deserialize(mapblock_pos, schematic, options)
 
-	elseif mapgen_info.type == "slope_lower" then
-		local options = {
-			use_cache = true,
-			transform = {
-				rotate = {
-					axis = "y",
-					angle = 0
-				}
-			}
-		}
-
-		-- rotate (z+ is default)
-		if mapgen_info.direction == "x+" then
-			options.transform.rotate.angle = 90
-		elseif mapgen_info.direction == "z-" then
-			options.transform.rotate.angle = 180
-		elseif mapgen_info.direction == "x-" then
-			options.transform.rotate.angle = 270
-		end
-
-		mapblock_lib.deserialize(mapblock_pos, schematics.slope_lower, options)
-		mapblock_lib.deserialize(mapblock_pos_upper, schematics.slope_upper, options)
 	else
 		-- not applicable
 		return
@@ -138,20 +111,11 @@ local street_neighbor_updates = {
   { x=1, y=0, z=0 },
   { x=0, y=0, z=1 },
   { x=0, y=0, z=-1 },
-  { x=-1, y=0, z=0 },
-
-  { x=1, y=1, z=0 },
-  { x=0, y=1, z=1 },
-  { x=0, y=1, z=-1 },
-  { x=-1, y=1, z=0 },
-
-  { x=1, y=-1, z=0 },
-  { x=0, y=-1, z=1 },
-  { x=0, y=-1, z=-1 },
-  { x=-1, y=-1, z=0 },
+  { x=-1, y=0, z=0 }
 }
 
-local function update_neighbor_streets(mapblock_pos, building_def)
+function building_lib.update_neighbor_streets(mapblock_pos)
+	local building_def = building_lib.get_building_at_pos(mapblock_pos)
 	-- iterate through possible connections
 	for _, offset in ipairs(street_neighbor_updates) do
 		local neighbor_mapblock = vector.add(mapblock_pos, offset)
@@ -174,6 +138,8 @@ building_lib.register_placement({
 	end,
 	place = function(mapblock_pos, building_def)
 		place_street(mapblock_pos, building_def)
-		update_neighbor_streets(mapblock_pos, building_def)
+	end,
+	after_place = function(mapblock_pos)
+		building_lib.update_neighbor_streets(mapblock_pos)
 	end
 })

@@ -38,6 +38,7 @@ building_lib.register_placement({
 			return false, "not gonna happen here!"
 		end
 	end,
-	place = function(mapblock_pos, building_def) end
+	place = function(mapblock_pos, building_def) end,
+	after_place = function(mapblock_pos, building_def) end
 })
 ```
