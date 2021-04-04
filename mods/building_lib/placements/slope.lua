@@ -44,5 +44,12 @@ building_lib.register_placement({
 			{x=0,y=0,z=0},
 			{x=0,y=1,z=0}
 		}
+	end,
+	after_place = function(mapblock_pos)
+		-- update connections
+		local mapblock_pos_upper = vector.add(mapblock_pos, {x=0, y=1, z=0})
+
+		building_lib.update_connections(mapblock_pos)
+		building_lib.update_connections(mapblock_pos_upper)
 	end
 })

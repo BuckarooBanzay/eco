@@ -114,15 +114,19 @@ local street_neighbor_updates = {
   { x=-1, y=0, z=0 }
 }
 
-function building_lib.update_neighbor_streets(mapblock_pos)
-	local building_def = building_lib.get_building_at_pos(mapblock_pos)
+function building_lib.update_connections(mapblock_pos)
+	local groups = building_lib.get_groups_at_pos(mapblock_pos)
+
 	-- iterate through possible connections
 	for _, offset in ipairs(street_neighbor_updates) do
 		local neighbor_mapblock = vector.add(mapblock_pos, offset)
-		local groups = building_lib.get_groups_at_pos(neighbor_mapblock)
 		local other_building_def = building_lib.get_building_at_pos(neighbor_mapblock)
-		if connects_to_groups(groups, building_def.connects_to) and other_building_def then
-			place_street(neighbor_mapblock, building_def)
+		if other_building_def and other_building_def.placement == "connected" then
+			-- connected type
+			if connects_to_groups(groups, other_building_def.connects_to) and other_building_def then
+				-- groups match
+				place_street(neighbor_mapblock, other_building_def)
+			end
 		end
 	end
 end
@@ -140,6 +144,6 @@ building_lib.register_placement({
 		place_street(mapblock_pos, building_def)
 	end,
 	after_place = function(mapblock_pos)
-		building_lib.update_neighbor_streets(mapblock_pos)
+		building_lib.update_connections(mapblock_pos)
 	end
 })
