@@ -19,15 +19,15 @@ building_lib.register({
 	can_build = function(mapblock_pos)
 		local below_mapblock_pos = vector.add(mapblock_pos, {x=0, y=-1, z=0})
 
-		-- check if mapblock below is a pylon
-		local building = building_lib.get_building_at_pos(below_mapblock_pos)
-		if building and building.name == "eco_buildings:pylon" then
+		-- allow placing on supported mapblocks
+		local groups = building_lib.get_groups_at_pos(below_mapblock_pos)
+		if groups.support then
 			return true
 		end
 
 		-- check biome
 		local _, biome_name = eco_mapgen.get_biome(mapblock_pos)
-		local biome_matches = biome_name == "grass" or biome_name == "snow"
+		local biome_matches = not biome_name or biome_name == "grass" or biome_name == "snow"
 		if not biome_matches then
 			return false, "wrong biome"
 		end
