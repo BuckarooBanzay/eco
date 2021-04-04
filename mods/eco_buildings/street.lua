@@ -8,6 +8,14 @@ minetest.register_craftitem("eco_buildings:street", {
 	}
 })
 
+local below_neighbor_support_offsets = {
+	{x=0, y=-1, z=0},
+	{x=1, y=-1, z=0},
+	{x=-1, y=-1, z=0},
+	{x=0, y=-1, z=1},
+	{x=0, y=-1, z=-1},
+}
+
 building_lib.register({
 	name = "eco_buildings:street",
 	placement = "connected",
@@ -18,11 +26,14 @@ building_lib.register({
 		street = true
 	},
 	can_build = function(mapblock_pos)
-		-- check if there is a building below with "support" group
-		local groups_below = building_lib.get_groups_at_pos(vector.add(mapblock_pos, {x=0,y=-1,z=0}))
-		if groups_below.support then
-			return true
+		-- allow placement if the neighbor mapblock or below is supported
+		for _, offset in ipairs(below_neighbor_support_offsets) do
+			local groups = building_lib.get_groups_at_pos(vector.add(mapblock_pos, offset))
+			if groups.support then
+				return true
+			end
 		end
+
 
 		-- check for biome and mapgen match
 		local _, biome_name = eco_mapgen.get_biome(mapblock_pos)
