@@ -61,20 +61,18 @@ describe("building_lib.can_build", function()
     end)
 
     it("array mix 2", function()
-        local success, msg = run_conditions(
-                                 {
-                {failure = true, success = true}, {success = true}
-            })
+        local success, msg = run_conditions({
+            {failure = true, success = true}, {success = true}
+        })
 
         assert.equals(true, success)
         assert.is_nil(msg)
     end)
 
     it("array mix 3", function()
-        local success, msg = run_conditions(
-                                 {
-                {failure = true, success = true}, {failure = true}
-            })
+        local success, msg = run_conditions({
+            {failure = true, success = true}, {failure = true}
+        })
 
         assert.equals(false, success)
         assert.not_nil(msg)
