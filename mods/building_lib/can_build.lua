@@ -9,15 +9,15 @@ function building_lib.can_build(mapblock_pos, building_def)
 	end
 
 	-- go through placement flags
-	if building_def.placement_flags then
+	if building_def.conditions then
 		-- TODO: array-like AND/OR def support
 		local placement_allowed = false
 		local error_msg
 
-		for key, value in pairs(building_def.placement_flags) do
-			local placement_flag_def = building_lib.placement_flags[key]
-			if placement_flag_def and type(placement_flag_def.can_build) == "function" then
-				local success, msg = placement_flag_def.can_build(mapblock_pos, building_def, value)
+		for key, value in pairs(building_def.conditions) do
+			local condition = building_lib.conditions[key]
+			if condition and type(condition.can_build) == "function" then
+				local success, msg = condition.can_build(mapblock_pos, building_def, value)
 				if not success then
 					error_msg = msg
 				else

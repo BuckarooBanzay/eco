@@ -1,5 +1,5 @@
 
-building_lib.register_placement_flag({
+building_lib.register_condition({
     name = "on_flat_surface",
     can_build = function(mapblock_pos)
 		local mapgen_info = eco_mapgen.get_info(mapblock_pos)
@@ -12,7 +12,7 @@ building_lib.register_placement_flag({
     end
 })
 
-building_lib.register_placement_flag({
+building_lib.register_condition({
     name = "on_slope_lower",
     can_build = function(mapblock_pos)
 		local mapgen_info = eco_mapgen.get_info(mapblock_pos)

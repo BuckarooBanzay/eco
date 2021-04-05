@@ -9,7 +9,7 @@ function building_lib.register_placement(def)
 	building_lib.placements[def.name] = def
 end
 
-function building_lib.register_placement_flag(def)
+function building_lib.register_condition(def)
 	assert(type(def.name) == "string")
-	building_lib.placement_flags[def.name] = def
+	building_lib.conditions[def.name] = def
 end

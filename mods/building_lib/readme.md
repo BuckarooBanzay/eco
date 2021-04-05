@@ -14,7 +14,7 @@ local size = building_lib.get_size(building_def)
 building_lib.register({
 	name = "buildings:my_building",
 	placement = "simple",
-	placement_flags = {
+	conditions = {
 		-- OR
 		on_flat_surface = true,
 		on_slope = true,
@@ -52,8 +52,8 @@ building_lib.register_placement({
 	after_place = function(mapblock_pos, building_def) end
 })
 
--- registers a placement flag to check for certain world conditions
-building_lib.register_placement_flag({
+-- registers a condition that checks for certain world conditions
+building_lib.register_condition({
     name = "on_flat_surface",
     can_build = function(mapblock_pos, building_def, flag_value)
 		return false, msg

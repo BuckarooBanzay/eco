@@ -6,7 +6,7 @@ building_lib = {
 	placements = {},
 
 	-- name -> def
-	placement_flags = {}
+	conditions = {}
 }
 
 local MP = minetest.get_modpath("building_lib")

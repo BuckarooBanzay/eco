@@ -2,7 +2,7 @@ eco_buildings = {}
 
 local MP = minetest.get_modpath("eco_buildings")
 
-dofile(MP .. "/placement_flags.lua")
+dofile(MP .. "/conditions.lua")
 
 dofile(MP .. "/house.lua")
 dofile(MP .. "/stone_platform.lua")
