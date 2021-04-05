@@ -8,15 +8,6 @@ minetest.register_craftitem("eco_buildings:street", {
 	}
 })
 
--- TODO: move into util / lower layer
-local below_neighbor_support_offsets = {
-	{x=0, y=-1, z=0},
-	{x=1, y=-1, z=0},
-	{x=-1, y=-1, z=0},
-	{x=0, y=-1, z=1},
-	{x=0, y=-1, z=-1},
-}
-
 building_lib.register({
 	name = "eco_buildings:street",
 	placement = "connected",
@@ -28,7 +19,7 @@ building_lib.register({
 	},
 	conditions = {
 		{ not_on_biome = "water", on_flat_surface = true },
-		{ on_group = "support" }
+		{ near_support = true }
 	},
 	schematics = {
 		straight = MP .. "/schematics/street/street_straight",

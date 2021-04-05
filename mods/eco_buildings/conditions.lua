@@ -60,3 +60,25 @@ building_lib.register_condition({
         end
     end
 })
+
+local below_neighbor_support_offsets = {
+	{x=0, y=-1, z=0},
+	{x=1, y=-1, z=0},
+	{x=-1, y=-1, z=0},
+	{x=0, y=-1, z=1},
+	{x=0, y=-1, z=-1},
+}
+
+building_lib.register_condition({
+    name = "near_support",
+    can_build = function(mapblock_pos)
+        for _, offset in ipairs(below_neighbor_support_offsets) do
+            local offset_mapblock_pos = vector.add(mapblock_pos, offset)
+            local groups = building_lib.get_groups_at_pos(offset_mapblock_pos)
+            if groups.support then
+                return true
+            end
+        end
+        return false, "surroundings not supported"
+    end
+})

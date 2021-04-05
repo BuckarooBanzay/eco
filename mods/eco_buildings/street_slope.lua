@@ -15,7 +15,7 @@ building_lib.register({
 		street = true
 	},
 	conditions = {
-		{ not_in_water = true, on_slope_lower = true }
+		{ not_on_biome = "water", on_slope_lower = true }
 	},
 	schematics = {
 		slope_lower = MP .. "/schematics/street/street_slope_lower",
