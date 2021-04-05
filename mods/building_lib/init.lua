@@ -3,7 +3,10 @@ building_lib = {
 	buildings = {},
 
 	-- name -> def
-	placements = {}
+	placements = {},
+
+	-- name -> def
+	placement_flags = {}
 }
 
 local MP = minetest.get_modpath("building_lib")

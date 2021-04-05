@@ -10,9 +10,18 @@ local groups = building_lib.get_groups_at_pos(mapblock_pos)
 local size = building_lib.get_size(building_def)
 -- single mapblock size: { x=0, y=0, z=0 }
 
+-- registers a placeable building
 building_lib.register({
 	name = "buildings:my_building",
 	placement = "simple",
+	placement_flags = {
+		-- OR
+		on_flat_surface = true,
+		on_slope = true,
+		-- alternatively: OR and AND combined
+		{ on_slope = true, on_biome = "grass" },
+		{ on_flat_surface = true, on_biome = "water" },
+	},
 	schematic = "",
 	-- optional groups
 	groups = {
@@ -28,6 +37,7 @@ building_lib.register({
 	end
 })
 
+-- registers a placement type (connected, simple, etc)
 building_lib.register_placement({
 	name = "simple",
 	check = function(mapblock_pos, building_def)
@@ -40,5 +50,13 @@ building_lib.register_placement({
 	end,
 	place = function(mapblock_pos, building_def) end,
 	after_place = function(mapblock_pos, building_def) end
+})
+
+-- registers a placement flag to check for certain world conditions
+building_lib.register_placement_flag({
+    name = "on_flat_surface",
+    can_build = function(mapblock_pos, building_def, flag_value)
+		return false, msg
+    end
 })
 ```
