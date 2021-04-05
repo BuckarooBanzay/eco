@@ -26,30 +26,10 @@ building_lib.register({
 	groups = {
 		street = true
 	},
-	can_build = function(mapblock_pos)
-		-- allow placement if the neighbor mapblock or below is supported
-		for _, offset in ipairs(below_neighbor_support_offsets) do
-			local groups = building_lib.get_groups_at_pos(vector.add(mapblock_pos, offset))
-			if groups.support then
-				return true
-			end
-		end
-
-
-		-- check for biome and mapgen match
-		local _, biome_name = eco_mapgen.get_biome(mapblock_pos)
-		local mapgen_info = eco_mapgen.get_info(mapblock_pos)
-
-		local mapgen_matches = mapgen_info and mapgen_info.type == "flat"
-		local biome_matches = biome_name == "grass" or biome_name == "snow"
-		if not mapgen_matches then
-			return false, "landscape not supported"
-		elseif not biome_matches then
-			return false, "biome not supported"
-		else
-			return true
-		end
-	end,
+	conditions = {
+		{ not_on_biome = "water", on_flat_surface = true },
+		{ on_group = "support" }
+	},
 	schematics = {
 		straight = MP .. "/schematics/street/street_straight",
 		all_sides = MP .. "/schematics/street/street_all_sides",

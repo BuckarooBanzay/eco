@@ -14,21 +14,9 @@ building_lib.register({
 	groups = {
 		street = true
 	},
-	can_build = function(mapblock_pos)
-		-- check for biome and mapgen match
-		local _, biome_name = eco_mapgen.get_biome(mapblock_pos)
-		local mapgen_info = eco_mapgen.get_info(mapblock_pos)
-
-		local mapgen_matches = mapgen_info and mapgen_info.type == "slope_lower"
-		local biome_matches = biome_name == "grass" or biome_name == "snow"
-		if not mapgen_matches then
-			return false, "landscape not supported"
-		elseif not biome_matches then
-			return false, "biome not supported"
-		else
-			return true
-		end
-	end,
+	conditions = {
+		{ not_in_water = true, on_slope_lower = true }
+	},
 	schematics = {
 		slope_lower = MP .. "/schematics/street/street_slope_lower",
 		slope_upper = MP .. "/schematics/street/street_slope_upper"

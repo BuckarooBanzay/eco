@@ -47,3 +47,16 @@ building_lib.register_condition({
         end
     end
 })
+
+building_lib.register_condition({
+    name = "on_group",
+    can_build = function(mapblock_pos, _, group)
+        local mapblock_pos_below = vector.add(mapblock_pos, {x=0, y=-1, z=0})
+        local groups = building_lib.get_groups_at_pos(mapblock_pos_below)
+        if groups[group] then
+            return true
+        else
+            return false, "biome not supported"
+        end
+    end
+})
