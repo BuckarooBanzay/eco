@@ -14,5 +14,12 @@ read_globals = {
 	"minetest",
 
 	-- mods
-	"mapblock_lib"
+	"mapblock_lib",
+
+	-- testing
+	"mineunit",
+	"sourcefile",
+	"describe",
+	"it",
+	"assert"
 }
