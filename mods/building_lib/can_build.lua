@@ -27,15 +27,7 @@ local function check_map(mode, map, mapblock_pos, building_def)
 	return placement_allowed, error_msg
 end
 
-function building_lib.can_build(mapblock_pos, building_def)
-	-- manual can_build function
-	if type(building_def.can_build) == "function" then
-		local success, message = building_def.can_build(mapblock_pos, building_def)
-		if not success then
-			return success, message
-		end
-	end
-
+local function check_conditions(mapblock_pos, building_def)
 	-- go through conditions
 	if building_def.conditions then
 		-- array-like AND/OR def support
@@ -61,6 +53,29 @@ function building_lib.can_build(mapblock_pos, building_def)
 			local success, error_msg = check_map("or", building_def.conditions, mapblock_pos, building_def)
 			if not success then
 				return false, error_msg or "<unknown>"
+			end
+		end
+	end
+
+	return true
+end
+
+function building_lib.can_build(mapblock_pos, building_def)
+	-- manual can_build function
+	if type(building_def.can_build) == "function" then
+		local success, message = building_def.can_build(mapblock_pos, building_def)
+		if not success then
+			return success, message
+		end
+	end
+
+	-- check the conditions on the ground-based mapblocks
+	local size = building_lib.get_size(building_def)
+	for x=mapblock_pos.x, mapblock_pos.x+size.x-1 do
+		for z=mapblock_pos.z, mapblock_pos.z+size.z-1 do
+			local success, msg = check_conditions({x=x, y=mapblock_pos.y, z=z}, building_def)
+			if not success then
+				return false, msg
 			end
 		end
 	end
