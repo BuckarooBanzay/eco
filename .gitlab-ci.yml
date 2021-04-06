@@ -11,6 +11,6 @@ luacheck:
  stage: lint
  script: ./luacheck.sh
 
-luacheck:
+busted:
  stage: test
  script: ./busted.sh
