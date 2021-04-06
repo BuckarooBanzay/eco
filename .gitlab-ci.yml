@@ -4,11 +4,10 @@ variables:
  GIT_SUBMODULE_STRATEGY: recursive
 
 stages:
- - lint
  - test
 
 luacheck:
- stage: lint
+ stage: test
  script: ./luacheck.sh
 
 busted:
