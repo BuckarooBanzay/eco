@@ -1,7 +1,10 @@
 
 function building_lib.get_size(building_def)
-	if building_def.placement == "simple" and building_def.placement == "connected" then
-		return {x=0, y=0, z=0}
+	local placement = building_lib.placements[building_def.placement]
+	if not placement or type(placement.get_size) ~= "function" then
+		-- default to one mapblock cube
+		return {x=1, y=1, z=1}
 	end
-	error("unknown placement: " .. building_def.placement)
+
+	return placement.get_size(building_def)
 end

@@ -1,5 +1,5 @@
 
-local function show_preview(player, def, building_def)
+local function show_preview(player, description, building_def)
 	-- preview
 	local mapblock_pos = eco_placement.get_pointed_mapblock_pos(player)
 	if not mapblock_pos then
@@ -14,7 +14,7 @@ local function show_preview(player, def, building_def)
 		return
 	end
 
-	mapblock_lib.display_mapblock(mapblock_pos, def.description, 2)
+	building_lib.show_preview(mapblock_pos, description, building_def)
 end
 
 
@@ -29,7 +29,7 @@ minetest.register_on_mods_loaded(function()
 
 			minetest.override_item(name, {
 				on_use = function(_, player)
-					show_preview(player, def, building_def)
+					show_preview(player, def.description, building_def)
 				end,
 				on_secondary_use = function(itemstack, player)
 					local mapblock_pos = eco_placement.get_pointed_mapblock_pos(player)

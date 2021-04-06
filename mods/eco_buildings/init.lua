@@ -5,6 +5,7 @@ local MP = minetest.get_modpath("eco_buildings")
 dofile(MP .. "/conditions.lua")
 
 dofile(MP .. "/house.lua")
+dofile(MP .. "/park.lua")
 dofile(MP .. "/stone_platform.lua")
 dofile(MP .. "/stone_block.lua")
 dofile(MP .. "/street.lua")
