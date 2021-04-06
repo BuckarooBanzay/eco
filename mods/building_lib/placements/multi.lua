@@ -22,9 +22,15 @@ building_lib.register_placement({
 		end
 
 		local iterator = result
-		repeat
+
+		-- build async
+		local function worker()
 			result = iterator()
-		until result ~= true
+			if result == true then
+				minetest.after(1, worker)
+			end
+		end
+		worker()
 
 		local _, size = mapblock_lib.get_multi_size(building_def.schematic)
 		local affected_offsets = {}
