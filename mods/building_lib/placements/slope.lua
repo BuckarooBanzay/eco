@@ -37,13 +37,17 @@ building_lib.register_placement({
 			options.transform.rotate.angle = 270
 		end
 
-		mapblock_lib.deserialize(mapblock_pos, building_def.schematics.slope_lower, options)
-		mapblock_lib.deserialize(mapblock_pos_upper, building_def.schematics.slope_upper, options)
-
-		return {
-			{x=0,y=0,z=0},
-			{x=0,y=1,z=0}
+		local affected_offsets = {
+			{x=0,y=0,z=0}
 		}
+
+		mapblock_lib.deserialize(mapblock_pos, building_def.schematics.slope_lower, options)
+		if building_def.schematics.slope_upper then
+			mapblock_lib.deserialize(mapblock_pos_upper, building_def.schematics.slope_upper, options)
+			table.insert(affected_offsets, {x=0,y=1,z=0})
+		end
+
+		return affected_offsets
 	end,
 	after_place = function(mapblock_pos)
 		-- update connections
