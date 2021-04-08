@@ -25,6 +25,20 @@ building_lib.register_condition({
 })
 
 building_lib.register_condition({
+    name = "on_mapgen_type",
+    can_build = function(mapblock_pos, _, mapgen_type)
+        local mapgen_info = eco_mapgen.get_info(mapblock_pos)
+        local mapgen_matches = mapgen_info and mapgen_info.type == mapgen_type
+        if not mapgen_matches then
+            return false, "landscape not of type: " .. mapgen_type
+        else
+            return true
+        end
+    end
+})
+
+
+building_lib.register_condition({
     name = "on_biome",
     can_build = function(mapblock_pos, _, biome)
 		local _, biome_name = eco_mapgen.get_biome(mapblock_pos)

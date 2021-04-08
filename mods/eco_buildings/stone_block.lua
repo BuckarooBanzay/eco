@@ -12,8 +12,10 @@ building_lib.register({
     name = "eco_buildings:stone_block",
     placement = "simple",
     conditions = {
-      on_slope_lower = true,
-      on_flat_surface = true
+      { on_mapgen_type = "slope_lower" },
+      { on_mapgen_type = "slope_inner_lower" },
+      { on_mapgen_type = "slope_outer_lower" },
+      { on_mapgen_type = "flat" },
     },
     groups = {
       support = true
