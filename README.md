@@ -6,8 +6,7 @@ Proof of concept Simutrans/SimCity/Network$A4 clone
 
 State: **WIP**
 
-![](https://github.com/eco-game/eco/workflows/luacheck/badge.svg)
-![](https://github.com/eco-game/eco/workflows/integration-test/badge.svg)
+![](https://github.com/BuckarooBanzay/eco/workflows/luacheck/badge.svg)
 
 <img src="./menu/background.png"/>
 

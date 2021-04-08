@@ -14,5 +14,5 @@ jobs:
     - name: luacheck install
       run: luarocks install --local luacheck
     - name: luacheck run
-      run: $HOME/.luarocks/bin/luacheck mods/eco_* mods/default
+      run: PATH=${PATH}:${HOME}/.luarocks/bin ./luacheck.sh
 
