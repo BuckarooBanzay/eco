@@ -26,5 +26,14 @@ building_lib.register({
 		all_sides = MP .. "/schematics/street/street_all_sides",
 		corner = MP .. "/schematics/street/street_corner",
 		three_sides = MP .. "/schematics/street/street_three_sides"
+	},
+	deserialize_options = {
+		transform = {
+			rotate = {
+				disable_orientation = {
+					["default:stonebrick"] = true
+				}
+			}
+		}
 	}
 })

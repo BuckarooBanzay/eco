@@ -20,5 +20,14 @@ building_lib.register({
 	schematics = {
 		slope_lower = MP .. "/schematics/street/street_slope_lower",
 		slope_upper = MP .. "/schematics/street/street_slope_upper"
+	},
+	deserialize_options = {
+		transform = {
+			rotate = {
+				disable_orientation = {
+					["default:stonebrick"] = true
+				}
+			}
+		}
 	}
 })

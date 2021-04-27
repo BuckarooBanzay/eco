@@ -18,25 +18,20 @@ local function place_street(mapblock_pos, building_def)
 	local schematics = building_def.schematics
 	local connects_to = building_def.connects_to
 
-	-- check connections on flat surface and one layer below
+	-- check connections on flat surface
 	local xplus = is_connected(vector.add(mapblock_pos, {x=1, y=0, z=0}), connects_to)
 	local xminus = is_connected(vector.add(mapblock_pos, {x=-1, y=0, z=0}), connects_to)
 	local zplus = is_connected(vector.add(mapblock_pos, {x=0, y=0, z=1}), connects_to)
 	local zminus = is_connected(vector.add(mapblock_pos, {x=0, y=0, z=-1}), connects_to)
 
 	local schematic = schematics.straight
-	local options = {
-		use_cache = true,
-		transform = {
-			rotate = {
-				axis = "y",
-				angle = 0,
-				disable_orientation = {
-					["default:stonebrick"] = true
-				}
-			}
-		}
-	}
+
+	local options = building_lib.get_deserialize_options(mapblock_pos, building_def)
+
+	options.transform = options.transform or {}
+	options.transform.rotate = options.transform.rotate or {}
+	options.transform.rotate.axis = "y"
+	options.transform.rotate.angle = 0
 
 	if xplus and xminus and zplus and zminus then
 		-- all sides
@@ -131,8 +126,8 @@ building_lib.register_placement({
 		end
 		return true
 	end,
-	place = function(mapblock_pos, building_def)
-		place_street(mapblock_pos, building_def)
+	place = function(mapblock_pos, building_def, options)
+		place_street(mapblock_pos, building_def, options)
 	end,
 	after_place = function(mapblock_pos)
 		building_lib.update_connections(mapblock_pos)

@@ -27,6 +27,11 @@ building_lib.register({
 	groups = {
 		x = true
 	},
+	-- optional deserialize options as table or function
+	-- deserialize_options = {}
+	deserialize_options = function(mapblock_pos, building_def)
+		return {}
+	end,
 	can_build = function(mapblock_pos, building_def)
 		-- building-related checks
 		if ok then

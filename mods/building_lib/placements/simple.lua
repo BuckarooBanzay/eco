@@ -8,8 +8,7 @@ building_lib.register_placement({
 		return true
 	end,
 	place = function(mapblock_pos, building_def)
-		mapblock_lib.deserialize(mapblock_pos, building_def.schematic, {
-			use_cache = true
-		})
+		local options = building_lib.get_deserialize_options(mapblock_pos, building_def)
+		mapblock_lib.deserialize(mapblock_pos, building_def.schematic, options)
 	end
 })

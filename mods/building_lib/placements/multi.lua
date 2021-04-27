@@ -16,7 +16,9 @@ building_lib.register_placement({
 		return true
 	end,
 	place = function(mapblock_pos, building_def)
-		local success, result = mapblock_lib.deserialize_multi(mapblock_pos, building_def.schematic)
+		local options = building_lib.get_deserialize_options(mapblock_pos, building_def)
+
+		local success, result = mapblock_lib.deserialize_multi(mapblock_pos, building_def.schematic, options)
 		if not success then
 			return false, result
 		end

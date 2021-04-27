@@ -16,14 +16,12 @@ building_lib.register_placement({
 		local mapblock_data = mapblock_lib.get_mapblock_data(mapblock_pos)
 		local mapgen_info = mapblock_data.mapgen_info
 
-		local options = {
-			use_cache = true,
-			transform = {
-				rotate = {
-					axis = "y",
-					angle = 0
-				}
-			}
+		local options = building_lib.get_deserialize_options(mapblock_pos, building_def)
+
+		options.transform = options.transform or {}
+		options.transform.rotate = {
+			axis = "y",
+			angle = 0
 		}
 
 		-- TODO: rotate in view direction
