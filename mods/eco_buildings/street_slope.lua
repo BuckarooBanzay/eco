@@ -29,9 +29,9 @@ building_lib.register({
 				}
 			},
 			replace = {
-				["eco_blocks:replacement_3"] = "eco_stairsplus:slope_gravel",
+				["eco_blocks:replacement_slope_1"] = "moreblocks:slope_stonebrick",
 				["eco_blocks:replacement_2"] = "default:stonebrick",
-				["eco_blocks:replacement_1"] = "moreblocks:slope_stonebrick"
+				["eco_blocks:replacement_slope_3"] = "eco_stairsplus:slope_gravel"
 			}
 		}
 	}
