@@ -27,6 +27,11 @@ building_lib.register({
 				disable_orientation = {
 					["default:stonebrick"] = true
 				}
+			},
+			replace = {
+				["eco_blocks:replacement_3"] = "eco_stairsplus:slope_gravel",
+				["eco_blocks:replacement_2"] = "default:stonebrick",
+				["eco_blocks:replacement_1"] = "moreblocks:slope_stonebrick"
 			}
 		}
 	}
