@@ -105,5 +105,5 @@ function eco_mapgen.render_mapblock(mapblock_pos)
 		-- nothing here
 	end
 
-	eco_mapgen.render_decorations(mapblock_pos, info, biome_data.height, biome)
+	eco_mapgen.render_decorations(mapblock_pos, info, biome_data, biome)
 end
