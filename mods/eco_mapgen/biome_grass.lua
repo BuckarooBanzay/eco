@@ -1,9 +1,11 @@
 local MP = minetest.get_modpath("eco_mapgen")
 
-eco_mapgen.register_biome("grass", {
-	match = function(mapblock_pos, info)
-		return mapblock_pos.y >= 0 and mapblock_pos.y < 4 and info.type ~= "none" and info.type ~= "underground"
-	end,
+eco_mapgen.register_biome({
+	name = "grass",
+	match = {
+		temperature = 50,
+		humidity = 50
+	},
 
 	flat = MP .. "/schematics/base/grass_flat",
 

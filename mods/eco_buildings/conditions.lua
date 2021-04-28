@@ -40,9 +40,9 @@ building_lib.register_condition({
 
 building_lib.register_condition({
     name = "on_biome",
-    can_build = function(mapblock_pos, _, biome)
-		local _, biome_name = eco_mapgen.get_biome(mapblock_pos)
-        if biome_name == biome then
+    can_build = function(mapblock_pos, _, biome_name)
+		local biome = eco_mapgen.get_biome(mapblock_pos)
+        if biome and biome_name == biome.name then
             return true
         else
             return false, "biome not supported"
@@ -52,9 +52,9 @@ building_lib.register_condition({
 
 building_lib.register_condition({
     name = "not_on_biome",
-    can_build = function(mapblock_pos, _, biome)
-		local _, biome_name = eco_mapgen.get_biome(mapblock_pos)
-        if biome_name ~= biome then
+    can_build = function(mapblock_pos, _, biome_name)
+		local biome = eco_mapgen.get_biome(mapblock_pos)
+        if not biome or biome_name ~= biome.name then
             return true
         else
             return false, "biome not supported"

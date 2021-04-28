@@ -7,7 +7,7 @@ local temperature_params = {
 	offset = 0,
 	scale = 1,
 	spread = {x=64, y=64, z=64},
-	seed = 5477835,
+	seed = 952995,
 	octaves = 2,
 	persist = 0.5
 }

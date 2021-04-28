@@ -1,6 +1,7 @@
 local MP = minetest.get_modpath("eco_mapgen")
 
-eco_mapgen.register_biome("water", {
+eco_mapgen.register_biome({
+	name = "water",
 	match = function(mapblock_pos, info)
 		return mapblock_pos.y < 0 and info.type ~= "underground"
 	end,

@@ -7,7 +7,8 @@
 ```lua
 local resources = eco_mapgen.count_resources(mapblock_pos, radius)
 
-eco_mapgen.register_biome("grass", {
+eco_mapgen.register_biome({
+	name = "grass",
 	match = function(mapblock_pos, info)
 		return mapblock_pos.y >= 0 and mapblock_pos.y < 4 and info.type ~= "none" and info.type ~= "underground"
 	end,
