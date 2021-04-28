@@ -3,7 +3,7 @@ local MP = minetest.get_modpath("eco_mapgen")
 eco_mapgen.register_biome({
 	name = "ice",
 	match = {
-		temperature = 10,
+		temperature = 0,
 		humidity = 20
 	},
 
