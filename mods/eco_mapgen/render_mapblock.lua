@@ -23,7 +23,7 @@ end
 
 function eco_mapgen.render_mapblock(mapblock_pos)
 	local info = eco_mapgen.get_info(mapblock_pos)
-	local height = eco_mapgen.get_mapblock_height(mapblock_pos)
+	local height = eco_mapgen.get_biome_data(mapblock_pos).height
 	local biome = eco_mapgen.get_biome(mapblock_pos, info, height)
 
 	-- add mapgen info (if available) to grid data

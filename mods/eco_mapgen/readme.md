@@ -1,6 +1,9 @@
 
 ## Api
 
+
+### Public
+
 ```lua
 local resources = eco_mapgen.count_resources(mapblock_pos, radius)
 
@@ -20,5 +23,18 @@ eco_mapgen.register_biome("grass", {
 	slope_outer_upper = MP .."/schematics/base/grass_slope_outer_corner_upper",
 	slope_outer_lower = MP .."/schematics/base/grass_slope_outer_corner_lower"
 })
+```
+
+
+### Internals
+
+```lua
+-- biome data
+local biome_data = eco_mapgen.get_biome_data({x=1, z=4})
+biome_data = {
+	height = 2,
+	temperature = 10,
+	humidity = 20
+}
 
 ```

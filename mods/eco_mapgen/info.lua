@@ -41,7 +41,7 @@ local function get_height_map(mapblock, mapblock_height)
 	for x=-1,1 do
 		hm[x] = hm[x] or {}
 		for z=-1,1 do
-			local neighbor_height = eco_mapgen.get_mapblock_height({ x=mapblock.x+x, z=mapblock.z+z })
+			local neighbor_height = eco_mapgen.get_biome_data({ x=mapblock.x+x, z=mapblock.z+z }).height
 
 			if neighbor_height > mapblock_height then
 				-- neighbor is higher
@@ -56,7 +56,7 @@ end
 
 local function get_info(mapblock)
 	local lower_mapblock = { x=mapblock.x, y=mapblock.y-1, z=mapblock.z }
-	local height = eco_mapgen.get_mapblock_height(mapblock)
+	local height = eco_mapgen.get_biome_data(mapblock).height
 
 	if mapblock.y < height then
 		return { type = "underground" }

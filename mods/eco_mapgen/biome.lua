@@ -8,7 +8,7 @@ end
 
 function eco_mapgen.get_biome(mapblock_pos, info, height)
 	info = info or eco_mapgen.get_info(mapblock_pos)
-	height = height or eco_mapgen.get_mapblock_height(mapblock_pos)
+	height = height or eco_mapgen.get_biome_data(mapblock_pos).height
 
 	for key, biome in pairs(eco_mapgen.biomes) do
 		if biome.match(mapblock_pos, info, height) then
