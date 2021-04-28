@@ -6,12 +6,12 @@ function eco_mapgen.register_biome(name, def)
 	eco_mapgen.biomes[name] = def
 end
 
-function eco_mapgen.get_biome(mapblock_pos, info, height)
+function eco_mapgen.get_biome(mapblock_pos, info, biome_data)
 	info = info or eco_mapgen.get_info(mapblock_pos)
-	height = height or eco_mapgen.get_biome_data(mapblock_pos).height
+	biome_data = biome_data or eco_mapgen.get_biome_data(mapblock_pos)
 
 	for key, biome in pairs(eco_mapgen.biomes) do
-		if biome.match(mapblock_pos, info, height) then
+		if biome.match(mapblock_pos, info, biome_data.height) then
 			return biome, key
 		end
 	end

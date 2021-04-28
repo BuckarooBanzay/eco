@@ -1,8 +1,8 @@
 local MP = minetest.get_modpath("eco_mapgen")
 
 eco_mapgen.register_biome("water", {
-	match = function(mapblock_pos)
-		return mapblock_pos.y < 0
+	match = function(mapblock_pos, info)
+		return mapblock_pos.y < 0 and info.type ~= "underground"
 	end,
 
 	flat = MP .. "/schematics/base/water_flat",
