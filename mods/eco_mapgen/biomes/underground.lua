@@ -6,5 +6,9 @@ eco_mapgen.register_biome({
 		return info.type == "underground"
 	end,
 
-	full = MP .. "/schematics/base/stone_full"
+	full = MP .. "/schematics/base/air_full",
+
+	replace = {
+		["air"] = "default:stone"
+	}
 })

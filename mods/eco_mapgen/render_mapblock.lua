@@ -37,6 +37,9 @@ function eco_mapgen.render_mapblock(mapblock_pos)
 	if info.type == "underground" and biome.full then
 		mapblock_lib.deserialize(mapblock_pos, biome.full, {
 			use_cache = true,
+			transform = {
+				replace = biome.replace
+			}
 		})
 
 	elseif info.type == "flat" and biome.flat then
