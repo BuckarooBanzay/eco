@@ -25,12 +25,41 @@ local function check_match(match, mapblock_pos, info, _, biome)
 	return true
 end
 
+local angles = {0, 90, 180, 270}
+
+
 function eco_mapgen.render_decorations(mapblock_pos, info, biome_data, biome)
 	for _, deco_def in ipairs(decorations) do
-		if type(deco_def.match) == "table" and type(deco_def.render) == "function" then
+		if type(deco_def.match) == "table" then
 			local is_match = check_match(deco_def.match, mapblock_pos, info, biome_data, biome)
 			if is_match then
-				deco_def.render(mapblock_pos)
+				local schematic
+
+				if type(deco_def.schematics) == "table" then
+					schematic = deco_def.schematics[math.random(#deco_def.schematics)]
+				elseif type(deco_def.schematics) == "string" then
+					schematic = deco_def.schematics
+				else
+					-- invalid deco def
+					return
+				end
+
+				local options = {
+					use_cache = true,
+					mode = "add"
+				}
+
+				if not deco_def.disable_rotation then
+					options.transform = {
+						rotate = {
+							axis = "y",
+							angle = angles[math.random(#angles)]
+						}
+					}
+				end
+
+				mapblock_lib.deserialize(mapblock_pos, schematic, options)
+				return
 			end
 		end
 	end
