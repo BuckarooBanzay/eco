@@ -1,24 +1,26 @@
 
 minetest.register_on_mods_loaded(function()
+	--TODO: this shouldn't work... (removing items while in the ipairs loop)
+
 	-- disable various abm's
 	for i, abm in ipairs(minetest.registered_abms) do
 		if abm.mod_origin == "default" then
-			minetest.registered_abms[i] = nil
+			table.remove(minetest.registered_abms, i)
 		elseif abm.mod_origin == "farming" then
-			minetest.registered_abms[i] = nil
+			table.remove(minetest.registered_abms, i)
 		elseif abm.mod_origin == "flowers" then
-			minetest.registered_abms[i] = nil
+			table.remove(minetest.registered_abms, i)
 		elseif abm.mod_origin == "moreblocks" then
-			minetest.registered_abms[i] = nil
+			table.remove(minetest.registered_abms, i)
 		end
 	end
 
 	-- disable various lbm's
 	for i, lbm in ipairs(minetest.registered_lbms) do
 		if lbm.mod_origin == "default" then
-			minetest.registered_abms[i] = nil
+			table.remove(minetest.registered_lbms, i)
 		elseif lbm.mod_origin == "moreblocks" then
-			minetest.registered_abms[i] = nil
+			table.remove(minetest.registered_lbms, i)
 		else
 			print(dump(lbm))
 		end
@@ -28,7 +30,7 @@ minetest.register_on_mods_loaded(function()
 	for i, globalstep in ipairs(minetest.registered_globalsteps) do
 		local info = minetest.callback_origins[globalstep]
 		if info.mod == "player_api" then
-			minetest.registered_globalsteps[i] = nil
+			table.remove(minetest.registered_globalsteps, i)
 		end
 	end
 end)
