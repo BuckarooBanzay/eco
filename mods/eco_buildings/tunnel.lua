@@ -12,7 +12,11 @@ building_lib.register({
 	name = "eco_buildings:tunnel",
 	placement = "slope",
 	groups = {
+		--TODO: deprecate
 		street = true
+	},
+	connections = {
+		street = {"x+"}
 	},
 	conditions = {
 		{ not_on_biome = "water", on_slope_lower = true }
