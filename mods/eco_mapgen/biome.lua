@@ -6,6 +6,22 @@ function eco_mapgen.register_biome(def)
 	eco_mapgen.biomes[def.name] = def
 end
 
+local function get_score(biome, mapblock_pos, biome_data)
+	local score = 0
+
+	if biome.match.min_height and mapblock_pos.y < biome.match.min_height then
+		return
+	end
+	if biome.match.temperature then
+		score = score - math.abs(biome_data.temperature - biome.match.temperature)
+	end
+	if biome.match.humidity then
+		score = score - math.abs(biome_data.humidity - biome.match.humidity)
+	end
+
+	return score
+end
+
 function eco_mapgen.get_biome(mapblock_pos, info, biome_data)
 	info = info or eco_mapgen.get_info(mapblock_pos)
 	biome_data = biome_data or eco_mapgen.get_biome_data(mapblock_pos)
@@ -19,15 +35,9 @@ function eco_mapgen.get_biome(mapblock_pos, info, biome_data)
 			return biome
 		elseif type(biome.match) == "table" then
 			-- matching table, evaluate
-			local score = 0
-			if biome.match.temperature then
-				score = score - math.abs(biome_data.temperature - biome.match.temperature)
-			end
-			if biome.match.humidity then
-				score = score - math.abs(biome_data.humidity - biome.match.humidity)
-			end
+			local score = get_score(biome, mapblock_pos, biome_data)
 
-			if not selected_biome or selected_score < score then
+			if score and (not selected_biome or selected_score < score) then
 				-- current score higher or no biome selected at all
 				selected_score = score
 				selected_biome = biome

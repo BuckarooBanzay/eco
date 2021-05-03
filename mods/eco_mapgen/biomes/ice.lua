@@ -4,7 +4,8 @@ eco_mapgen.register_biome({
 	name = "ice",
 	match = {
 		temperature = 0,
-		humidity = 20
+		humidity = 20,
+		min_height = 8
 	},
 
 	flat = MP .. "/schematics/base/grass_flat",
