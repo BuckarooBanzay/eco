@@ -8,11 +8,16 @@ function building_lib.do_build(mapblock_pos, building_def)
 
 	-- place into world
 	local placement = building_lib.placements[building_def.placement]
-	local affected_offsets = placement.place(mapblock_pos, building_def)
+	local affected_offsets, rotation = placement.place(mapblock_pos, building_def)
 
 	if not affected_offsets then
 		-- default to 1 mapblock
 		affected_offsets = { {x=0,y=0,z=0} }
+	end
+
+	if not rotation then
+		-- default rotation
+		rotation = 0
 	end
 
 	-- write new data
@@ -23,7 +28,8 @@ function building_lib.do_build(mapblock_pos, building_def)
 		local mapblock_data = mapblock_lib.get_mapblock_data(offset_mapblock_pos)
 		mapblock_data = mapblock_data or {}
 		mapblock_data.building = {
-			name = building_def.name
+			name = building_def.name,
+			rotation = rotation
 		}
 
 		mapblock_lib.set_mapblock_data(offset_mapblock_pos, mapblock_data)

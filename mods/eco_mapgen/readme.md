@@ -47,3 +47,14 @@ biome_data = {
 }
 
 ```
+
+## Mapblock data
+
+```lua
+{
+	mapgen_info = {
+		type = "slope_lower",
+		direction = "x+"
+	}
+}
+```

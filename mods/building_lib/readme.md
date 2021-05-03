@@ -65,3 +65,14 @@ building_lib.register_condition({
     end
 })
 ```
+
+## Mapblock data
+
+```lua
+{
+	building = {
+		name = "eco_buildings:simple_house",
+		rotation = 0
+	}
+}
+```

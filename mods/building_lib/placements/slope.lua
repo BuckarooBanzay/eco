@@ -45,7 +45,7 @@ building_lib.register_placement({
 			table.insert(affected_offsets, {x=0,y=1,z=0})
 		end
 
-		return affected_offsets
+		return affected_offsets, options.transform.rotate.angle
 	end,
 	after_place = function(mapblock_pos)
 		-- update connections
