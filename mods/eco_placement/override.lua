@@ -1,21 +1,5 @@
 
-local function show_preview(player, description, building_def)
-	-- preview
-	local mapblock_pos = eco_placement.get_pointed_mapblock_pos(player)
-	if not mapblock_pos then
-		minetest.chat_send_player(player:get_player_name(), "Too far away")
-		return
-	end
 
-	local success, message = building_lib.can_build(mapblock_pos, building_def)
-
-	if not success then
-		minetest.chat_send_player(player:get_player_name(), message or "can't build here!")
-		return
-	end
-
-	building_lib.show_preview(mapblock_pos, description, building_def)
-end
 
 
 minetest.register_on_mods_loaded(function()
@@ -29,7 +13,7 @@ minetest.register_on_mods_loaded(function()
 
 			minetest.override_item(name, {
 				on_use = function(_, player)
-					show_preview(player, def.description, building_def)
+					eco_placement.show_preview(player, def.description, building_def)
 				end,
 				on_secondary_use = function(itemstack, player)
 					local mapblock_pos = eco_placement.get_pointed_mapblock_pos(player)
