@@ -1,5 +1,9 @@
 local transport_list = {}
 
+local function get_fractional_time()
+    return minetest.get_us_time() / 1000 / 1000
+end
+
 minetest.register_entity("eco_transport:car1", {
     visual = "cube",
     textures = {
@@ -20,6 +24,7 @@ minetest.register_entity("eco_transport:car1", {
     end,
     on_activate = function(self, staticdata)
         self.id = staticdata
+        self.skip = 0
     end,
     on_punch = function() end,
     on_step = function(self)
@@ -28,33 +33,40 @@ minetest.register_entity("eco_transport:car1", {
             return self.object:remove()
         end
 
-        local now = os.time()
-        if now - transport.mtime < 0.2 then
+        local now = get_fractional_time()
+        local expired = now - transport.start
+        local progress = math.min(expired / transport.traversal_time, 1)
+        if progress > 1 then
+            -- let the animation do the movement
             return
         end
-
-        transport.mtime = now
 
         local min = mapblock_lib.get_mapblock_bounds_from_mapblock(transport.mapblock_pos)
         local building_def = building_lib.get_building_at_pos(transport.mapblock_pos)
 
         if building_def.transport and building_def.transport.travel then
             local ctx = building_def.transport.travel(
-                transport.mapblock_pos, {x=-1,y=0,z=0}, {x=1,y=0,z=0}, transport.progress, 1.6
+                transport.mapblock_pos, {x=-1,y=0,z=0}, {x=1,y=0,z=0}, progress
             )
 
-            self.object:set_pos(vector.add(min, ctx.position))
+            local pos = vector.add(min, ctx.position)
+            pos = vector.add(pos, {x=0, y=0.25, z=0})
+
+            self.object:set_pos(pos)
             self.object:set_velocity(ctx.velocity)
+            self.object:set_rotation(ctx.rotation)
         end
 
     end
 })
 
 local function dummy_move()
+    local now = get_fractional_time()
     for id, ctx in pairs(transport_list) do
-        ctx.progress = ctx.progress + 0.05
-        if ctx.progress > 1 then
+        if (ctx.start + ctx.traversal_time) <= now then
+            -- done, TODO: next mapblock
             transport_list[id] = nil
+            print("transport_list, removing: " .. id, dump(ctx))
         end
     end
 
@@ -76,12 +88,13 @@ minetest.register_chatcommand("transport_test", {
         local building_def = building_lib.get_building_at_pos(mapblock_pos)
 
         if building_def.transport and building_def.transport.travel then
-            transport_list["1"] = {
-                progress = 0,
+            local id = "tx_" .. math.random(10000)
+            transport_list[id] = {
                 mapblock_pos = mapblock_pos,
-                mtime = os.time()
+                start = get_fractional_time(),
+                traversal_time = building_def.transport.traversal_time
             }
-            minetest.add_entity(min, "eco_transport:car1", "1")
+            minetest.add_entity(min, "eco_transport:car1", id)
         end
 
         return true
