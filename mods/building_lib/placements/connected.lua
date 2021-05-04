@@ -115,7 +115,7 @@ function building_lib.update_connections(mapblock_pos)
 
 	-- iterate through possible connections
 	for _, direction in ipairs(street_neighbor_updates) do
-		for group in pairs(building_def.connects_to) do
+		for group in pairs(building_def.connections) do
 			if is_connecting(mapblock_pos, group, direction) then
 				local neighbor_mapblock = vector.add(mapblock_pos, direction)
 				local other_building_def = building_lib.get_building_at_pos(neighbor_mapblock)

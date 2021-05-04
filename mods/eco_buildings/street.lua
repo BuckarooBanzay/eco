@@ -11,9 +11,6 @@ minetest.register_craftitem("eco_buildings:street", {
 building_lib.register({
 	name = "eco_buildings:street",
 	placement = "connected",
-	connects_to = {
-		street = true
-	},
 	connections = {
 		street = {
 			{x=1,y=0,z=0},
