@@ -15,7 +15,9 @@ building_lib.register({
       { not_on_biome = "water", on_flat_surface = true }
     },
     connections = {
-      street = {"x-"}
+      street = {
+        {x=-1,y=0,z=0}
+      }
     },
     schematic = MP .. "/schematics/loading_dock/loading_dock"
 })

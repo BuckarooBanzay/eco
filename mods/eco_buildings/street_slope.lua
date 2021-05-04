@@ -11,12 +11,11 @@ minetest.register_craftitem("eco_buildings:street_slope", {
 building_lib.register({
 	name = "eco_buildings:street_slope",
 	placement = "slope",
-	groups = {
-		--TODO: deprecate
-		street = true
-	},
 	connections = {
-		street = {"x+"}
+		street = {
+			{x=1,y=0,z=0},
+			{x=-1,y=1,z=0}
+		}
 	},
 	conditions = {
 		{ not_on_biome = "water", on_slope_lower = true }

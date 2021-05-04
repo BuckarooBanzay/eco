@@ -14,8 +14,13 @@ building_lib.register({
 	connects_to = {
 		street = true
 	},
-	groups = {
-		street = true
+	connections = {
+		street = {
+			{x=1,y=0,z=0},
+			{x=-1,y=0,z=0},
+			{x=0,y=0,z=1},
+			{x=0,y=0,z=-1}
+		}
 	},
 	conditions = {
 		{ not_on_biome = "water", on_flat_surface = true },

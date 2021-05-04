@@ -1,28 +1,34 @@
 
-local function connects_to_groups(groups, connects_to)
-	for group in pairs(connects_to) do
-		if groups[group] then
+local function is_connecting(mapblock_pos, group, direction)
+	local inverse_direction = vector.multiply(direction, -1)
+	local neighbor_mapblock = vector.add(mapblock_pos, direction)
+	local neighbor_building_def = building_lib.get_building_at_pos(neighbor_mapblock)
+	if not neighbor_building_def or not neighbor_building_def.connections then
+		return false
+	end
+
+	local neighbor_directions = neighbor_building_def.connections[group]
+	if not neighbor_directions then
+		return false
+	end
+
+	for _, neighbor_direction in ipairs(neighbor_directions) do
+		if vector.equals(inverse_direction, neighbor_direction) then
 			return true
 		end
 	end
+
 	return false
 end
 
-local function is_connected(mapblock_pos, connects_to)
-	local other_groups = building_lib.get_groups_at_pos(mapblock_pos)
-	return connects_to_groups(other_groups, connects_to)
-end
-
-
 local function place_street(mapblock_pos, building_def)
 	local schematics = building_def.schematics
-	local connects_to = building_def.connects_to
 
 	-- check connections on flat surface
-	local xplus = is_connected(vector.add(mapblock_pos, {x=1, y=0, z=0}), connects_to)
-	local xminus = is_connected(vector.add(mapblock_pos, {x=-1, y=0, z=0}), connects_to)
-	local zplus = is_connected(vector.add(mapblock_pos, {x=0, y=0, z=1}), connects_to)
-	local zminus = is_connected(vector.add(mapblock_pos, {x=0, y=0, z=-1}), connects_to)
+	local xplus = is_connecting(mapblock_pos, "street", {x=1, y=0, z=0})
+	local xminus = is_connecting(mapblock_pos, "street", {x=-1, y=0, z=0})
+	local zplus = is_connecting(mapblock_pos, "street", {x=0, y=0, z=1})
+	local zminus = is_connecting(mapblock_pos, "street", {x=0, y=0, z=-1})
 
 	local schematic = schematics.straight
 
@@ -97,23 +103,28 @@ local street_neighbor_updates = {
   { x=1, y=0, z=0 },
   { x=0, y=0, z=1 },
   { x=0, y=0, z=-1 },
-  { x=-1, y=0, z=0 }
+  { x=-1, y=0, z=0 },
+  { x=1, y=-1, z=0 },
+  { x=0, y=-1, z=1 },
+  { x=0, y=-1, z=-1 },
+  { x=-1, y=-1, z=0 }
 }
 
 function building_lib.update_connections(mapblock_pos)
-	local groups = building_lib.get_groups_at_pos(mapblock_pos)
+	local building_def = building_lib.get_building_at_pos(mapblock_pos)
 
 	-- iterate through possible connections
-	for _, offset in ipairs(street_neighbor_updates) do
-		local neighbor_mapblock = vector.add(mapblock_pos, offset)
-		local other_building_def = building_lib.get_building_at_pos(neighbor_mapblock)
-		if other_building_def and other_building_def.placement == "connected" then
-			-- connected type
-			if connects_to_groups(groups, other_building_def.connects_to) and other_building_def then
-				-- groups match
-				place_street(neighbor_mapblock, other_building_def)
+	for _, direction in ipairs(street_neighbor_updates) do
+		for group in pairs(building_def.connects_to) do
+			if is_connecting(mapblock_pos, group, direction) then
+				local neighbor_mapblock = vector.add(mapblock_pos, direction)
+				local other_building_def = building_lib.get_building_at_pos(neighbor_mapblock)
+				if other_building_def.placement == "connected" then
+					place_street(neighbor_mapblock, other_building_def)
+				end
 			end
 		end
+
 	end
 end
 

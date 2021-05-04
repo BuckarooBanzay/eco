@@ -11,12 +11,8 @@ minetest.register_craftitem("eco_buildings:tunnel", {
 building_lib.register({
 	name = "eco_buildings:tunnel",
 	placement = "slope",
-	groups = {
-		--TODO: deprecate
-		street = true
-	},
 	connections = {
-		street = {"x+"}
+		street = {{x=1,y=0,z=0}}
 	},
 	conditions = {
 		{ not_on_biome = "water", on_slope_lower = true }
