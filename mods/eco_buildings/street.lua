@@ -42,5 +42,16 @@ building_lib.register({
 				["eco_blocks:replacement_3"] = "default:gravel"
 			}
 		}
+	},
+	transport = {
+		travel = function(_, _, _, progress, speed)
+			return {
+				-- relative position in the mapblock
+				position = { x = progress * 16, y = 3, z = 4 },
+				velocity = { x = speed, y = 0, z = 0 },
+				rotation = 0.2,
+				yaw = 0.3
+			}
+		end
 	}
 })
