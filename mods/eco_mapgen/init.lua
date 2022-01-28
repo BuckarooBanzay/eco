@@ -16,6 +16,3 @@ dofile(MP .. "/biomes/water.lua")
 dofile(MP .. "/biomes/snow.lua")
 dofile(MP .. "/biomes/ice.lua")
 dofile(MP .. "/biomes/desert.lua")
-
-dofile(MP .. "/decorations.lua")
-dofile(MP .. "/decorations/grass.lua")

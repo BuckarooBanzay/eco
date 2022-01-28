@@ -107,9 +107,4 @@ function eco_mapgen.render_mapblock(mapblock_pos)
 	--elseif info.type == "none" then
 		-- nothing here
 	end
-
-	-- render decorations if the mapgen_info is set (not "none")
-	if info.type ~= "none" then
-		eco_mapgen.render_decorations(mapblock_pos, info, biome_data, biome)
-	end
 end

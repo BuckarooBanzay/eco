@@ -58,6 +58,9 @@ local nodes = {
     ["obsidian_brick"] = {
         sounds = eco_nodes.node_sound_stone()
     },
+    ["desert_sand"] = {},
+    ["silver_sand"] = {},
+    ["sand"] = {},
     ["ice"] = {groups={slippery=3, cracky=1}},
     ["snow"] = {},
     ["glass"] = {
