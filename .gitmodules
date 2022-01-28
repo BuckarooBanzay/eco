@@ -1,18 +1,9 @@
 [submodule "mods/moreblocks"]
 	path = mods/moreblocks
 	url = https://github.com/minetest-mods/moreblocks.git
-[submodule "mods/default"]
-	path = mods/default
-	url = https://github.com/minetest-game/default.git
 [submodule "mods/player_api"]
 	path = mods/player_api
 	url = https://github.com/minetest-game/player_api.git
-[submodule "mods/flowers"]
-	path = mods/flowers
-	url = https://github.com/minetest-game/flowers.git
 [submodule "mods/mapblock_lib"]
 	path = mods/mapblock_lib
 	url = https://github.com/BuckarooBanzay/mapblock_lib.git
-[submodule "mods/farming"]
-	path = mods/farming
-	url = https://github.com/minetest-mirrors/farming.git
