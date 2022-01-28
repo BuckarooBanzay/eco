@@ -45,7 +45,7 @@ eco_mapgen.register_biome({
 	slope_outer_lower = MP .."/schematics/base/grass_slope_outer_corner_lower",
 
 	replace = {
-		["eco:grass"] = "default:sand",
+		["eco:grass"] = "eco:sand",
 		["eco:slope_grass"] = "eco:slope_sand",
 		["eco:slope_grass_inner_cut"] = "eco:slope_sand_inner_cut",
 		["eco:slope_grass_outer_cut"] = "eco:slope_sand_outer_cut"
@@ -71,7 +71,7 @@ eco_mapgen.register_biome({
 	slope_outer_lower = MP .."/schematics/base/grass_slope_outer_corner_lower",
 
 	replace = {
-		["eco:grass"] = "default:desert_sand",
+		["eco:grass"] = "eco:desert_sand",
 		["eco:slope_grass"] = "eco:slope_desert_sand",
 		["eco:slope_grass_inner_cut"] = "eco:slope_desert_sand_inner_cut",
 		["eco:slope_grass_outer_cut"] = "eco:slope_desert_sand_outer_cut"
