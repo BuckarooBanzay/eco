@@ -20,11 +20,11 @@ eco_mapgen.register_biome({
 	empty = MP .. "/schematics/base/air_full",
 
 	replace = {
-		["air"] = "default:water_source",
-		["default:dirt_with_grass"] = "default:dirt",
-		["default:stone"] = "default:dirt",
-		["eco_stairsplus:slope_dirt_with_grass"] = "default:water_source",
-		["eco_stairsplus:slope_dirt_with_grass_inner_cut"] = "default:water_source",
-		["eco_stairsplus:slope_dirt_with_grass_outer_cut"] = "default:water_source"
+		["air"] = "eco:water_source",
+		["eco:grass"] = "eco:dirt",
+		["eco:stone"] = "eco:dirt",
+		["eco:slope_grass"] = "eco:water_source",
+		["eco:slope_grass_inner_cut"] = "eco:water_source",
+		["eco:slope_grass_outer_cut"] = "eco:water_source"
 	}
 })

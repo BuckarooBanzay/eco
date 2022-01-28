@@ -9,6 +9,6 @@ eco_mapgen.register_biome({
 	full = MP .. "/schematics/base/air_full",
 
 	replace = {
-		["air"] = "default:stone"
+		["air"] = "eco:stone"
 	}
 })

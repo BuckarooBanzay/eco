@@ -33,13 +33,13 @@ building_lib.register({
 		transform = {
 			rotate = {
 				disable_orientation = {
-					["default:stonebrick"] = true
+					["eco:stonebrick"] = true
 				}
 			},
 			replace = {
-				["eco_blocks:replacement_1"] = "default:stonebrick",
-				["eco_blocks:replacement_2"] = "default:stonebrick",
-				["eco_blocks:replacement_3"] = "default:gravel"
+				["eco_blocks:replacement_1"] = "eco:stonebrick",
+				["eco_blocks:replacement_2"] = "eco:stonebrick",
+				["eco_blocks:replacement_3"] = "eco:gravel"
 			}
 		}
 	},

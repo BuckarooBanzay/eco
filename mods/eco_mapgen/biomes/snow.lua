@@ -20,9 +20,9 @@ eco_mapgen.register_biome({
 	slope_outer_lower = MP .."/schematics/base/grass_slope_outer_corner_lower",
 
 	replace = {
-		["default:dirt_with_grass"] = "default:dirt_with_snow",
-		["eco_stairsplus:slope_dirt_with_grass"] = "eco_stairsplus:slope_dirt_with_snow",
-		["eco_stairsplus:slope_dirt_with_grass_inner_cut"] = "eco_stairsplus:slope_dirt_with_snow_inner_cut",
-		["eco_stairsplus:slope_dirt_with_grass_outer_cut"] = "eco_stairsplus:slope_dirt_with_snow_outer_cut"
+		["eco:grass"] = "eco:dirt_with_snow",
+		["eco:slope_grass"] = "eco_stairsplus:slope_dirt_with_snow",
+		["eco:slope_grass_inner_cut"] = "eco_stairsplus:slope_dirt_with_snow_inner_cut",
+		["eco:slope_grass_outer_cut"] = "eco_stairsplus:slope_dirt_with_snow_outer_cut"
 	}
 })

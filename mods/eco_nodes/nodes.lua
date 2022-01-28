@@ -10,6 +10,9 @@ local nodes = {
     ["cobble"] = {
         sounds = eco_nodes.node_sound_stone()
     },
+    ["gravel"] = {
+        sounds = eco_nodes.node_sound_stone()
+    },
     ["stone"] = {
         sounds = eco_nodes.node_sound_stone()
     },

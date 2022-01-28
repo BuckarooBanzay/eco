@@ -20,9 +20,9 @@ eco_mapgen.register_biome({
 	slope_outer_lower = MP .."/schematics/base/grass_slope_outer_corner_lower",
 
 	replace = {
-		["default:dirt_with_grass"] = "default:ice",
-		["eco_stairsplus:slope_dirt_with_grass"] = "moreblocks:slope_ice",
-		["eco_stairsplus:slope_dirt_with_grass_inner_cut"] = "moreblocks:slope_ice_inner_cut",
-		["eco_stairsplus:slope_dirt_with_grass_outer_cut"] = "moreblocks:slope_ice_outer_cut"
+		["eco:grass"] = "default:ice",
+		["eco:slope_grass"] = "moreblocks:slope_ice",
+		["eco:slope_grass_inner_cut"] = "moreblocks:slope_ice_inner_cut",
+		["eco:slope_grass_outer_cut"] = "moreblocks:slope_ice_outer_cut"
 	}
 })

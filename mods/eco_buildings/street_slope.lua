@@ -28,12 +28,12 @@ building_lib.register({
 		transform = {
 			rotate = {
 				disable_orientation = {
-					["default:stonebrick"] = true
+					["eco:stonebrick"] = true
 				}
 			},
 			replace = {
 				["eco_blocks:replacement_slope_1"] = "moreblocks:slope_stonebrick",
-				["eco_blocks:replacement_2"] = "default:stonebrick",
+				["eco_blocks:replacement_2"] = "eco:stonebrick",
 				["eco_blocks:replacement_slope_3"] = "eco_stairsplus:slope_gravel"
 			}
 		}

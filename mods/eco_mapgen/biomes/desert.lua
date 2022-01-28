@@ -19,10 +19,10 @@ eco_mapgen.register_biome({
 	slope_outer_lower = MP .."/schematics/base/grass_slope_outer_corner_lower",
 
 	replace = {
-		["default:dirt_with_grass"] = "default:silver_sand",
-		["eco_stairsplus:slope_dirt_with_grass"] = "eco_stairsplus:slope_silver_sand",
-		["eco_stairsplus:slope_dirt_with_grass_inner_cut"] = "eco_stairsplus:slope_silver_sand_inner_cut",
-		["eco_stairsplus:slope_dirt_with_grass_outer_cut"] = "eco_stairsplus:slope_silver_sand_outer_cut"
+		["eco:grass"] = "default:silver_sand",
+		["eco:slope_grass"] = "eco_stairsplus:slope_silver_sand",
+		["eco:slope_grass_inner_cut"] = "eco_stairsplus:slope_silver_sand_inner_cut",
+		["eco:slope_grass_outer_cut"] = "eco_stairsplus:slope_silver_sand_outer_cut"
 	}
 })
 
@@ -45,10 +45,10 @@ eco_mapgen.register_biome({
 	slope_outer_lower = MP .."/schematics/base/grass_slope_outer_corner_lower",
 
 	replace = {
-		["default:dirt_with_grass"] = "default:sand",
-		["eco_stairsplus:slope_dirt_with_grass"] = "eco_stairsplus:slope_sand",
-		["eco_stairsplus:slope_dirt_with_grass_inner_cut"] = "eco_stairsplus:slope_sand_inner_cut",
-		["eco_stairsplus:slope_dirt_with_grass_outer_cut"] = "eco_stairsplus:slope_sand_outer_cut"
+		["eco:grass"] = "default:sand",
+		["eco:slope_grass"] = "eco_stairsplus:slope_sand",
+		["eco:slope_grass_inner_cut"] = "eco_stairsplus:slope_sand_inner_cut",
+		["eco:slope_grass_outer_cut"] = "eco_stairsplus:slope_sand_outer_cut"
 	}
 })
 
@@ -71,9 +71,9 @@ eco_mapgen.register_biome({
 	slope_outer_lower = MP .."/schematics/base/grass_slope_outer_corner_lower",
 
 	replace = {
-		["default:dirt_with_grass"] = "default:desert_sand",
-		["eco_stairsplus:slope_dirt_with_grass"] = "eco_stairsplus:slope_desert_sand",
-		["eco_stairsplus:slope_dirt_with_grass_inner_cut"] = "eco_stairsplus:slope_desert_sand_inner_cut",
-		["eco_stairsplus:slope_dirt_with_grass_outer_cut"] = "eco_stairsplus:slope_desert_sand_outer_cut"
+		["eco:grass"] = "default:desert_sand",
+		["eco:slope_grass"] = "eco_stairsplus:slope_desert_sand",
+		["eco:slope_grass_inner_cut"] = "eco_stairsplus:slope_desert_sand_inner_cut",
+		["eco:slope_grass_outer_cut"] = "eco_stairsplus:slope_desert_sand_outer_cut"
 	}
 })
