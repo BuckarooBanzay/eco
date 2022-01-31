@@ -54,7 +54,11 @@ building_lib.register_placement({
 		end
 	end,
 	place = function(mapblock_pos, building_def) end,
-	after_place = function(mapblock_pos, building_def) end
+	after_place = function(mapblock_pos, building_def) end,
+	-- validation function for startup-checks (optional)
+	validate = function(building_def)
+		return success, err_msg
+	end
 })
 
 -- registers a condition that checks for certain world conditions

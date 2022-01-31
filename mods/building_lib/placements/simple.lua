@@ -14,5 +14,8 @@ building_lib.register_placement({
 	after_place = function(mapblock_pos)
 		-- update connections
 		building_lib.update_connections(mapblock_pos)
+	end,
+	validate = function(building_def)
+		return mapblock_lib.validate(building_def.schematic)
 	end
 })

@@ -1,6 +1,5 @@
 eco_buildings = {}
 
---[[
 local MP = minetest.get_modpath("eco_buildings")
 
 dofile(MP .. "/conditions.lua")
@@ -15,4 +14,3 @@ dofile(MP .. "/tunnel.lua")
 dofile(MP .. "/street_slope.lua")
 dofile(MP .. "/pylon.lua")
 dofile(MP .. "/timber.lua")
---]]

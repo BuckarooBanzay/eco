@@ -52,6 +52,14 @@ local nodes = {
             }
         }
     },
+    ["pine_tree"] = {},
+    ["pine_wood"] = {},
+    ["steel_block"] = {},
+    ["copperpatina"] = {textures = {"moreblocks_copperpatina.png"}},
+    ["coal_checker"] = {textures = {"moreblocks_coal_checker.png"}},
+    ["clean_glass"] = {textures = {"moreblocks_clean_glass.png"}},
+    ["grey_bricks"] = {textures = {"moreblocks_grey_bricks.png"}},
+    ["cactus_brick"] = {textures = {"moreblocks_cactus_brick.png"}},
     ["obsidian_block"] = {
         sounds = eco_nodes.node_sound_stone()
     },

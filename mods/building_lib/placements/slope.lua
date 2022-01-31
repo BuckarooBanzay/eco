@@ -53,5 +53,12 @@ building_lib.register_placement({
 
 		building_lib.update_connections(mapblock_pos)
 		building_lib.update_connections(mapblock_pos_upper)
+	end,
+	validate = function(building_def)
+		local success, err_msg = mapblock_lib.validate(building_def.schematics.slope_lower)
+		if not success then
+			return success, err_msg
+		end
+		return mapblock_lib.validate(building_def.schematics.slope_upper)
 	end
 })
