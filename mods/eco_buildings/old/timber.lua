@@ -14,14 +14,5 @@ building_lib.register({
 	schematic = MP .. "/schematics/timber_plantation",
 	conditions = {
 		{ not_in_water = true, on_flat_surface = true }
-	},
-	timer = {
-		interval = 2,
-		run = function(mapblock_pos)
-			local resources = eco_mapgen.count_resources(mapblock_pos, 1)
-			local trees = resources.trees or 0
-			local inv = building_lib.get_inventory(mapblock_pos)
-			inv.add("tree", trees)
-		end
 	}
 })

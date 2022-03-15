@@ -5,8 +5,6 @@
 ### Public
 
 ```lua
-local resources = eco_mapgen.count_resources(mapblock_pos, radius)
-
 eco_mapgen.register_biome({
 	name = "grass",
 
