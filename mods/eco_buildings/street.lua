@@ -35,11 +35,6 @@ building_lib.register({
 				disable_orientation = {
 					["eco:stonebrick"] = true
 				}
-			},
-			replace = {
-				["eco_blocks:replacement_1"] = "eco:stonebrick",
-				["eco_blocks:replacement_2"] = "eco:stonebrick",
-				["eco_blocks:replacement_3"] = "eco:gravel"
 			}
 		}
 	},

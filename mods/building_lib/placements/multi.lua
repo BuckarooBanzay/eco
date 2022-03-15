@@ -18,21 +18,11 @@ building_lib.register_placement({
 	place = function(mapblock_pos, building_def)
 		local options = building_lib.get_deserialize_options(mapblock_pos, building_def)
 
-		local success, result = mapblock_lib.deserialize_multi(mapblock_pos, building_def.schematic, options)
-		if not success then
-			return false, result
-		end
-
-		local iterator = result
-
-		-- build async
-		local function worker()
-			result = iterator()
-			if result == true then
-				minetest.after(1, worker)
+		mapblock_lib.deserialize_multi(mapblock_pos, building_def.schematic, {
+			mapblock_options = function()
+				return options
 			end
-		end
-		worker()
+		})
 
 		local _, size = mapblock_lib.get_multi_size(building_def.schematic)
 		local affected_offsets = {}
