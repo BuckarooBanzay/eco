@@ -3,8 +3,8 @@
 local nodes = {
     ["brick"] = {
         tiles= {
-            "default_brick.png^[transformFX",
-            "default_brick.png"
+            "eco_brick.png^[transformFX",
+            "eco_brick.png"
         }
     },
     ["cobble"] = {
@@ -46,8 +46,8 @@ local nodes = {
     ["grass"] = {
         sounds = eco_nodes.node_sound_dirt(),
         tiles = {
-            "default_grass.png", "default_dirt.png", {
-                name = "default_dirt.png^default_grass_side.png",
+            "eco_grass.png", "eco_dirt.png", {
+                name = "eco_dirt.png^eco_grass_side.png",
 			    tileable_vertical = false
             }
         }
@@ -72,7 +72,7 @@ local nodes = {
     ["ice"] = {groups={slippery=3, cracky=1}},
     ["snow"] = {},
     ["glass"] = {
-        tiles = {"default_glass.png", "default_glass_detail.png"},
+        tiles = {"eco_glass.png", "eco_glass_detail.png"},
         drawtype = "glasslike_framed_optional",
         use_texture_alpha = "clip",
         sunlight_propagates = true,
@@ -82,7 +82,7 @@ local nodes = {
 
 for name, def in pairs(nodes) do
     def.description = "eco '" .. name .. "' node"
-    def.tiles = def.tiles or {"default_" .. name .. ".png"}
+    def.tiles = def.tiles or {"eco_" .. name .. ".png"}
     def.groups = def.groups or { cracky = 1 }
 
     minetest.register_node(":eco:" .. name, def)

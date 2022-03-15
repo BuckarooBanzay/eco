@@ -5,7 +5,7 @@ minetest.register_node(":eco:water_source", {
 	waving = 3,
 	tiles = {
 		{
-			name = "default_river_water_source_animated.png",
+			name = "eco_river_water_source_animated.png",
 			backface_culling = false,
 			animation = {
 				type = "vertical_frames",
@@ -15,7 +15,7 @@ minetest.register_node(":eco:water_source", {
 			},
 		},
 		{
-			name = "default_river_water_source_animated.png",
+			name = "eco_river_water_source_animated.png",
 			backface_culling = true,
 			animation = {
 				type = "vertical_frames",
@@ -46,10 +46,10 @@ minetest.register_node(":eco_nodes:water_flowing", {
 	description = "Flowing Water",
 	drawtype = "flowingliquid",
 	waving = 3,
-	tiles = {"default_river_water.png"},
+	tiles = {"eco_river_water.png"},
 	special_tiles = {
 		{
-			name = "default_river_water_flowing_animated.png",
+			name = "eco_river_water_flowing_animated.png",
 			backface_culling = false,
 			animation = {
 				type = "vertical_frames",
@@ -59,7 +59,7 @@ minetest.register_node(":eco_nodes:water_flowing", {
 			},
 		},
 		{
-			name = "default_river_water_flowing_animated.png",
+			name = "eco_river_water_flowing_animated.png",
 			backface_culling = true,
 			animation = {
 				type = "vertical_frames",
@@ -94,7 +94,7 @@ minetest.register_node(":eco_nodes:lava_source", {
 	drawtype = "liquid",
 	tiles = {
 		{
-			name = "default_lava_source_animated.png",
+			name = "eco_lava_source_animated.png",
 			backface_culling = false,
 			animation = {
 				type = "vertical_frames",
@@ -104,7 +104,7 @@ minetest.register_node(":eco_nodes:lava_source", {
 			},
 		},
 		{
-			name = "default_lava_source_animated.png",
+			name = "eco_lava_source_animated.png",
 			backface_culling = true,
 			animation = {
 				type = "vertical_frames",
@@ -136,10 +136,10 @@ minetest.register_node(":eco_nodes:lava_source", {
 minetest.register_node(":eco_nodes:lava_flowing", {
 	description = "Flowing Lava",
 	drawtype = "flowingliquid",
-	tiles = {"default_lava.png"},
+	tiles = {"eco_lava.png"},
 	special_tiles = {
 		{
-			name = "default_lava_flowing_animated.png",
+			name = "eco_lava_flowing_animated.png",
 			backface_culling = false,
 			animation = {
 				type = "vertical_frames",
@@ -149,7 +149,7 @@ minetest.register_node(":eco_nodes:lava_flowing", {
 			},
 		},
 		{
-			name = "default_lava_flowing_animated.png",
+			name = "eco_lava_flowing_animated.png",
 			backface_culling = true,
 			animation = {
 				type = "vertical_frames",

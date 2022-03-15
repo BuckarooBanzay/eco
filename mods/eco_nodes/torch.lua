@@ -3,7 +3,7 @@ minetest.register_node(":eco:torch_wall", {
 	drawtype = "mesh",
 	mesh = "torch_wall.obj",
 	tiles = {{
-		    name = "default_torch_on_floor_animated.png",
+		    name = "eco_torch_on_floor_animated.png",
 		    animation = {type = "vertical_frames", aspect_w = 16, aspect_h = 16, length = 3.3}
 	}},
 	use_texture_alpha = "clip",
