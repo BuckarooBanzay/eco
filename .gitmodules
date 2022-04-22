@@ -7,3 +7,6 @@
 [submodule "mods/mapblock_lib"]
 	path = mods/mapblock_lib
 	url = https://github.com/BuckarooBanzay/mapblock_lib.git
+[submodule "mods/mtzip"]
+	path = mods/mtzip
+	url = https://github.com/BuckarooBanzay/mtzip

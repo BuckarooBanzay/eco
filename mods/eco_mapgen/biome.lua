@@ -3,6 +3,38 @@ eco_mapgen.biomes = {}
 
 function eco_mapgen.register_biome(def)
 	assert(def.name)
+	assert(type(def.catalog) == "string")
+	local catalog = mapblock_lib.get_catalog(def.catalog)
+
+	-- ${type}.${angle}
+	local cache = {}
+	cache.flat = { [0] = catalog:prepare({x=0, y=1, z=1}) }
+	cache.underground = { [0] = catalog:prepare({x=0, y=0, z=1}) }
+
+	cache.slope_lower = {}
+	cache.slope_upper = {}
+	cache.slope_inner_lower = {}
+	cache.slope_inner_upper = {}
+	cache.slope_outer_lower = {}
+	cache.slope_outer_upper = {}
+	for _, angle in ipairs({0,90,180,270}) do
+		local options = {
+			transform = {
+				rotate = {
+					axis = "y",
+					angle = angle
+				}
+			}
+		}
+		cache.slope_lower[angle] = catalog:prepare({x=0,y=0,z=0}, options)
+		cache.slope_upper[angle] = catalog:prepare({x=0,y=1,z=0}, options)
+		cache.slope_inner_lower[angle] = catalog:prepare({x=1,y=0,z=1}, options)
+		cache.slope_inner_upper[angle] = catalog:prepare({x=1,y=1,z=1}, options)
+		cache.slope_outer_lower[angle] = catalog:prepare({x=1,y=0,z=0}, options)
+		cache.slope_outer_upper[angle] = catalog:prepare({x=1,y=1,z=0}, options)
+	end
+
+	def.cache = cache
 	eco_mapgen.biomes[def.name] = def
 end
 
