@@ -25,7 +25,7 @@ function eco_mapgen.render_mapblock(mapblock_pos)
 		})
 	end
 
-	if biome.cache[info.type] then
+	if biome and biome.cache[info.type] then
 		local angle = get_angle(info.direction)
 		if biome.cache[info.type][angle] then
 			biome.cache[info.type][angle](mapblock_pos)
