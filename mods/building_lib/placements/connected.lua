@@ -21,16 +21,19 @@ local function is_connecting(mapblock_pos, group, direction)
 	return false
 end
 
-local function place_street(mapblock_pos, building_def)
-	local schematics = building_def.schematics
+local POS_STRAIGHT = {x=0,y=0,z=0}
+local POS_ALL_SIDES = {x=1,y=0,z=0}
+local POS_THREE_SIDES = {x=1,y=0,z=1}
+local POS_CORNER = {x=0,y=0,z=1}
 
+local function place_street(mapblock_pos, building_def)
 	-- check connections on flat surface
 	local xplus = is_connecting(mapblock_pos, "street", {x=1, y=0, z=0})
 	local xminus = is_connecting(mapblock_pos, "street", {x=-1, y=0, z=0})
 	local zplus = is_connecting(mapblock_pos, "street", {x=0, y=0, z=1})
 	local zminus = is_connecting(mapblock_pos, "street", {x=0, y=0, z=-1})
 
-	local schematic = schematics.straight
+	local catalog_pos = POS_STRAIGHT
 
 	local options = building_lib.get_deserialize_options(mapblock_pos, building_def)
 
@@ -41,61 +44,62 @@ local function place_street(mapblock_pos, building_def)
 
 	if xplus and xminus and zplus and zminus then
 		-- all sides
-		schematic = schematics.all_sides
+		catalog_pos = POS_ALL_SIDES
 
 	elseif not xplus and xminus and zplus and zminus then
 		-- three sides 90°
-		schematic = schematics.three_sides
+		catalog_pos = POS_THREE_SIDES
 		options.transform.rotate.angle = 90
 
 	elseif xplus and not xminus and zplus and zminus then
 		-- three sides 270°
-		schematic = schematics.three_sides
+		catalog_pos = POS_THREE_SIDES
 		options.transform.rotate.angle = 270
 
 	elseif xplus and xminus and not zplus and zminus then
 		-- three sides 0°
-		schematic = schematics.three_sides
+		catalog_pos = POS_THREE_SIDES
 		options.transform.rotate.angle = 0
 
 	elseif xplus and xminus and zplus and not zminus then
 		-- three sides 180°
-		schematic = schematics.three_sides
+		catalog_pos = POS_THREE_SIDES
 		options.transform.rotate.angle = 180
 
 	elseif xplus and not xminus and zplus and not zminus then
 		-- corner 0°
-		schematic = schematics.corner
+		catalog_pos = POS_CORNER
 		options.transform.rotate.angle = 0
 
 	elseif not xplus and xminus and zplus and not zminus then
 		-- corner 270°
-		schematic = schematics.corner
+		catalog_pos = POS_CORNER
 		options.transform.rotate.angle = 270
 
 	elseif xplus and not xminus and not zplus and zminus then
 		-- corner 90°
-		schematic = schematics.corner
+		catalog_pos = POS_CORNER
 		options.transform.rotate.angle = 90
 
 	elseif not xplus and xminus and not zplus and zminus then
 		-- corner 180°
-		schematic = schematics.corner
+		catalog_pos = POS_CORNER
 		options.transform.rotate.angle = 180
 
 	elseif xplus or xminus then
 		-- straight 0°
-		schematic = schematics.straight
+		catalog_pos = POS_STRAIGHT
 		options.transform.rotate.angle = 0
 
 	elseif zplus or zminus then
 		-- straight 90°
-		schematic = schematics.straight
+		catalog_pos = POS_STRAIGHT
 		options.transform.rotate.angle = 90
 
 	end
 
-	mapblock_lib.deserialize(mapblock_pos, schematic, options)
+	local catalog = mapblock_lib.get_catalog(building_def.catalog)
+	catalog:deserialize(catalog_pos, mapblock_pos, options)
 end
 
 

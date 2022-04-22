@@ -23,12 +23,7 @@ building_lib.register({
 		{ not_on_biome = "water", on_flat_surface = true },
 		{ near_support = true }
 	},
-	schematics = {
-		straight = MP .. "/schematics/street/street_straight",
-		all_sides = MP .. "/schematics/street/street_all_sides",
-		corner = MP .. "/schematics/street/street_corner",
-		three_sides = MP .. "/schematics/street/street_three_sides"
-	},
+	catalog = MP .. "/schematics/street.zip",
 	deserialize_options = {
 		transform = {
 			rotate = {
@@ -37,17 +32,5 @@ building_lib.register({
 				}
 			}
 		}
-	},
-	transport = {
-		-- 16 nodes / 10 seconds
-		traversal_time = 10,
-		travel = function(_, _, _, progress)
-			return {
-				-- relative position in the mapblock
-				position = { x = progress * 16, y = 2, z = 5 },
-				velocity = { x = 1.6, y = 0, z = 0 },
-				rotation = { x = 0, y = 1.5 * math.pi, z = 0}
-			}
-		end
 	}
 })
