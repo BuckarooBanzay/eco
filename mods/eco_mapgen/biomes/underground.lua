@@ -1,14 +1,10 @@
 local MP = minetest.get_modpath("eco_mapgen")
 
+-- TODO: this biome has only 1 used mapblock, the others just take up ram
 eco_mapgen.register_biome({
 	name = "underground",
 	match = function(_, info)
 		return info.type == "underground"
 	end,
-
-	full = MP .. "/schematics/base/air_full",
-
-	replace = {
-		["air"] = "eco:stone"
-	}
+	catalog = MP .."/schematics/mapgen_grass.zip"
 })
