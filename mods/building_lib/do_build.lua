@@ -40,10 +40,5 @@ function building_lib.do_build(mapblock_pos, building_def)
 		placement.after_place(mapblock_pos, building_def)
 	end
 
-	-- start timer, if defined
-	if building_def.timer then
-		building_lib.start_timer(mapblock_pos, building_def)
-	end
-
 	return true
 end
