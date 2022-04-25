@@ -21,6 +21,7 @@ building_lib.register({
 	},
 	conditions = {
 		{ not_on_biome = "water", on_flat_surface = true },
+--		{ not_on_biome = "water", on_slope_lower = true },
 		{ near_support = true }
 	},
 	catalog = MP .. "/schematics/street.zip",

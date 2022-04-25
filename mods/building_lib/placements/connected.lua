@@ -25,6 +25,8 @@ local POS_STRAIGHT = {x=0,y=0,z=0}
 local POS_ALL_SIDES = {x=1,y=0,z=0}
 local POS_THREE_SIDES = {x=1,y=0,z=1}
 local POS_CORNER = {x=0,y=0,z=1}
+--local POS_SLOPE_LOWER = {x=0,y=0,z=2}
+--local POS_SLOPE_UPPER = {x=0,y=1,z=2}
 
 local function place_street(mapblock_pos, building_def)
 	-- check connections on flat surface
