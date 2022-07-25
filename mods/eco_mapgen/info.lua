@@ -58,7 +58,7 @@ local function get_info(mapblock)
 	local height = eco_mapgen.get_biome_data(mapblock).height
 
 	if mapblock.y < height then
-		return { type = "full" }
+		return { type = "full", rotation = 0 }
 	end
 
 	if mapblock.y == height then

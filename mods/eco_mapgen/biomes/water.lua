@@ -9,6 +9,7 @@ eco_mapgen.register_biome({
 
 	replace = {
 		["air"] = "eco:water_source",
+		["eco:stone"] = "eco:water_source",
 		["eco:slope_stone"] = "eco:water_source",
 		["eco:slope_stone_inner"] = "eco:water_source",
 		["eco:slope_stone_outer"] = "eco:water_source"
