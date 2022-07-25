@@ -1,36 +1,36 @@
-local function get_slope_direction(hm)
+local function get_slope_rotation(hm)
 	if hm[-1][0] and not hm[1][0] and not hm[0][-1] and not hm[0][1] then
-		return "x-"
+		return 270
 	elseif not hm[-1][0] and hm[1][0] and not hm[0][-1] and not hm[0][1] then
-		return "x+"
+		return 90
 	elseif not hm[-1][0] and not hm[1][0] and hm[0][-1] and not hm[0][1] then
-		return "z-"
+		return 180
 	elseif not hm[-1][0] and not hm[1][0] and not hm[0][-1] and hm[0][1] then
-		return "z+"
+		return 0
 	end
 end
 
-local function get_slope_inner_direction(hm)
+local function get_slope_inner_rotation(hm)
 	if hm[0][-1] and hm[-1][0] and not hm[0][1] and not hm[1][0] then
-		return "x-z-"
+		return 270
 	elseif not hm[0][-1] and hm[-1][0] and hm[0][1] and not hm[1][0] then
-		return "x-z+"
+		return 0
 	elseif not hm[0][-1] and not hm[-1][0] and hm[0][1] and hm[1][0] then
-		return "x+z+"
+		return 90
 	elseif hm[0][-1] and not hm[-1][0] and not hm[0][1] and hm[1][0] then
-		return "x+z-"
+		return 180
 	end
 end
 
-local function get_slope_outer_direction(hm)
+local function get_slope_outer_rotation(hm)
 	if hm[-1][-1] and not hm[-1][1] and not hm[1][1] and not hm[1][-1] then
-		return "x-z-"
+		return 270
 	elseif not hm[-1][-1] and hm[-1][1] and not hm[1][1] and not hm[1][-1] then
-		return "x-z+"
+		return 0
 	elseif not hm[-1][-1] and not hm[-1][1] and hm[1][1] and not hm[1][-1] then
-		return "x+z+"
+		return 90
 	elseif not hm[-1][-1] and not hm[-1][1] and not hm[1][1] and hm[1][-1] then
-		return "x+z-"
+		return 180
 	end
 end
 
@@ -67,28 +67,28 @@ local function get_info(mapblock)
 		local hm, elevated_neighbor_count = get_height_map(mapblock, height)
 
 		if elevated_neighbor_count == 0 then
-			return { type = "flat" }
+			return { type = "flat", rotation = 0 }
 		end
 
 		-- straight slopes
-		local direction = get_slope_direction(hm)
-		if direction then
-			return { type = "slope", direction = direction }
+		local rotation = get_slope_rotation(hm)
+		if rotation then
+			return { type = "slope", rotation = rotation }
 		end
 
 		-- z- / x- / z+ / x+
-		direction = get_slope_inner_direction(hm)
-		if direction then
-			return { type = "slope_inner", direction = direction }
+		rotation = get_slope_inner_rotation(hm)
+		if rotation then
+			return { type = "slope_inner", rotation = rotation }
 		end
 
-		direction = get_slope_outer_direction(hm)
-		if direction then
-			return { type = "slope_outer", direction = direction }
+		rotation = get_slope_outer_rotation(hm)
+		if rotation then
+			return { type = "slope_outer", rotation = rotation }
 		end
 
-		-- no direction
-		return { type = "full" }
+		-- no rotation
+		return { type = "full", rotation = 0 }
 	end
 
 	return { type = "none" }

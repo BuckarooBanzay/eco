@@ -1,16 +1,4 @@
 
-local function get_angle(direction)
-	-- slope looks into z+ (normal slope) or x-/z+ (diagonal slope) direction
-	if direction == "z-" or direction == "x+z-" then
-		return 180
-	elseif direction == "x+" or direction == "x+z+" then
-		return 90
-	elseif direction == "x-" or direction == "x-z-" then
-		return 270
-	else
-		return 0
-	end
-end
 
 function eco_mapgen.render_mapblock(mapblock_pos)
 	local info = eco_mapgen.get_info(mapblock_pos)
@@ -25,10 +13,7 @@ function eco_mapgen.render_mapblock(mapblock_pos)
 		})
 	end
 
-	if biome and biome.cache[info.type] then
-		local angle = get_angle(info.direction)
-		if biome.cache[info.type][angle] then
-			biome.cache[info.type][angle](mapblock_pos)
-		end
+	if biome and biome.cache[info.type] and biome.cache[info.type][info.rotation] then
+		biome.cache[info.type][info.rotation](mapblock_pos)
 	end
 end
