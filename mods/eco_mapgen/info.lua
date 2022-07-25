@@ -55,11 +55,10 @@ local function get_height_map(mapblock, mapblock_height)
 end
 
 local function get_info(mapblock)
-	local lower_mapblock = { x=mapblock.x, y=mapblock.y-1, z=mapblock.z }
 	local height = eco_mapgen.get_biome_data(mapblock).height
 
 	if mapblock.y < height then
-		return { type = "underground" }
+		return { type = "full" }
 	end
 
 	if mapblock.y == height then
@@ -74,46 +73,22 @@ local function get_info(mapblock)
 		-- straight slopes
 		local direction = get_slope_direction(hm)
 		if direction then
-			return { type = "slope_lower", direction = direction }
+			return { type = "slope", direction = direction }
 		end
 
 		-- z- / x- / z+ / x+
 		direction = get_slope_inner_direction(hm)
 		if direction then
-			return { type = "slope_inner_lower", direction = direction }
+			return { type = "slope_inner", direction = direction }
 		end
 
 		direction = get_slope_outer_direction(hm)
 		if direction then
-			return { type = "slope_outer_lower", direction = direction }
+			return { type = "slope_outer", direction = direction }
 		end
 
 		-- no direction
-		return { type = "flat" }
-	end
-
-	if mapblock.y == (height + 1) then
-		-- check upper slopes just one mapblock above the flat terrain
-
-		-- collect neighbor elevations and count
-		local hm = get_height_map(lower_mapblock, height)
-
-		-- straight slopes
-		local direction = get_slope_direction(hm)
-		if direction then
-			return { type = "slope_upper", direction = direction }
-		end
-
-		-- z- / x- / z+ / x+
-		direction = get_slope_inner_direction(hm)
-		if direction then
-			return { type = "slope_inner_upper", direction = direction }
-		end
-
-		direction = get_slope_outer_direction(hm)
-		if direction then
-			return { type = "slope_outer_upper", direction = direction }
-		end
+		return { type = "full" }
 	end
 
 	return { type = "none" }

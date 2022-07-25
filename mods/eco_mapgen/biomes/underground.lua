@@ -6,5 +6,5 @@ eco_mapgen.register_biome({
 	match = function(_, info)
 		return info.type == "underground"
 	end,
-	catalog = MP .."/schematics/mapgen_grass.zip"
+	catalog = MP .."/schematics/terrain.zip"
 })

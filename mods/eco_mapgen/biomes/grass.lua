@@ -6,5 +6,5 @@ eco_mapgen.register_biome({
 		temperature = 50,
 		humidity = 50
 	},
-	catalog = MP .."/schematics/mapgen_grass.zip"
+	catalog = MP .."/schematics/terrain.zip"
 })
