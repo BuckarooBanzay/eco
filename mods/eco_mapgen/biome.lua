@@ -3,48 +3,12 @@ eco_mapgen.biomes = {}
 
 function eco_mapgen.register_biome(def)
 	assert(def.name)
-	assert(type(def.catalog) == "string")
-	local catalog = mapblock_lib.get_catalog(def.catalog)
-	local plain_options = {
-		transform = {
-			replace = def.replace
-		}
-	}
-
-	-- prepare all mapblocks in the catalog with their rotations
-	-- ${type}.${angle}
-	local cache = {}
-	cache.full = { [0] = catalog:prepare({x=0, y=0, z=0}, plain_options) }
-
-	cache.slope = {}
-	cache.slope_inner = {}
-	cache.slope_outer = {}
-
-	for _, angle in ipairs({0,90,180,270}) do
-		local options = {
-			transform = {
-				rotate = {
-					axis = "y",
-					angle = angle
-				},
-				replace = def.replace
-			}
-		}
-		cache.slope[angle] = catalog:prepare({x=2,y=0,z=0}, options)
-		cache.slope_inner[angle] = catalog:prepare({x=1,y=0,z=0}, options)
-		cache.slope_outer[angle] = catalog:prepare({x=3,y=0,z=0}, options)
-	end
-
-	def.cache = cache
 	eco_mapgen.biomes[def.name] = def
 end
 
-local function get_score(biome, mapblock_pos, biome_data)
+local function get_score(biome, biome_data)
 	local score = 0
 
-	if biome.match.min_height and mapblock_pos.y < biome.match.min_height then
-		return
-	end
 	if biome.match.temperature then
 		score = score - math.abs(biome_data.temperature - biome.match.temperature)
 	end
@@ -68,7 +32,7 @@ function eco_mapgen.get_biome(mapblock_pos, info, biome_data)
 			return biome
 		elseif type(biome.match) == "table" then
 			-- matching table, evaluate
-			local score = get_score(biome, mapblock_pos, biome_data)
+			local score = get_score(biome, biome_data)
 
 			if score and (not selected_biome or selected_score < score) then
 				-- current score higher or no biome selected at all
