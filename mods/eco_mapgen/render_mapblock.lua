@@ -29,7 +29,7 @@ function eco_mapgen.render_mapblock(mapblock_pos)
 		return
 	end
 
-	if mapblock_pos.y < -1 then
+	if mapblock_pos.y < 0 then
 		-- water
 		water_full(mapblock_pos)
 		return
