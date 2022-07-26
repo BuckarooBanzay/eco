@@ -9,6 +9,7 @@ local jobs = {}
 
 local MP = minetest.get_modpath(minetest.get_current_modname())
 table.insert(jobs, loadfile(MP .. "/tests/mapgen.lua")(pos1, pos2))
+table.insert(jobs, loadfile(MP .. "/tests/eco_data.lua")())
 
 local job_index = 1
 

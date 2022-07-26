@@ -1,3 +1,7 @@
+globals = {
+	"eco_data"
+}
+
 read_globals = {
 	-- Stdlib
 	string = {fields = {"split", "trim"}},
@@ -9,6 +13,7 @@ read_globals = {
 	"dump", "dump2", "vector",
 	"VoxelArea",
 
+
 	-- deps
-	"eco_data"
+	"mapblock_lib"
 }
