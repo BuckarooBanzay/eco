@@ -34,41 +34,41 @@ local function get_slope_outer_rotation(hm)
 	end
 end
 
-local function get_height_map(mapblock, mapblock_height)
+local function get_height_map(mapblock_pos, mapblock_height)
 	-- collect neighbor elevations and count
 	local hm = {}
-	local elevated_neighbor_count = 0
 	for x=-1,1 do
 		hm[x] = hm[x] or {}
 		for z=-1,1 do
-			local neighbor_height = eco_mapgen.get_biome_data({ x=mapblock.x+x, z=mapblock.z+z }).height
+			local neighbor_height = eco_mapgen.get_biome_data({ x=mapblock_pos.x+x, z=mapblock_pos.z+z }).height
 
 			if neighbor_height > mapblock_height then
 				-- neighbor is higher
 				hm[x][z] = true
-				elevated_neighbor_count = elevated_neighbor_count + 1
 			end
 		end
 	end
 
-	return hm, elevated_neighbor_count
+	return hm
 end
 
-local function get_info(mapblock)
-	local height = eco_mapgen.get_biome_data(mapblock).height
+local function get_slope_info(mapblock_pos)
+	local height = eco_mapgen.get_biome_data(mapblock_pos).height
 
-	if mapblock.y < height then
+	-- above heightmap
+	if mapblock_pos.y > height then
+		return { type = "none" }
+	end
+
+	-- below heightmap
+	if mapblock_pos.y < height then
 		return { type = "full", rotation = 0 }
 	end
 
-	if mapblock.y == height then
-		-- check slopes on flat terrain
-		-- collect neighbor elevations and count
-		local hm, elevated_neighbor_count = get_height_map(mapblock, height)
-
-		if elevated_neighbor_count == 0 then
-			return { type = "flat", rotation = 0 }
-		end
+	-- surface block
+	if mapblock_pos.y == height then
+		-- collect neighbor elevations
+		local hm = get_height_map(mapblock_pos, height)
 
 		-- straight slopes
 		local rotation = get_slope_rotation(hm)
@@ -90,17 +90,15 @@ local function get_info(mapblock)
 		-- no rotation
 		return { type = "full", rotation = 0 }
 	end
-
-	return { type = "none" }
 end
 
 local cache = {}
 
 -- cached access
-function eco_mapgen.get_info(mapblock_pos)
+function eco_mapgen.get_slope_info(mapblock_pos)
 	local key = minetest.hash_node_position(mapblock_pos)
 	if not cache[key] then
-		cache[key] = get_info(mapblock_pos)
+		cache[key] = get_slope_info(mapblock_pos)
 	end
 
 	return cache[key]

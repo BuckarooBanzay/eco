@@ -19,15 +19,15 @@ local function get_score(biome, biome_data)
 	return score
 end
 
-function eco_mapgen.get_biome(mapblock_pos, info, biome_data)
-	info = info or eco_mapgen.get_info(mapblock_pos)
+function eco_mapgen.get_biome(mapblock_pos, slope_info, biome_data)
+	slope_info = slope_info or eco_mapgen.get_slope_info(mapblock_pos)
 	biome_data = biome_data or eco_mapgen.get_biome_data(mapblock_pos)
 
 	local selected_biome
 	local selected_score
 
 	for _, biome in pairs(eco_mapgen.biomes) do
-		if type(biome.match) == "function" and biome.match(mapblock_pos, info, biome_data.height) then
+		if type(biome.match) == "function" and biome.match(mapblock_pos, slope_info, biome_data.height) then
 			-- hard-wired match() function, return fast
 			return biome
 		elseif type(biome.match) == "table" then

@@ -28,7 +28,7 @@ minetest.register_chatcommand("mapgen_info", {
 
 		local pos = player:get_pos()
 		local mapblock_pos = mapblock_lib.get_mapblock(pos)
-		local info = eco_mapgen.get_info(mapblock_pos)
+		local info = eco_mapgen.get_slope_info(mapblock_pos)
 
 		return true, dump(info)
 	end

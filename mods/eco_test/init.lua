@@ -2,7 +2,7 @@ if not minetest.settings:get_bool("enable_integration_test") then
     return
 end
 
-local pos1 = vector.new(0,0,0)
+local pos1 = vector.new(-30,-30,-30)
 local pos2 = vector.new(30,30,30)
 
 local jobs = {}

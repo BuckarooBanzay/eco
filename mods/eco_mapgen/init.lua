@@ -2,7 +2,7 @@ eco_mapgen = {}
 
 local MP = minetest.get_modpath("eco_mapgen")
 
-dofile(MP .. "/info.lua")
+dofile(MP .. "/slope_info.lua")
 dofile(MP .. "/mapgen.lua")
 dofile(MP .. "/render_mapblock.lua")
 dofile(MP .. "/get_biome_data.lua")

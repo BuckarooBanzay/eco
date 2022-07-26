@@ -1,7 +1,7 @@
 building_lib.register_condition({
     name = "on_flat_surface",
     can_build = function(mapblock_pos)
-        local mapgen_info = eco_mapgen.get_info(mapblock_pos)
+        local mapgen_info = eco_mapgen.get_slope_info(mapblock_pos)
         local mapgen_matches = mapgen_info and mapgen_info.type == "flat"
         if not mapgen_matches then
             return false, "landscape not flat"
@@ -14,7 +14,7 @@ building_lib.register_condition({
 building_lib.register_condition({
     name = "on_slope_lower",
     can_build = function(mapblock_pos)
-        local mapgen_info = eco_mapgen.get_info(mapblock_pos)
+        local mapgen_info = eco_mapgen.get_slope_info(mapblock_pos)
         local mapgen_matches = mapgen_info and mapgen_info.type == "slope_lower"
         if not mapgen_matches then
             return false, "landscape not sloped"
@@ -27,7 +27,7 @@ building_lib.register_condition({
 building_lib.register_condition({
     name = "on_mapgen_type",
     can_build = function(mapblock_pos, _, mapgen_type)
-        local mapgen_info = eco_mapgen.get_info(mapblock_pos)
+        local mapgen_info = eco_mapgen.get_slope_info(mapblock_pos)
         local mapgen_matches = mapgen_info and mapgen_info.type == mapgen_type
         if not mapgen_matches then
             return false, "landscape not of type: " .. mapgen_type
