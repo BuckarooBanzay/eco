@@ -50,11 +50,11 @@ function eco_data.set(mapblock_pos, data)
 end
 
 function eco_data.merge(mapblock_pos, merge_data)
-    local data = eco_data.get(mapblock_pos)
+    local data = eco_data.get(mapblock_pos) or {}
     for k,v in pairs(merge_data) do
         data[k] = v
     end
-    eco_data.set(data)
+    eco_data.set(mapblock_pos, data)
 end
 
 minetest.register_chatcommand("tileset_info", {
