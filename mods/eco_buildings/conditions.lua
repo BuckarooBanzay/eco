@@ -1,10 +1,10 @@
 building_lib.register_condition({
-    name = "on_flat_surface",
+    name = "on_solid_underground",
     can_build = function(mapblock_pos)
-        local mapgen_info = eco_mapgen.get_slope_info(mapblock_pos)
-        local mapgen_matches = mapgen_info and mapgen_info.type == "flat"
-        if not mapgen_matches then
-            return false, "landscape not flat"
+        local mapblock_pos_below = vector.add(mapblock_pos, {x=0, y=-1, z=0})
+        local mapgen_info_below = eco_mapgen.get_info(mapblock_pos_below)
+        if not mapgen_info_below.solid then
+            return false, "not on solid underground"
         else
             return true
         end
@@ -12,31 +12,16 @@ building_lib.register_condition({
 })
 
 building_lib.register_condition({
-    name = "on_slope_lower",
+    name = "on_slope",
     can_build = function(mapblock_pos)
-        local mapgen_info = eco_mapgen.get_slope_info(mapblock_pos)
-        local mapgen_matches = mapgen_info and mapgen_info.type == "slope_lower"
-        if not mapgen_matches then
+        local mapgen_info = eco_mapgen.get_info(mapblock_pos)
+        if not mapgen_info.slope then
             return false, "landscape not sloped"
         else
             return true
         end
     end
 })
-
-building_lib.register_condition({
-    name = "on_mapgen_type",
-    can_build = function(mapblock_pos, _, mapgen_type)
-        local mapgen_info = eco_mapgen.get_slope_info(mapblock_pos)
-        local mapgen_matches = mapgen_info and mapgen_info.type == mapgen_type
-        if not mapgen_matches then
-            return false, "landscape not of type: " .. mapgen_type
-        else
-            return true
-        end
-    end
-})
-
 
 building_lib.register_condition({
     name = "on_biome",
@@ -70,7 +55,7 @@ building_lib.register_condition({
         if groups[group] then
             return true
         else
-            return false, "biome not supported"
+            return false, "group not found: '" .. group .. "'"
         end
     end
 })
@@ -93,6 +78,6 @@ building_lib.register_condition({
                 return true
             end
         end
-        return false, "surroundings not supported"
+        return false, "not near a support structure"
     end
 })

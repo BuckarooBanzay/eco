@@ -28,13 +28,12 @@ function eco_mapgen.render_mapblock(mapblock_pos)
 		-- below biome-height or solid underground
 		underground_full(mapblock_pos)
 		mapgen_info = {
-			full = true
+			solid = true
 		}
 	elseif mapblock_pos.y == water_level then
 		-- water layer
 		water_full(mapblock_pos)
 		mapgen_info = {
-			full = true,
 			water = true
 		}
 	else
@@ -49,7 +48,7 @@ function eco_mapgen.render_mapblock(mapblock_pos)
 				}
 			})
 			mapgen_info = {
-				full = true
+				solid = true
 			}
 		elseif slope_info.type == "slope" then
 			catalog:deserialize({x=2,y=0,z=0}, mapblock_pos, {
@@ -108,17 +107,11 @@ function eco_mapgen.render_mapblock(mapblock_pos)
 	end
 end
 
-minetest.register_chatcommand("mapgen_info", {
-	func = function(name)
-		local player = minetest.get_player_by_name(name)
-		if not player then
-			return false, "player not found"
-		end
-
-		local pos = player:get_pos()
-		local mapblock_pos = mapblock_lib.get_mapblock(pos)
-		local info = eco_data.get(mapblock_pos)
-
-		return true, dump(info)
+function eco_mapgen.get_info(mapblock_pos)
+	local data = eco_data.get(mapblock_pos)
+	if not data then
+		return {}
 	end
-})
+
+	return data.mapgen_info or {}
+end

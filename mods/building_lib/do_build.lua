@@ -25,14 +25,14 @@ function building_lib.do_build(mapblock_pos, building_def)
 		local offset_mapblock_pos = vector.add(mapblock_pos, offset)
 
 		-- set mapblock data
-		local mapblock_data = mapblock_lib.get_mapblock_data(offset_mapblock_pos)
+		local mapblock_data = building_lib.get_mapblock_data(offset_mapblock_pos)
 		mapblock_data = mapblock_data or {}
 		mapblock_data.building = {
 			name = building_def.name,
 			rotation = rotation
 		}
 
-		mapblock_lib.set_mapblock_data(offset_mapblock_pos, mapblock_data)
+		building_lib.set_mapblock_data(offset_mapblock_pos, mapblock_data)
 	end
 
 	-- fire after_place() hooks

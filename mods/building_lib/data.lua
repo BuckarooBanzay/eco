@@ -30,9 +30,8 @@ end
 local cache = {}
 
 -- exposed functions below here
-eco_data = {}
 
-function eco_data.get(mapblock_pos)
+function building_lib.get_mapblock_data(mapblock_pos)
     local index = minetest.pos_to_string(mapblock_pos)
     if cache[index] then
         return cache[index]
@@ -41,7 +40,7 @@ function eco_data.get(mapblock_pos)
     return group_data[index]
 end
 
-function eco_data.set(mapblock_pos, data)
+function building_lib.set_mapblock_data(mapblock_pos, data)
     local index = minetest.pos_to_string(mapblock_pos)
     cache[index] = data
     local group_data = get_group_data(mapblock_pos)
@@ -49,20 +48,12 @@ function eco_data.set(mapblock_pos, data)
     set_group_data(mapblock_pos, group_data)
 end
 
-function eco_data.merge(mapblock_pos, merge_data)
-    local data = eco_data.get(mapblock_pos) or {}
-    for k,v in pairs(merge_data) do
-        data[k] = v
-    end
-    eco_data.set(mapblock_pos, data)
-end
-
-minetest.register_chatcommand("eco_data_get", {
+minetest.register_chatcommand("building_lib_info", {
     func = function(name)
         local player = minetest.get_player_by_name(name)
         local ppos = player:get_pos()
         local mapblock_pos = mapblock_lib.get_mapblock(ppos)
-        local data = eco_data.get(mapblock_pos)
+        local data = building_lib.get_mapblock_data(mapblock_pos)
         return true, "Data for mapblock " .. minetest.pos_to_string(mapblock_pos) .. ": " .. dump(data)
     end
 })
