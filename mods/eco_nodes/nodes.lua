@@ -13,34 +13,6 @@ local nodes = {
     ["gravel"] = {
         sounds = eco_nodes.node_sound_stone()
     },
-    ["stone"] = {
-        sounds = eco_nodes.node_sound_stone(),
-        moreblocks = true
-    },
-    ["stone_block"] = {
-        sounds = eco_nodes.node_sound_stone()
-    },
-    ["stone_brick"] = {
-        sounds = eco_nodes.node_sound_stone()
-    },
-    ["desert_sandstone"] = {
-        sounds = eco_nodes.node_sound_stone()
-    },
-    ["desert_sandstone_block"] = {
-        sounds = eco_nodes.node_sound_stone()
-    },
-    ["desert_sandstone_brick"] = {
-        sounds = eco_nodes.node_sound_stone()
-    },
-    ["desert_stone"] = {
-        sounds = eco_nodes.node_sound_stone()
-    },
-    ["desert_stone_block"] = {
-        sounds = eco_nodes.node_sound_stone()
-    },
-    ["desert_stone_brick"] = {
-        sounds = eco_nodes.node_sound_stone()
-    },
     ["dirt"] = {
         sounds = eco_nodes.node_sound_dirt()
     },
@@ -54,8 +26,6 @@ local nodes = {
         },
         moreblocks = true
     },
-    ["pine_tree"] = {},
-    ["pine_wood"] = {},
     ["steel_block"] = {},
     ["copperpatina"] = {tiles = {"moreblocks_copperpatina.png"}},
     ["coal_checker"] = {tiles = {"moreblocks_coal_checker.png"}},
