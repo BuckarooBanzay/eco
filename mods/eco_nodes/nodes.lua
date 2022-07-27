@@ -11,7 +11,8 @@ local nodes = {
         moreblocks = true
     },
     ["gravel"] = {
-        sounds = eco_nodes.node_sound_stone()
+        sounds = eco_nodes.node_sound_stone(),
+        moreblocks = true
     },
     ["dirt"] = {
         sounds = eco_nodes.node_sound_dirt()
