@@ -114,7 +114,7 @@ local street_neighbor_updates = {
 	{ x=-1, y=-1, z=0 }
 }
 
-function building_lib.update_connections(mapblock_pos)
+local function update_connections(mapblock_pos)
 	local building_def = building_lib.get_building_at_pos(mapblock_pos)
 
 	-- iterate through possible connections
@@ -143,8 +143,9 @@ building_lib.register_placement({
 	get_size = function()
 		return { x=1, y=1, z=1 }
 	end,
-	place = function(_, mapblock_pos, building_def, options)
-		place_street(mapblock_pos, building_def, options)
-		building_lib.update_connections(mapblock_pos)
+	place = function(_, mapblock_pos, building_def, callback)
+		place_street(mapblock_pos, building_def)
+		update_connections(mapblock_pos)
+		callback()
 	end
 })

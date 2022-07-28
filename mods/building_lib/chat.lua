@@ -9,7 +9,7 @@ minetest.register_chatcommand("building_place", {
             return false, "building not found: '" .. building_name .. "'"
         end
 
-        return building_lib.do_build(mapblock_pos, building_def)
+        return building_lib.do_build(mapblock_pos, building_def, function() end)
 	end
 })
 

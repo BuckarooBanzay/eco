@@ -11,10 +11,7 @@ building_lib.register_building({
 			{x=0,y=0,z=-1}
 		}
 	},
-	conditions = {
-		{ on_solid_underground = true },
-		{ near_support = true }
-	},
+	-- conditions = {},
 	catalog = MP .. "/schematics/street.zip",
 	deserialize_options = {
 		transform = {
