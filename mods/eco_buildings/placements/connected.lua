@@ -6,6 +6,7 @@ local POS_ALL_SIDES = {x=1,y=0,z=0}
 local POS_STRAIGHT = {x=2,y=0,z=0} -- x+ to x-
 local POS_THREE_SIDES = {x=3,y=0,z=0} -- x+/x-/z+
 local POS_CORNER = {x=4,y=0,z=0} -- x- to z+
+local POS_END = {x=5,y=0,z=0} -- only x- connection
 
 local neighbors = {
 	{ x=1, y=0, z=0 },
@@ -54,6 +55,15 @@ local function get_tile_pos_rotation(mapblock_pos, connects_to_groups)
 		return POS_CORNER, 180
 	elseif xn and zn then
 		return POS_CORNER, 270
+	-- end
+	elseif xn then
+		return POS_END, 0
+	elseif zp then
+		return POS_END, 90
+	elseif xp then
+		return POS_END, 180
+	elseif zn then
+		return POS_END, 270
 	end
 end
 
