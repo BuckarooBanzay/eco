@@ -134,7 +134,7 @@ end
 
 building_lib.register_placement({
 	name = "connected",
-	check = function(mapblock_pos)
+	check = function(_, mapblock_pos)
 		if building_lib.get_building_at_pos(mapblock_pos) then
 			return false, "already occupied"
 		end
@@ -143,7 +143,7 @@ building_lib.register_placement({
 	get_size = function()
 		return { x=1, y=1, z=1 }
 	end,
-	place = function(mapblock_pos, building_def, options)
+	place = function(_, mapblock_pos, building_def, options)
 		place_street(mapblock_pos, building_def, options)
 		building_lib.update_connections(mapblock_pos)
 	end
