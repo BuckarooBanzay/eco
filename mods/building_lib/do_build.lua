@@ -1,44 +1,34 @@
 
-function building_lib.do_build(mapblock_pos, building_def)
+function building_lib.do_build(mapblock_pos, building_def, callback)
 	local success, message = building_lib.can_build(mapblock_pos, building_def)
 	if not success then
 		return false, message
 	end
 
-
 	-- place into world
 	local placement = building_lib.placements[building_def.placement]
-	local affected_offsets, rotation = placement.place(mapblock_pos, building_def)
-
-	if not affected_offsets then
-		-- default to 1 mapblock
-		affected_offsets = { {x=0,y=0,z=0} }
-	end
-
-	if not rotation then
-		-- default rotation
-		rotation = 0
-	end
+	local size = placement.get_size(placement, mapblock_pos, building_def)
 
 	-- write new data
-	for _, offset in ipairs(affected_offsets) do
-		local offset_mapblock_pos = vector.add(mapblock_pos, offset)
+	for x=mapblock_pos.x,mapblock_pos.x+size.x do
+		for y=mapblock_pos.y,mapblock_pos.y+size.y do
+			for z=mapblock_pos.z,mapblock_pos.z+size.z do
+				local offset_mapblock_pos = {x=x, y=y, z=z}
 
-		-- set mapblock data
-		local mapblock_data = building_lib.get_mapblock_data(offset_mapblock_pos)
-		mapblock_data = mapblock_data or {}
-		mapblock_data.building = {
-			name = building_def.name,
-			rotation = rotation
-		}
+				-- set mapblock data
+				local mapblock_data = building_lib.get_mapblock_data(offset_mapblock_pos) or {}
+				mapblock_data.building = {
+					name = building_def.name,
+					origin = mapblock_pos,
+					size = size
+				}
 
-		building_lib.set_mapblock_data(offset_mapblock_pos, mapblock_data)
+				building_lib.set_mapblock_data(offset_mapblock_pos, mapblock_data)
+			end
+		end
 	end
 
-	-- fire after_place() hooks
-	if type(placement.after_place) == "function" then
-		placement.after_place(mapblock_pos, building_def)
-	end
+	placement.place(placement, mapblock_pos, building_def, callback)
 
 	return true
 end

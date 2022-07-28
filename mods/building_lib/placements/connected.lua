@@ -37,8 +37,7 @@ local function place_street(mapblock_pos, building_def)
 
 	local catalog_pos = POS_STRAIGHT
 
-	local options = building_lib.get_deserialize_options(mapblock_pos, building_def)
-
+	local options = {}
 	options.transform = options.transform or {}
 	options.transform.rotate = options.transform.rotate or {}
 	options.transform.rotate.axis = "y"
@@ -104,16 +103,15 @@ local function place_street(mapblock_pos, building_def)
 	catalog:deserialize(catalog_pos, mapblock_pos, options)
 end
 
-
 local street_neighbor_updates = {
-  { x=1, y=0, z=0 },
-  { x=0, y=0, z=1 },
-  { x=0, y=0, z=-1 },
-  { x=-1, y=0, z=0 },
-  { x=1, y=-1, z=0 },
-  { x=0, y=-1, z=1 },
-  { x=0, y=-1, z=-1 },
-  { x=-1, y=-1, z=0 }
+	{ x=1, y=0, z=0 },
+	{ x=0, y=0, z=1 },
+	{ x=0, y=0, z=-1 },
+	{ x=-1, y=0, z=0 },
+	{ x=1, y=-1, z=0 },
+	{ x=0, y=-1, z=1 },
+	{ x=0, y=-1, z=-1 },
+	{ x=-1, y=-1, z=0 }
 }
 
 function building_lib.update_connections(mapblock_pos)
@@ -134,7 +132,6 @@ function building_lib.update_connections(mapblock_pos)
 	end
 end
 
-
 building_lib.register_placement({
 	name = "connected",
 	check = function(mapblock_pos)
@@ -143,10 +140,11 @@ building_lib.register_placement({
 		end
 		return true
 	end,
+	get_size = function()
+		return { x=1, y=1, z=1 }
+	end,
 	place = function(mapblock_pos, building_def, options)
 		place_street(mapblock_pos, building_def, options)
-	end,
-	after_place = function(mapblock_pos)
 		building_lib.update_connections(mapblock_pos)
 	end
 })

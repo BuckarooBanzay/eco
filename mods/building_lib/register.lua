@@ -1,5 +1,5 @@
 
-function building_lib.register(def)
+function building_lib.register_building(def)
 	assert(type(def.name) == "string", "name not defined")
 	assert(type(def.placement) == "string", "placement is not a string on " .. def.name)
 
@@ -7,7 +7,7 @@ function building_lib.register(def)
 	local placement = building_lib.placements[def.placement]
 	assert(placement, "placement not found: " .. def.placement)
 	if type(placement.validate) == "function" then
-		local success, err_msg = placement.validate(def)
+		local success, err_msg = placement.validate(placement, def)
 		if not success then
 			error("validation failed for " .. def.name .. " with message: " .. err_msg)
 		end

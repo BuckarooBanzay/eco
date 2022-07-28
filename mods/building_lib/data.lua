@@ -47,13 +47,3 @@ function building_lib.set_mapblock_data(mapblock_pos, data)
     group_data[index] = data
     set_group_data(mapblock_pos, group_data)
 end
-
-minetest.register_chatcommand("building_lib_info", {
-    func = function(name)
-        local player = minetest.get_player_by_name(name)
-        local ppos = player:get_pos()
-        local mapblock_pos = mapblock_lib.get_mapblock(ppos)
-        local data = building_lib.get_mapblock_data(mapblock_pos)
-        return true, "Data for mapblock " .. minetest.pos_to_string(mapblock_pos) .. ": " .. dump(data)
-    end
-})

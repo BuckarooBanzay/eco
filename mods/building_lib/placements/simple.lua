@@ -1,21 +1,26 @@
 
 building_lib.register_placement({
 	name = "simple",
-	check = function(mapblock_pos)
+	check = function(_, mapblock_pos)
 		if building_lib.get_building_at_pos(mapblock_pos) then
 			return false, "already occupied"
 		end
 		return true
 	end,
-	place = function(mapblock_pos, building_def)
-		local options = building_lib.get_deserialize_options(mapblock_pos, building_def)
-		mapblock_lib.deserialize(mapblock_pos, building_def.schematic, options)
+	place = function(_, mapblock_pos, building_def, callback)
+		local catalog = mapblock_lib.get_catalog(building_def.catalog)
+		catalog:deserialize_all(mapblock_pos, { callback = callback })
 	end,
-	after_place = function(mapblock_pos)
-		-- update connections
-		building_lib.update_connections(mapblock_pos)
+	get_size = function(_, _, building_def)
+		local catalog = mapblock_lib.get_catalog(building_def.catalog)
+		return catalog:get_size()
 	end,
-	validate = function(building_def)
-		return mapblock_lib.validate(building_def.schematic)
+	validate = function(_, building_def)
+		local catalog, err = mapblock_lib.get_catalog(building_def.catalog)
+		if catalog then
+			return true
+		else
+			return false, err
+		end
 	end
 })
