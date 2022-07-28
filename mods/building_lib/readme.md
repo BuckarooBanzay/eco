@@ -1,13 +1,23 @@
 
+# Building register and placement library
+
 ## Api
 
 ```lua
 -- check if something can be built there
 local success, message = building_lib.can_build(mapblock_pos, building_def)
+
 -- build it there
 local success, message = building_lib.do_build(mapblock_pos, building_def, callback)
+
 -- get the building at the position or nil
 local building_def = building_lib.get_building_at_pos(mapblock_pos)
+
+-- get the final building size ({x=1,y=1,z=1} means 1 mapblock)
+local size = building_lib.get_size(mapblock_pos, building_def)
+
+-- returns the opposite corners of the to-build area
+local pos1, pos2 = building_lib.get_corners(mapblock_pos, building_def)
 
 -- registers a placeable building
 building_lib.register_building({
