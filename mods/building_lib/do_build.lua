@@ -10,9 +10,9 @@ function building_lib.do_build(mapblock_pos, building_def, callback)
 	local size = placement.get_size(placement, mapblock_pos, building_def)
 
 	-- write new data
-	for x=mapblock_pos.x,mapblock_pos.x+size.x do
-		for y=mapblock_pos.y,mapblock_pos.y+size.y do
-			for z=mapblock_pos.z,mapblock_pos.z+size.z do
+	for x=mapblock_pos.x,mapblock_pos.x+size.x-1 do
+		for y=mapblock_pos.y,mapblock_pos.y+size.y-1 do
+			for z=mapblock_pos.z,mapblock_pos.z+size.z-1 do
 				local offset_mapblock_pos = {x=x, y=y, z=z}
 
 				-- set mapblock data

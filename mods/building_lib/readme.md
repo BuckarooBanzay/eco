@@ -19,6 +19,9 @@ local size = building_lib.get_size(mapblock_pos, building_def)
 -- returns the opposite corners of the to-build area
 local pos1, pos2 = building_lib.get_corners(mapblock_pos, building_def)
 
+-- get all groups of the building on the mapblock position (returns {} if no building found)
+local groups = building_lib.get_groups(mapblock_pos)
+
 -- registers a placeable building
 building_lib.register_building({
 	name = "buildings:my_building",
@@ -31,7 +34,11 @@ building_lib.register_building({
 		{ on_slope = true, on_biome = "grass" },
 		{ on_flat_surface = true, on_biome = "water" },
 	},
-	schematic = ""
+	schematic = "",
+	-- optional groups attribute
+	groups = {
+		building = true
+	}
 })
 
 -- registers a placement type (connected, simple, etc)

@@ -60,6 +60,14 @@ local function check_conditions(mapblock_pos, building_def)
 	return true
 end
 
+local function check_free(mapblock_pos)
+	if building_lib.get_building_at_pos(mapblock_pos) then
+		return false
+	else
+		return true
+	end
+end
+
 function building_lib.can_build(mapblock_pos, building_def)
 	-- check placement definition
 	local placement = building_lib.placements[building_def.placement]
@@ -68,7 +76,13 @@ function building_lib.can_build(mapblock_pos, building_def)
 	local size = placement.get_size(placement, mapblock_pos, building_def)
 	for x=mapblock_pos.x, mapblock_pos.x+size.x-1 do
 		for z=mapblock_pos.z, mapblock_pos.z+size.z-1 do
-			local success, msg = check_conditions({x=x, y=mapblock_pos.y, z=z}, building_def)
+			local offset_mapblock_pos = {x=x, y=mapblock_pos.y, z=z}
+			local is_free = check_free(offset_mapblock_pos)
+			if not is_free then
+				return false, "Space occupied at " .. minetest.pos_to_string(offset_mapblock_pos)
+			end
+
+			local success, msg = check_conditions(offset_mapblock_pos, building_def)
 			if not success then
 				return false, msg
 			end
