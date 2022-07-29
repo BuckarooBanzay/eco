@@ -1,6 +1,5 @@
 
-building_lib.register_placement({
-	name = "simple",
+building_lib.register_placement("simple", {
 	check = function(_, mapblock_pos)
 		if building_lib.get_building_at_pos(mapblock_pos) then
 			return false, "already occupied"

@@ -1,5 +1,4 @@
-eco_mapgen.register_biome({
-	name = "grass",
+eco_mapgen.register_biome("grass", {
 	match = {
 		temperature = 50,
 		humidity = 50

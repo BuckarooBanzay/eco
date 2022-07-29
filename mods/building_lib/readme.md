@@ -23,8 +23,7 @@ local pos1, pos2 = building_lib.get_corners(mapblock_pos, building_def)
 local groups = building_lib.get_groups(mapblock_pos)
 
 -- registers a placeable building
-building_lib.register_building({
-	name = "buildings:my_building",
+building_lib.register_building("buildings:my_building", {
 	placement = "simple",
 	conditions = {
 		-- OR
@@ -42,8 +41,7 @@ building_lib.register_building({
 })
 
 -- registers a placement type (connected, simple, etc)
-building_lib.register_placement({
-	name = "simple",
+building_lib.register_placement("simple", {
 	check = function(self, mapblock_pos, building_def)
 		-- placement-related checks
 		if ok then
@@ -65,8 +63,7 @@ building_lib.register_placement({
 })
 
 -- registers a condition that checks for certain world conditions
-building_lib.register_condition({
-    name = "on_flat_surface",
+building_lib.register_condition("on_flat_surface", {
     can_build = function(mapblock_pos, building_def, flag_value)
 		return false, msg
     end

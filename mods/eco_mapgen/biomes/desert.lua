@@ -1,5 +1,4 @@
-eco_mapgen.register_biome({
-	name = "desert_1",
+eco_mapgen.register_biome("desert_1", {
 	match = {
 		temperature = 80,
 		humidity = 20
@@ -12,8 +11,7 @@ eco_mapgen.register_biome({
 	}
 })
 
-eco_mapgen.register_biome({
-	name = "desert_2",
+eco_mapgen.register_biome("desert_2", {
 	match = {
 		temperature = 85,
 		humidity = 20
@@ -26,8 +24,7 @@ eco_mapgen.register_biome({
 	}
 })
 
-eco_mapgen.register_biome({
-	name = "desert_3",
+eco_mapgen.register_biome("desert_3", {
 	match = {
 		temperature = 90,
 		humidity = 20

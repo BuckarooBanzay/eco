@@ -107,8 +107,7 @@ local slope_update_directions = {
 	[270] = { {x=1,y=0,z=0}, {x=-1,y=1,z=0} }
 }
 
-building_lib.register_placement({
-	name = "connected",
+building_lib.register_placement("connected", {
 	check = function()
 		return true
 	end,

@@ -1,7 +1,6 @@
 local MP = minetest.get_modpath("eco_buildings")
 
-building_lib.register_building({
-	name = "eco_buildings:park",
+building_lib.register_building("eco_buildings:park", {
 	placement = "simple",
 	groups = {
 		park = true

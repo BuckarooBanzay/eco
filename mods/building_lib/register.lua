@@ -1,6 +1,6 @@
 
-function building_lib.register_building(def)
-	assert(type(def.name) == "string", "name not defined")
+function building_lib.register_building(name, def)
+	def.name = name
 	assert(type(def.placement) == "string", "placement is not a string on " .. def.name)
 
 	-- try to validate the building/placement combo
@@ -13,15 +13,15 @@ function building_lib.register_building(def)
 		end
 	end
 
-	building_lib.buildings[def.name] = def
+	building_lib.buildings[name] = def
 end
 
-function building_lib.register_placement(def)
-	assert(type(def.name) == "string")
-	building_lib.placements[def.name] = def
+function building_lib.register_placement(name, def)
+	def.name = name
+	building_lib.placements[name] = def
 end
 
-function building_lib.register_condition(def)
-	assert(type(def.name) == "string")
-	building_lib.conditions[def.name] = def
+function building_lib.register_condition(name, def)
+	def.name = name
+	building_lib.conditions[name] = def
 end

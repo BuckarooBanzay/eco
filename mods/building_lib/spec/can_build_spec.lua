@@ -6,18 +6,15 @@ mineunit("default/functions")
 
 sourcefile("init")
 
-building_lib.register_condition({
-    name = "success",
+building_lib.register_condition("success", {
     can_build = function() return true end
 })
 
-building_lib.register_condition({
-    name = "failure",
+building_lib.register_condition("failure", {
     can_build = function() return false, "no success" end
 })
 
-building_lib.register_placement({
-    name = "dummy",
+building_lib.register_placement("dummy", {
     check = function() return true end,
     place = function() end
 })

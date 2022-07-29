@@ -1,5 +1,4 @@
-eco_mapgen.register_biome({
-	name = "ice",
+eco_mapgen.register_biome("ice", {
 	match = {
 		temperature = 0,
 		humidity = 20
