@@ -9,7 +9,14 @@ minetest.register_chatcommand("building_place", {
             return false, "building not found: '" .. building_name .. "'"
         end
 
-        return building_lib.do_build(mapblock_pos, building_def, function() end)
+        local t0 = minetest.get_us_time()
+        local success, err = building_lib.do_build(mapblock_pos, building_def, function() end)
+        local diff = minetest.get_us_time() - t0
+        if success then
+            return true, "Placement took " .. diff .. " us"
+        else
+            return false, err
+        end
 	end
 })
 
