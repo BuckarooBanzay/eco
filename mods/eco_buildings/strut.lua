@@ -7,5 +7,9 @@ building_lib.register_building({
 		strut = true,
 		support = true
 	},
+	ground_conditions = {
+		{ on_group = "support" },
+		{ on_solid_underground = true }
+	},
 	catalog = MP .. "/schematics/strut.zip"
 })

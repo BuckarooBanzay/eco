@@ -6,5 +6,9 @@ building_lib.register_building({
 	groups = {
 		park = true
 	},
+	ground_conditions = {
+		{ on_group = "support" },
+		{ on_solid_underground = true }
+	},
 	catalog = MP .. "/schematics/park.zip"
 })

@@ -9,7 +9,7 @@ building_lib.register_building({
 	connects_to_groups = {
 		street = true
 	},
-	conditions = {
+	ground_conditions = {
 		{ on_slope = true },
 		{ near_support = true },
 		{ on_solid_underground = true }
