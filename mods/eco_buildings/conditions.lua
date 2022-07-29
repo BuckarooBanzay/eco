@@ -51,7 +51,7 @@ building_lib.register_condition({
     name = "on_group",
     can_build = function(mapblock_pos, _, group)
         local mapblock_pos_below = vector.add(mapblock_pos, {x=0, y=-1, z=0})
-        local groups = building_lib.get_groups_at_pos(mapblock_pos_below)
+        local groups = building_lib.get_groups(mapblock_pos_below)
         if groups[group] then
             return true
         else
@@ -73,7 +73,7 @@ building_lib.register_condition({
     can_build = function(mapblock_pos)
         for _, offset in ipairs(below_neighbor_support_offsets) do
             local offset_mapblock_pos = vector.add(mapblock_pos, offset)
-            local groups = building_lib.get_groups_at_pos(offset_mapblock_pos)
+            local groups = building_lib.get_groups(offset_mapblock_pos)
             if groups.support then
                 return true
             end

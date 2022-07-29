@@ -9,5 +9,10 @@ building_lib.register_building({
 	connects_to_groups = {
 		street = true
 	},
+	conditions = {
+		{ on_slope = true },
+		{ near_support = true },
+		{ on_solid_underground = true }
+	},
 	catalog = MP .. "/schematics/street.zip"
 })

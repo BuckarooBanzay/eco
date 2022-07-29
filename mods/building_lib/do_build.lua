@@ -15,14 +15,22 @@ function building_lib.do_build(mapblock_pos, building_def, callback)
 			for z=mapblock_pos.z,mapblock_pos.z+size.z-1 do
 				local offset_mapblock_pos = {x=x, y=y, z=z}
 
-				-- set mapblock data
-				building_lib.store:merge(offset_mapblock_pos, {
-					building = {
-						name = building_def.name,
-						origin = mapblock_pos,
-						size = size
-					}
-				})
+				if vector.equals(offset_mapblock_pos, mapblock_pos) then
+					-- origin
+					building_lib.store:merge(offset_mapblock_pos, {
+						building = {
+							name = building_def.name,
+							size = size
+						}
+					})
+				else
+					-- reference to origin
+					building_lib.store:merge(offset_mapblock_pos, {
+						building = {
+							ref = mapblock_pos
+						}
+					})
+				end
 			end
 		end
 	end
