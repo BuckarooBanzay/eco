@@ -1,11 +1,4 @@
 
-eco_mapgen.biomes = {}
-
-function eco_mapgen.register_biome(def)
-	assert(def.name)
-	eco_mapgen.biomes[def.name] = def
-end
-
 local function get_score(biome, biome_data)
 	local score = 0
 
@@ -26,7 +19,8 @@ function eco_mapgen.get_biome(mapblock_pos, slope_info, biome_data)
 	local selected_biome
 	local selected_score
 
-	for _, biome in pairs(eco_mapgen.biomes) do
+	local biomes = eco_mapgen.get_biomes()
+	for _, biome in pairs(biomes) do
 		if type(biome.match) == "function" and biome.match(mapblock_pos, slope_info, biome_data.height) then
 			-- hard-wired match() function, return fast
 			return biome
