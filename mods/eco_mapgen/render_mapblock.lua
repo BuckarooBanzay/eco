@@ -101,14 +101,14 @@ function eco_mapgen.render_mapblock(mapblock_pos)
 	end
 
 	if mapgen_info then
-		eco_data.merge(mapblock_pos, {
+		eco_data:merge(mapblock_pos, {
 			mapgen_info = mapgen_info
 		})
 	end
 end
 
 function eco_mapgen.get_info(mapblock_pos)
-	local data = eco_data.get(mapblock_pos)
+	local data = eco_data:get(mapblock_pos)
 	if not data then
 		return {}
 	end

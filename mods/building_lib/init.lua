@@ -1,3 +1,5 @@
+local storage = minetest.get_mod_storage()
+
 building_lib = {
 	-- name -> def
 	buildings = {},
@@ -6,11 +8,13 @@ building_lib = {
 	placements = {},
 
 	-- name -> def
-	conditions = {}
+	conditions = {},
+
+	-- data storage
+	store = mapblock_lib.create_data_storage(storage)
 }
 
 local MP = minetest.get_modpath("building_lib")
-dofile(MP .. "/data.lua")
 dofile(MP .. "/register.lua")
 dofile(MP .. "/get_size.lua")
 dofile(MP .. "/get_groups.lua")

@@ -16,14 +16,13 @@ function building_lib.do_build(mapblock_pos, building_def, callback)
 				local offset_mapblock_pos = {x=x, y=y, z=z}
 
 				-- set mapblock data
-				local mapblock_data = building_lib.get_mapblock_data(offset_mapblock_pos) or {}
-				mapblock_data.building = {
-					name = building_def.name,
-					origin = mapblock_pos,
-					size = size
-				}
-
-				building_lib.set_mapblock_data(offset_mapblock_pos, mapblock_data)
+				building_lib.store:merge(offset_mapblock_pos, {
+					building = {
+						name = building_def.name,
+						origin = mapblock_pos,
+						size = size
+					}
+				})
 			end
 		end
 	end
