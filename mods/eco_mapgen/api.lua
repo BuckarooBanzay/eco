@@ -1,6 +1,13 @@
 
--- local decorations = {}
+--[[
+local decorations = {}
 
+function eco_mapgen.register_decoration(name, def)
+end
+
+function eco_mapgen.get_decorations(biome_name)
+end
+--]]
 
 local biomes = {}
 
