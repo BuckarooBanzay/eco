@@ -137,10 +137,27 @@ building_lib.register_placement({
 		for _, dir in ipairs(neighbor_updates) do
 			local neighbor_pos = vector.add(mapblock_pos, dir)
 			local neighbor_below_pos = vector.add(neighbor_pos, {x=0,y=-1,z=0})
+
+			local neighbor_info = eco_mapgen.get_info(neighbor_pos)
 			local neighbor_below_info = eco_mapgen.get_info(neighbor_below_pos)
-			-- don't update slopes
-			if not neighbor_below_info.slope then
-				local neighbor_building_def = building_lib.get_building_at_pos(neighbor_pos)
+
+			local do_update = true
+
+			local neighbor_below_building_def = building_lib.get_building_at_pos(neighbor_below_pos)
+			local neighbor_building_def = building_lib.get_building_at_pos(neighbor_pos)
+
+			if neighbor_below_info.slope and neighbor_below_building_def and
+				neighbor_below_building_def.name == building_def.name then
+				-- upper part of a built slope, don't update
+				do_update = false
+			end
+
+			if neighbor_info.slope and not neighbor_below_info.slope then
+				-- lower part of a slope, don't update
+				do_update = false
+			end
+
+			if do_update then
 				-- re-place the neighboring mapblock too if it is of the same type
 				if neighbor_building_def and neighbor_building_def.placement == self.name then
 					place_and_rotate(neighbor_pos, neighbor_building_def)
