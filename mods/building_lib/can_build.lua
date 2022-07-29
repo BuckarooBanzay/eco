@@ -27,16 +27,16 @@ local function check_map(mode, map, mapblock_pos, building_def)
 	return placement_allowed, error_msg
 end
 
-local function check_conditions(mapblock_pos, building_def)
+local function check_conditions(mapblock_pos, conditions, building_def)
 	-- go through conditions
-	if building_def.conditions then
+	if conditions then
 		-- array-like AND/OR def support
-		if building_def.conditions[1] then
+		if conditions[1] then
 			-- OR'ed array
 			local placement_allowed = false
 			local error_msg
 
-			for _, entry in ipairs(building_def.conditions) do
+			for _, entry in ipairs(conditions) do
 				local success, msg = check_map("and", entry, mapblock_pos, building_def)
 				if success then
 					placement_allowed = true
@@ -50,7 +50,7 @@ local function check_conditions(mapblock_pos, building_def)
 			end
 		else
 			-- map
-			local success, error_msg = check_map("or", building_def.conditions, mapblock_pos, building_def)
+			local success, error_msg = check_map("or", conditions, mapblock_pos, building_def)
 			if not success then
 				return false, error_msg or "<unknown>"
 			end
@@ -75,16 +75,18 @@ function building_lib.can_build(mapblock_pos, building_def)
 	-- check the conditions on the ground-based mapblocks
 	local size = placement.get_size(placement, mapblock_pos, building_def)
 	for x=mapblock_pos.x, mapblock_pos.x+size.x-1 do
-		for z=mapblock_pos.z, mapblock_pos.z+size.z-1 do
-			local offset_mapblock_pos = {x=x, y=mapblock_pos.y, z=z}
-			local is_free = check_free(offset_mapblock_pos)
-			if not is_free then
-				return false, "Space occupied at " .. minetest.pos_to_string(offset_mapblock_pos)
-			end
+		for y=mapblock_pos.y, mapblock_pos.y+size.y-1 do
+			for z=mapblock_pos.z, mapblock_pos.z+size.z-1 do
+				local offset_mapblock_pos = {x=x, y=y, z=z}
+				local is_free = check_free(offset_mapblock_pos)
+				if not is_free then
+					return false, "Space occupied at " .. minetest.pos_to_string(offset_mapblock_pos)
+				end
 
-			local success, msg = check_conditions(offset_mapblock_pos, building_def)
-			if not success then
-				return false, msg
+				local success, msg = check_conditions(offset_mapblock_pos, building_def.conditions, building_def)
+				if not success then
+					return false, msg
+				end
 			end
 		end
 	end
