@@ -54,6 +54,10 @@ function eco_mapgen.get_biome_data(mapblock_pos)
 	return data
 end
 
+eco_mapgen.get_biome_data = memoize(eco_mapgen.get_biome_data, function(pos)
+    return minetest.hash_node_position({ x=pos.x, y=0, z=pos.z })
+end)
+
 minetest.register_chatcommand("get_biome_data", {
 	func = function(name)
 		local player = minetest.get_player_by_name(name)

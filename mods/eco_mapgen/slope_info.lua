@@ -91,6 +91,7 @@ function eco_mapgen.get_slope_info(mapblock_pos)
 		return { type = "full", rotation = 0 }
 	end
 end
+eco_mapgen.get_slope_info = memoize(eco_mapgen.get_slope_info, minetest.hash_node_position)
 
 minetest.register_chatcommand("get_slope_info", {
 	func = function(name)

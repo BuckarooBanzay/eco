@@ -17,6 +17,7 @@ function eco_mapgen.prepare_decoration_list(biome_name)
 
     return chance_list, max_chance_value
 end
+eco_mapgen.prepare_decoration_list = memoize(eco_mapgen.prepare_decoration_list, function(s) return s end)
 
 function eco_mapgen.select_decoration(biome_name)
     local chance_list, max_chance_value = eco_mapgen.prepare_decoration_list(biome_name)
