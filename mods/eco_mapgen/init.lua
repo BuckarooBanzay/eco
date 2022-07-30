@@ -11,6 +11,8 @@ dofile(MP .. "/render_decorations.lua")
 dofile(MP .. "/get_biome_data.lua")
 dofile(MP .. "/restore.lua")
 
+dofile(MP .. "/decorations/grass.lua")
+
 dofile(MP .. "/biomes/grass.lua")
 dofile(MP .. "/biomes/ice.lua")
 dofile(MP .. "/biomes/desert.lua")
