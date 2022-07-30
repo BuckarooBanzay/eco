@@ -42,10 +42,6 @@ end
 minetest.register_chatcommand("biome_info", {
 	func = function(name)
 		local player = minetest.get_player_by_name(name)
-		if not player then
-			return false, "player not found"
-		end
-
 		local pos = player:get_pos()
 		local mapblock_pos = mapblock_lib.get_mapblock(pos)
 		local biome = eco_mapgen.get_biome(mapblock_pos)
