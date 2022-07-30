@@ -1,6 +1,4 @@
 
-local cache = {}
-
 
 local temperature_perlin
 local temperature_params = {
@@ -33,11 +31,6 @@ local height_params = {
 }
 
 function eco_mapgen.get_biome_data(mapblock_pos)
-    local hash = minetest.hash_node_position({ x=mapblock_pos.x, y=0, z=mapblock_pos.z })
-	if cache[hash] ~= nil then
-		return cache[hash]
-	end
-
 	local map_lengths_xyz = {x=1, y=1, z=1}
 
     local temperature_perlin_map = {}
@@ -57,8 +50,6 @@ function eco_mapgen.get_biome_data(mapblock_pos)
         humidity = math.floor(math.abs(humidity_perlin_map[1]) * 100),
         height = math.floor(math.abs(height_perlin_map[1]) * 6) -1
     }
-
-	cache[hash] = data
 
 	return data
 end

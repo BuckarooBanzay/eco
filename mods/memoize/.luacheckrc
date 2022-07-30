@@ -1,5 +1,5 @@
 globals = {
-	"eco_mapgen"
+	"memoize"
 }
 
 read_globals = {
@@ -11,8 +11,5 @@ read_globals = {
 	"minetest",
 	"vector", "ItemStack",
 	"dump", "dump2",
-	"VoxelArea",
-
-	-- mods
-	"mapblock_lib", "eco_data", "memoize"
+	"VoxelArea"
 }

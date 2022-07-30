@@ -7,5 +7,6 @@ cd ../eco_placement && luacheck .
 cd ../eco_nodes && luacheck .
 cd ../eco_data && luacheck .
 cd ../building_lib && luacheck .
+cd ../memoize && luacheck .
 
 cd ../../test/test_mod && luacheck .

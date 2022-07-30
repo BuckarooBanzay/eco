@@ -52,7 +52,7 @@ local function get_height_map(mapblock_pos, mapblock_height)
 	return hm
 end
 
-local function get_slope_info(mapblock_pos)
+function eco_mapgen.get_slope_info(mapblock_pos)
 	local height = eco_mapgen.get_biome_data(mapblock_pos).height
 
 	-- above heightmap
@@ -90,18 +90,6 @@ local function get_slope_info(mapblock_pos)
 		-- no rotation
 		return { type = "full", rotation = 0 }
 	end
-end
-
-local cache = {}
-
--- cached access
-function eco_mapgen.get_slope_info(mapblock_pos)
-	local key = minetest.hash_node_position(mapblock_pos)
-	if not cache[key] then
-		cache[key] = get_slope_info(mapblock_pos)
-	end
-
-	return cache[key]
 end
 
 minetest.register_chatcommand("get_slope_info", {
