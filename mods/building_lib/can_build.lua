@@ -27,7 +27,7 @@ local function check_map(mode, map, mapblock_pos, building_def)
 	return placement_allowed, error_msg
 end
 
-local function check_conditions(mapblock_pos, conditions, building_def)
+function building_lib.check_conditions(mapblock_pos, conditions, building_def)
 	-- go through conditions
 	if conditions then
 		-- array-like AND/OR def support
@@ -73,8 +73,18 @@ function building_lib.can_build(mapblock_pos, building_def)
 	-- check placement definition
 	local placement = building_lib.placements[building_def.placement]
 
+	local success, message = placement.check(placement, mapblock_pos, building_def)
+	if not success then
+		return false, message
+	end
+
 	-- check the conditions on every mapblock the building would occupy
-	local size = placement.get_size(placement, mapblock_pos, building_def)
+	local size
+	size, message = placement.get_size(placement, mapblock_pos, building_def)
+	if not size then
+		return false, message
+	end
+
 	for x=mapblock_pos.x, mapblock_pos.x+size.x-1 do
 		for z=mapblock_pos.z, mapblock_pos.z+size.z-1 do
 			for y=mapblock_pos.y, mapblock_pos.y+size.y-1 do
@@ -86,23 +96,18 @@ function building_lib.can_build(mapblock_pos, building_def)
 
 				if y == mapblock_pos.y then
 					-- check ground conditions
-					local success, msg = check_conditions(offset_mapblock_pos, building_def.ground_conditions, building_def)
+					success, message = building_lib.check_conditions(offset_mapblock_pos, building_def.ground_conditions, building_def)
 					if not success then
-						return false, msg
+						return false, message
 					end
 				end
 
-				local success, msg = check_conditions(offset_mapblock_pos, building_def.conditions, building_def)
+				success, message = building_lib.check_conditions(offset_mapblock_pos, building_def.conditions, building_def)
 				if not success then
-					return false, msg
+					return false, message
 				end
 			end
 		end
-	end
-
-	local success, message = placement.check(placement, mapblock_pos, building_def)
-	if not success then
-		return false, message
 	end
 
 	-- all checks ok

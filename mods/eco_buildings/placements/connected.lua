@@ -1,168 +1,132 @@
 
+local function string_to_pos(str)
+    return minetest.string_to_pos("(" .. str .. ")")
+end
 
-local POS_SLOPE_LOWER = {x=0,y=0,z=0} -- x- on the upper side
-local POS_SLOPE_UPPER = {x=0,y=1,z=0} -- x- on the upper side
-local POS_ALL_SIDES = {x=1,y=0,z=0}
-local POS_STRAIGHT = {x=2,y=0,z=0} -- x+ to x-
-local POS_THREE_SIDES = {x=3,y=0,z=0} -- x+/x-/z+
-local POS_CORNER = {x=4,y=0,z=0} -- x- to z+
-local POS_END = {x=5,y=0,z=0} -- only x- connection
+local function pos_to_string(pos)
+    return pos.x .. "," .. pos.y .. "," .. pos.z
+end
 
-local neighbors = {
-	{ x=1, y=0, z=0 },
-	{ x=0, y=0, z=1 },
-	{ x=0, y=0, z=-1 },
-	{ x=-1, y=0, z=0 }
-}
+local function flip_pos(rel_pos, axis)
+	rel_pos[axis] = 0 - rel_pos[axis]
+end
 
-local function is_connecting(mapblock_pos, connects_to_groups)
-	local groups = building_lib.get_groups(mapblock_pos)
-	for group in pairs(groups) do
-		if connects_to_groups[group] then
-			return true
+local function transpose_pos(rel_pos, axis1, axis2)
+	rel_pos[axis1], rel_pos[axis2] = rel_pos[axis2], rel_pos[axis1]
+end
+
+local function rotate_connections(connections, rotation)
+    if rotation == 0 then
+        return connections
+    end
+    local rotated_connections = {}
+
+    for pos_str, rule in pairs(connections) do
+        local pos = string_to_pos(pos_str)
+        if rotation == 90 then
+            flip_pos(pos, "x")
+            transpose_pos(pos, "x", "z")
+        elseif rotation == 180 then
+            flip_pos(pos, "x")
+            flip_pos(pos, "z")
+        elseif rotation == 270 then
+            flip_pos(pos, "z")
+            transpose_pos(pos, "x", "z")
+        end
+        rotated_connections[pos_to_string(pos)] = rule
+    end
+
+    return rotated_connections
+end
+
+local function match_connections(mapblock_pos, connection)
+	local other_groups = building_lib.get_groups(mapblock_pos)
+	for _, group in ipairs(connection.groups or {}) do
+		if not other_groups[group] then
+			-- one of the required groups not found
+			return false
 		end
 	end
+
+	return true
 end
 
-local function get_tile_pos_rotation(mapblock_pos, connects_to_groups)
-	local xp = is_connecting(vector.add(mapblock_pos, {x=1,y=0,z=0}), connects_to_groups)
-	local xn = is_connecting(vector.add(mapblock_pos, {x=-1,y=0,z=0}), connects_to_groups)
-	local zp = is_connecting(vector.add(mapblock_pos, {x=0,y=0,z=1}), connects_to_groups)
-	local zn = is_connecting(vector.add(mapblock_pos, {x=0,y=0,z=-1}), connects_to_groups)
+local function select_tile(mapblock_pos, building_def)
+	local default_tilepos, default_tile
 
-	if xp and xn and zp and zn then
-		return POS_ALL_SIDES, 0
-	-- 3 sided
-	elseif xp and xn and zp then
-		return POS_THREE_SIDES, 0
-	elseif zp and zn and xp then
-		return POS_THREE_SIDES, 90
-	elseif xp and xn and zn then
-		return POS_THREE_SIDES, 180
-	elseif zp and zn and xn then
-		return POS_THREE_SIDES, 270
-	-- straight
-	elseif xp and xn then
-		return POS_STRAIGHT, 0
-	elseif zp and zn then
-		return POS_STRAIGHT, 90
-	-- corner
-	elseif xn and zp then
-		return POS_CORNER, 0
-	elseif xp and zp then
-		return POS_CORNER, 90
-	elseif xp and zn then
-		return POS_CORNER, 180
-	elseif xn and zn then
-		return POS_CORNER, 270
-	-- end
-	elseif xn then
-		return POS_END, 0
-	elseif zp then
-		return POS_END, 90
-	elseif xp then
-		return POS_END, 180
-	elseif zn then
-		return POS_END, 270
-	end
-end
-
-local function place_and_rotate(mapblock_pos, building_def)
-	local tile_pos, rotation = get_tile_pos_rotation(mapblock_pos, building_def.connects_to_groups)
-	local catalog = mapblock_lib.get_catalog(building_def.catalog)
-	if tile_pos then
-		-- matching street
-		catalog:deserialize(tile_pos, mapblock_pos, {
-			transform = {
-				rotate = {
-					angle = rotation,
-					axis = "y"
-				}
-			}
-		})
-	else
-		-- default 4-way street
-		catalog:deserialize(POS_ALL_SIDES, mapblock_pos)
-	end
-end
-
-local function place_and_rotate_slope(mapblock_pos, building_def, rotation)
-	local options = {
-		transform = {
-			rotate = {
-				angle = rotation,
-				axis = "y"
-			}
-		}
-	}
-	local catalog = mapblock_lib.get_catalog(building_def.catalog)
-	catalog:deserialize(POS_SLOPE_LOWER, mapblock_pos, options)
-	catalog:deserialize(POS_SLOPE_UPPER, vector.add(mapblock_pos, {x=0,y=1,z=0}), options)
-end
-
-local slope_update_directions = {
-	[0] = { {x=0,y=0,z=-1}, {x=0,y=1,z=1} },
-	[90] = { {x=-1,y=0,z=0}, {x=1,y=1,z=0} },
-	[180] = { {x=0,y=0,z=1}, {x=0,y=1,z=-1} },
-	[270] = { {x=1,y=0,z=0}, {x=-1,y=1,z=0} }
-}
-
-building_lib.register_placement("connected", {
-	check = function()
-		return true
-	end,
-	get_size = function(_, mapblock_pos)
-		local info = eco_mapgen.get_info(mapblock_pos)
-		if info.slope then
-			return { x=1, y=2, z=1 }
-		else
-			return { x=1, y=1, z=1 }
-		end
-	end,
-	place = function(self, mapblock_pos, building_def, callback)
-		local info = eco_mapgen.get_info(mapblock_pos)
-		local neighbor_updates
-
-		if info.slope then
-			-- place a slope
-			place_and_rotate_slope(mapblock_pos, building_def, info.rotation)
-			neighbor_updates = slope_update_directions[info.rotation]
-		else
-			-- place a flat tile
-			place_and_rotate(mapblock_pos, building_def)
-			neighbor_updates = neighbors
+	-- try to match a tile
+	for tile_pos, tile in pairs(building_def.tiles) do
+		local success = building_lib.check_conditions(mapblock_pos, tile.ground_conditions, building_def)
+		print(dump({
+			name = "select_tile::pairs(building_def.tiles)",
+			tile_pos = tile_pos,
+			success = success
+		}))
+		if not success then
+			break
 		end
 
-		for _, dir in ipairs(neighbor_updates) do
-			local neighbor_pos = vector.add(mapblock_pos, dir)
-			local neighbor_below_pos = vector.add(neighbor_pos, {x=0,y=-1,z=0})
+		if tile.default then
+			print({
+				name = "default-tile",
+				default_tilepos = default_tilepos
+			})
+			default_tilepos = string_to_pos(tile_pos)
+			default_tile = tile
+		end
 
-			local neighbor_info = eco_mapgen.get_info(neighbor_pos)
-			local neighbor_below_info = eco_mapgen.get_info(neighbor_below_pos)
+		for _, rotation in ipairs(tile.rotations or {0,90,180,270}) do
+			local connections = rotate_connections(tile.connections, rotation)
+			for dir, connection in pairs(connections) do
+				local other_pos = vector.add(mapblock_pos, string_to_pos(dir))
+				local matches = match_connections(other_pos, connection)
+				print(dump({
+					name = "select_tile::ipairs(tile.rotations)",
+					tile_pos = tile_pos,
+					matches = matches,
+					other_pos = other_pos
+				}))
 
-			local do_update = true
-
-			local neighbor_below_building_def = building_lib.get_building_at_pos(neighbor_below_pos)
-			local neighbor_building_def = building_lib.get_building_at_pos(neighbor_pos)
-
-			if neighbor_below_info.slope and neighbor_below_building_def and
-				neighbor_below_building_def.name == building_def.name then
-				-- upper part of a built slope, don't update
-				do_update = false
-			end
-
-			if neighbor_info.slope and not neighbor_below_info.slope then
-				-- lower part of a slope, don't update
-				do_update = false
-			end
-
-			if do_update then
-				-- re-place the neighboring mapblock too if it is of the same type
-				if neighbor_building_def and neighbor_building_def.placement == self.name then
-					place_and_rotate(neighbor_pos, neighbor_building_def)
+				if matches then
+					return string_to_pos(tile_pos), tile
 				end
 			end
 		end
+	end
+
+	-- fallback to default tile, if available
+	return default_tilepos, default_tile, 0
+end
+
+building_lib.register_placement("connected", {
+	check = function(_, mapblock_pos, building_def)
+		if building_lib.get_building_at_pos(mapblock_pos) then
+			return false, "already occupied"
+		end
+
+		local _, tile = select_tile(mapblock_pos, building_def)
+		print(dump({
+			name = "check",
+			tile = tile,
+		})) --XXX
+
+		return tile ~= nil
+	end,
+	get_size = function(_, mapblock_pos, building_def)
+		local _, tile = select_tile(mapblock_pos, building_def)
+		return tile.size or { x=1, y=1, z=1 }
+	end,
+	place = function(_, mapblock_pos, building_def, callback)
+		local tile_pos, tile, rotation = select_tile(mapblock_pos, building_def)
+		print(dump({
+			name = "place",
+			tile_pos = tile_pos,
+			tile = tile,
+			rotation = rotation
+		})) --XXX
+
+		local catalog = mapblock_lib.get_catalog(building_def.catalog)
+		catalog:deserialize(tile_pos, mapblock_pos, { callback = callback })
 
 		callback()
 	end
