@@ -1,6 +1,8 @@
 
 local trees = {
+    "acacia",
     "pine",
+    "jungle",
     "birch",
     "oak"
 }
