@@ -39,7 +39,7 @@ function eco_mapgen.render_mapblock(mapblock_pos)
 	else
 		-- render biomes
 		local slope_info = eco_mapgen.get_slope_info(mapblock_pos)
-		local biome = eco_mapgen.get_biome(mapblock_pos, slope_info, biome_data)
+		local biome = eco_mapgen.get_biome(mapblock_pos, biome_data)
 
 		if slope_info.type == "full" then
 			catalog:deserialize({x=0,y=0,z=0}, mapblock_pos, {
