@@ -57,20 +57,11 @@ local function select_tile(mapblock_pos, building_def)
 	-- try to match a tile
 	for tile_pos, tile in pairs(building_def.tiles) do
 		local success = building_lib.check_conditions(mapblock_pos, tile.ground_conditions, building_def)
-		print(dump({
-			name = "select_tile::pairs(building_def.tiles)",
-			tile_pos = tile_pos,
-			success = success
-		}))
 		if not success then
 			break
 		end
 
 		if tile.default then
-			print({
-				name = "default-tile",
-				default_tilepos = default_tilepos
-			})
 			default_tilepos = string_to_pos(tile_pos)
 			default_tile = tile
 		end
@@ -84,11 +75,12 @@ local function select_tile(mapblock_pos, building_def)
 					name = "select_tile::ipairs(tile.rotations)",
 					tile_pos = tile_pos,
 					matches = matches,
-					other_pos = other_pos
+					other_pos = other_pos,
+					rotation = rotation
 				}))
 
 				if matches then
-					return string_to_pos(tile_pos), tile
+					return string_to_pos(tile_pos), tile, rotation
 				end
 			end
 		end
@@ -105,11 +97,6 @@ building_lib.register_placement("connected", {
 		end
 
 		local _, tile = select_tile(mapblock_pos, building_def)
-		print(dump({
-			name = "check",
-			tile = tile,
-		})) --XXX
-
 		return tile ~= nil
 	end,
 	get_size = function(_, mapblock_pos, building_def)
