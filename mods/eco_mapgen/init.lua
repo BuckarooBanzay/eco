@@ -16,3 +16,7 @@ dofile(MP .. "/decorations/grass.lua")
 dofile(MP .. "/biomes/grass.lua")
 dofile(MP .. "/biomes/ice.lua")
 dofile(MP .. "/biomes/desert.lua")
+
+if minetest.get_modpath("mtt") then
+    dofile(MP .. "/mtt.lua")
+end

@@ -7,7 +7,6 @@ services:
   user: root
   volumes:
     - "./:/root/.minetest/worlds/world/game/"
-    - "./test/test_mod:/root/.minetest/worlds/world/game/mods/test_mod"
     - "./test/world.mt:/root/.minetest/worlds/world/world.mt"
     - "./test/minetest.conf:/minetest.conf"
     - "world:/root/.minetest/worlds/world"

@@ -10,3 +10,6 @@
 [submodule "mods/mtzip"]
 	path = mods/mtzip
 	url = https://github.com/BuckarooBanzay/mtzip
+[submodule "mods/mtt"]
+	path = mods/mtt
+	url = https://github.com/buckaroobanzay/mtt

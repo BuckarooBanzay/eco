@@ -14,5 +14,5 @@ read_globals = {
 	"VoxelArea",
 
 	-- mods
-	"mapblock_lib", "eco_data", "memoize"
+	"mapblock_lib", "eco_data", "memoize", "mtt"
 }
