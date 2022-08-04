@@ -39,14 +39,13 @@ local function rotate_connections(connections, rotation)
     return rotated_connections
 end
 
-local function match_connections(mapblock_pos, connection)
-	local other_groups = building_lib.get_groups(mapblock_pos)
-	for _, group in ipairs(connection.groups or {}) do
-		if not other_groups[group] then
-			-- one of the required groups not found
-			return false
-		end
+local function match_connection(mapblock_pos, other_mapblock_pos, connection)
+	local other_building, other_origin = building_lib.get_building_at_pos(other_mapblock_pos)
+	if not other_building then
+		return false
 	end
+
+
 
 	return true
 end
@@ -56,21 +55,16 @@ local function select_tile(mapblock_pos, building_def)
 
 	-- try to match a tile
 	for tile_pos, tile in pairs(building_def.tiles) do
-		local success = building_lib.check_conditions(mapblock_pos, tile.ground_conditions, building_def)
-		if not success then
-			break
-		end
-
 		if tile.default then
 			default_tilepos = string_to_pos(tile_pos)
 			default_tile = tile
 		end
 
-		for _, rotation in ipairs(tile.rotations or {0,90,180,270}) do
+		for _, rotation in ipairs(tile.rotations or {0}) do
 			local connections = rotate_connections(tile.connections, rotation)
 			for dir, connection in pairs(connections) do
 				local other_pos = vector.add(mapblock_pos, string_to_pos(dir))
-				local matches = match_connections(other_pos, connection)
+				local matches = match_connection(mapblock_pos, other_pos, connection)
 				print(dump({
 					name = "select_tile::ipairs(tile.rotations)",
 					tile_pos = tile_pos,
@@ -102,7 +96,7 @@ building_lib.register_placement("connected", {
 	get_size = function()
 		return { x=1, y=1, z=1 }
 	end,
-	place = function(_, mapblock_pos, building_def, callback)
+	place = function(_, mapblock_pos, building_def, placement_options, callback)
 		local tile_pos, tile, rotation = select_tile(mapblock_pos, building_def)
 		print(dump({
 			name = "place",
@@ -115,6 +109,8 @@ building_lib.register_placement("connected", {
 		catalog:deserialize(tile_pos, mapblock_pos, { callback = callback })
 
 		callback()
+
+		placement_options.rotation = rotation
 	end
 })
 
@@ -126,6 +122,22 @@ if minetest.get_modpath("mtt") then
 
 	mtt.register("pos_to_string", function(callback)
 		assert(pos_to_string({x=1,y=2,z=3}) == "1,2,3")
+		callback()
+	end)
+
+	mtt.register("rotate_connections", function(callback)
+		local connections = {
+			["1,0,0"] = "x+"
+		}
+		local rotated_connections = rotate_connections(connections, 90)
+		assert(rotated_connections["0,0,-1"] == "x+")
+
+		rotated_connections = rotate_connections(connections, 180)
+		assert(rotated_connections["-1,0,0"] == "x+")
+
+		rotated_connections = rotate_connections(connections, 270)
+		assert(rotated_connections["0,0,1"] == "x+")
+
 		callback()
 	end)
 end

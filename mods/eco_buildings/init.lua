@@ -9,3 +9,7 @@ dofile(MP .. "/park.lua")
 dofile(MP .. "/strut.lua")
 dofile(MP .. "/foundation.lua")
 dofile(MP .. "/loading_dock.lua")
+
+if minetest.get_modpath("mtt") and mtt.enabled then
+    dofile(MP .. "/mtt.lua")
+end

@@ -18,9 +18,9 @@ local function check_map(mode, map, mapblock_pos, building_def)
 			placement_allowed = true
 		elseif mode == "and" then
 			-- failure and in AND mode, return immediately
-			return false, msg
+			return false, msg or "condition failed: '" .. key .. "'"
 		else
-			error_msg = msg
+			error_msg = msg or "condition failed: '" .. key .. "'"
 		end
 	end
 
@@ -75,14 +75,14 @@ function building_lib.can_build(mapblock_pos, building_def)
 
 	local success, message = placement.check(placement, mapblock_pos, building_def)
 	if not success then
-		return false, message
+		return false, message or "placement check '" .. building_def.placement .. "' failed"
 	end
 
 	-- check the conditions on every mapblock the building would occupy
 	local size
 	size, message = placement.get_size(placement, mapblock_pos, building_def)
 	if not size then
-		return false, message
+		return false, message or "size check '" .. building_def.placement .. "' failed"
 	end
 
 	for x=mapblock_pos.x, mapblock_pos.x+size.x-1 do

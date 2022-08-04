@@ -6,7 +6,8 @@ building_lib.register_placement("simple", {
 		end
 		return true
 	end,
-	place = function(_, mapblock_pos, building_def, callback)
+	place = function(_, mapblock_pos, building_def, _, callback)
+		-- TODO: placement_options, rotation
 		local catalog = mapblock_lib.get_catalog(building_def.catalog)
 		catalog:deserialize_all(mapblock_pos, { callback = callback })
 	end,

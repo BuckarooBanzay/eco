@@ -4,13 +4,9 @@ minetest.register_chatcommand("building_place", {
 		local player = minetest.get_player_by_name(name)
 		local pos = player:get_pos()
 		local mapblock_pos = mapblock_lib.get_mapblock(pos)
-        local building_def = building_lib.buildings[building_name]
-        if not building_def then
-            return false, "building not found: '" .. building_name .. "'"
-        end
 
         local t0 = minetest.get_us_time()
-        local success, err = building_lib.do_build(mapblock_pos, building_def, function() end)
+        local success, err = building_lib.do_build(mapblock_pos, building_name, {}, function() end)
         local diff = minetest.get_us_time() - t0
         if success then
             return true, "Placement took " .. diff .. " us"

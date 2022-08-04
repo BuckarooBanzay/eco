@@ -15,7 +15,7 @@ building_lib.register_placement("dummy", {
 
 local function run_conditions(conditions)
     local mapblock_pos = {x = 0, y = 0, z = 0}
-    return building_lib.can_build(mapblock_pos, {
+    return building_lib.check_conditions(mapblock_pos, conditions, {
         name = "something:test1",
         placement = "dummy",
         conditions = conditions

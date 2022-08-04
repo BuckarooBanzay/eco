@@ -1,5 +1,10 @@
 
-function building_lib.do_build(mapblock_pos, building_def, callback)
+function building_lib.do_build(mapblock_pos, building_name, placement_options, callback)
+	local building_def = building_lib.get_building(building_name)
+	if not building_def then
+		return false, "Building not found: '" .. building_name .. "'"
+	end
+
 	local success, message = building_lib.can_build(mapblock_pos, building_def)
 	if not success then
 		return false, message
@@ -35,7 +40,10 @@ function building_lib.do_build(mapblock_pos, building_def, callback)
 		end
 	end
 
-	placement.place(placement, mapblock_pos, building_def, callback)
+	placement.place(placement, mapblock_pos, building_def, placement_options, callback)
+	building_lib.store:merge(mapblock_pos, {
+		placement_options = placement_options
+	})
 
 	return true
 end
