@@ -10,16 +10,6 @@ building_lib.register_building("simple_building", {
     catalog = MP .. "/schematics/foundation.zip"
 })
 
--- a 2x2 building with connections
-building_lib.register_building("2x2_building", {
-    placement = "simple",
-    connections = {
-        ["2,0,0"] = "conngroup",
-        ["-1,0,0"] = "conngroup"
-    },
-    catalog = MP .. "/schematics/foundation.zip"
-})
-
 -- connected placement, only 1x1 allowed
 building_lib.register_building("connected_building", {
     placement = "connected",
@@ -29,16 +19,18 @@ building_lib.register_building("connected_building", {
     tiles = {
         ["0,0,0"] = {
             default = true,
-            rotations = {0,90,180,270},
+            rotations = {0},
             connections = {
-                ["1,0,0"] = "conngroup"
+                ["1,0,0"] = "conngroup",
+                ["-1,0,0"] = "conngroup",
+                ["0,0,1"] = "conngroup",
+                ["0,0,-1"] = "conngroup"
             }
         },
         ["1,0,0"] = {
-            rotations = {0,90},
+            rotations = {0,90,180,270},
             connections = {
-                ["1,0,0"] = "conngroup",
-                ["-1,0,0"] = "conngroup"
+                ["1,0,0"] = "conngroup"
             }
         }
     },
@@ -52,7 +44,7 @@ mtt.register("select_tile", function(callback)
     local callback_count = 0
     local function progress()
         callback_count = callback_count + 1
-        if callback_count == 2 then
+        if callback_count == 3 then
             callback()
         end
     end
@@ -72,4 +64,7 @@ mtt.register("select_tile", function(callback)
 
     local mapblock_data = building_lib.store:get(mapblock_pos2)
     print(dump(mapblock_data))
+    assert(mapblock_data.placement_options and mapblock_data.placement_options.rotation == 180)
+
+    progress()
 end)
