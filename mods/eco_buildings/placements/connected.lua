@@ -99,9 +99,8 @@ building_lib.register_placement("connected", {
 		local _, tile = select_tile(mapblock_pos, building_def)
 		return tile ~= nil
 	end,
-	get_size = function(_, mapblock_pos, building_def)
-		local _, tile = select_tile(mapblock_pos, building_def)
-		return tile.size or { x=1, y=1, z=1 }
+	get_size = function()
+		return { x=1, y=1, z=1 }
 	end,
 	place = function(_, mapblock_pos, building_def, callback)
 		local tile_pos, tile, rotation = select_tile(mapblock_pos, building_def)
@@ -118,3 +117,15 @@ building_lib.register_placement("connected", {
 		callback()
 	end
 })
+
+if minetest.get_modpath("mtt") then
+	mtt.register("string_to_pos", function(callback)
+		assert(vector.equals(string_to_pos("1,2,3"), {x=1,y=2,z=3}))
+		callback()
+	end)
+
+	mtt.register("pos_to_string", function(callback)
+		assert(pos_to_string({x=1,y=2,z=3}) == "1,2,3")
+		callback()
+	end)
+end
