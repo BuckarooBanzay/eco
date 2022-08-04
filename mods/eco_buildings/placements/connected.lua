@@ -59,6 +59,11 @@ local function match_connection(mapblock_pos, connection, other_mapblock_pos, ot
 	return true
 end
 
+local supported_placements = {
+	connected = true,
+	simple = true
+}
+
 local function select_tile(mapblock_pos, building_def)
 	local default_tilepos, default_tile
 
@@ -79,7 +84,7 @@ local function select_tile(mapblock_pos, building_def)
 				local other_pos = vector.add(mapblock_pos, string_to_pos(dir))
 				local other_building = building_lib.get_building_at_pos(other_pos)
 
-				if other_building then
+				if other_building and supported_placements[other_building.placement] and other_building.connections then
 					local other_placement_options = building_lib.get_placement_options(other_pos) or {}
 					local other_rotation = other_placement_options.rotation or 0
 					local other_connections = rotate_connections(other_building.connections, other_rotation)
