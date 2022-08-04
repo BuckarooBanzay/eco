@@ -59,13 +59,9 @@ local function match_connection(mapblock_pos, connection, other_mapblock_pos, ot
 	return true
 end
 
-local supported_placements = {
-	connected = true,
-	simple = true
-}
-
 local function select_tile(mapblock_pos, building_def)
 	local default_tilepos, default_tile
+	-- TODO: only match "best" tile
 
 	-- try to match a tile
 	for tile_pos, tile in pairs(building_def.tiles) do
@@ -84,15 +80,26 @@ local function select_tile(mapblock_pos, building_def)
 				local other_pos = vector.add(mapblock_pos, string_to_pos(dir))
 				local other_building = building_lib.get_building_at_pos(other_pos)
 
-				if other_building and supported_placements[other_building.placement] and other_building.connections then
-					local other_placement_options = building_lib.get_placement_options(other_pos) or {}
-					local other_rotation = other_placement_options.rotation or 0
-					local other_connections = rotate_connections(other_building.connections, other_rotation)
+				if other_building then
+					if other_building.placement == "connected" then
+						-- just check group
+						local groups = building_lib.get_groups(mapblock_pos)
+						if not groups[connection] then
+							matches = false
+							break
+						end
+					elseif other_building.placement == "simple" then
+						local other_placement_options = building_lib.get_placement_options(other_pos) or {}
+						local other_rotation = other_placement_options.rotation or 0
+						local other_connections = rotate_connections(other_building.connections, other_rotation)
 
-					local conn_match = match_connection(mapblock_pos, connection, other_pos, other_connections)
-					if not conn_match then
-						matches = false
-						break
+						local conn_match = match_connection(mapblock_pos, connection, other_pos, other_connections)
+						if not conn_match then
+							matches = false
+							break
+						end
+					-- else
+						-- unknown placement type
 					end
 				else
 					matches = false
@@ -126,7 +133,14 @@ building_lib.register_placement("connected", {
 		local tile_pos, _, rotation = select_tile(mapblock_pos, building_def)
 
 		local catalog = mapblock_lib.get_catalog(building_def.catalog)
-		catalog:deserialize(tile_pos, mapblock_pos, { callback = callback })
+		catalog:deserialize(tile_pos, mapblock_pos, {
+			transform = {
+				rotate = {
+					axis = "y",
+					angle = rotation
+				}
+			}
+		})
 
 		callback()
 
