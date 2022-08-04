@@ -40,11 +40,6 @@ local function rotate_connections(connections, rotation)
 end
 
 local function match_connection(mapblock_pos, other_mapblock_pos, connection)
-	local other_building, other_origin = building_lib.get_building_at_pos(other_mapblock_pos)
-	if not other_building then
-		return false
-	end
-
 
 
 	return true
@@ -62,8 +57,12 @@ local function select_tile(mapblock_pos, building_def)
 
 		for _, rotation in ipairs(tile.rotations or {0}) do
 			local connections = rotate_connections(tile.connections, rotation)
+
 			for dir, connection in pairs(connections) do
 				local other_pos = vector.add(mapblock_pos, string_to_pos(dir))
+				local other_building, other_origin = building_lib.get_building_at_pos(other_pos)
+				-- TODO
+
 				local matches = match_connection(mapblock_pos, other_pos, connection)
 				print(dump({
 					name = "select_tile::ipairs(tile.rotations)",

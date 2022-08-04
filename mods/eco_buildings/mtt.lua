@@ -1,6 +1,7 @@
 -- register test building defs
 local MP = minetest.get_modpath("eco_buildings")
 
+-- a 1x1 building with connections
 building_lib.register_building("simple_building", {
     placement = "simple",
     connections = {
@@ -9,6 +10,17 @@ building_lib.register_building("simple_building", {
     catalog = MP .. "/schematics/foundation.zip"
 })
 
+-- a 2x2 building with connections
+building_lib.register_building("2x2_building", {
+    placement = "simple",
+    connections = {
+        ["2,0,0"] = "conngroup",
+        ["-1,0,0"] = "conngroup"
+    },
+    catalog = MP .. "/schematics/foundation.zip"
+})
+
+-- connected placement, only 1x1 allowed
 building_lib.register_building("connected_building", {
     placement = "connected",
     groups = {
@@ -45,7 +57,12 @@ mtt.register("select_tile", function(callback)
         end
     end
 
-    local success, err = building_lib.do_build(mapblock_pos1, "simple_building", {}, progress)
+    local success, err = building_lib.do_build(
+        mapblock_pos1,
+        "simple_building",
+        { rotation = 0 },
+        progress
+    )
     assert(success)
     assert(err == nil)
 
