@@ -60,14 +60,15 @@ local function match_connection(mapblock_pos, connection, other_mapblock_pos, ot
 end
 
 local function select_tile(mapblock_pos, building_def)
-	local default_tilepos, default_tile
-	-- TODO: only match "best" tile
+	local selected_tilepos, selected_tile, selected_rotation = 0
+	local selected_tile_score = 0
 
 	-- try to match a tile
 	for tile_pos, tile in pairs(building_def.tiles) do
-		if tile.default then
-			default_tilepos = string_to_pos(tile_pos)
-			default_tile = tile
+		if tile.default and selected_tile_score == 0 then
+			-- select default tile if no other available
+			selected_tilepos = string_to_pos(tile_pos)
+			selected_tile = tile
 		end
 
 		for _, rotation in ipairs(tile.rotations or {0}) do
@@ -107,14 +108,59 @@ local function select_tile(mapblock_pos, building_def)
 				end
 			end
 
-			if matches and num_connections > 0 then
-				return string_to_pos(tile_pos), tile, rotation
+			if matches and num_connections > selected_tile_score then
+				selected_tilepos = string_to_pos(tile_pos)
+				selected_tile = tile
+				selected_rotation = rotation
+				selected_tile_score = num_connections
 			end
 		end
 	end
 
 	-- fallback to default tile, if available
-	return default_tilepos, default_tile, 0
+	return selected_tilepos, selected_tile, selected_rotation
+end
+
+local function select_and_place(mapblock_pos, building_def)
+	local tile_pos, _, rotation = select_tile(mapblock_pos, building_def)
+	if not tile_pos then
+		return
+	end
+
+	local catalog = mapblock_lib.get_catalog(building_def.catalog)
+	catalog:deserialize(tile_pos, mapblock_pos, {
+		transform = {
+			rotate = {
+				axis = "y",
+				angle = rotation
+			}
+		}
+	})
+
+	return tile_pos, rotation
+end
+
+local cardinal_directions = {
+	{x=1,y=0,z=0},
+	{x=-1,y=0,z=0},
+	{x=0,y=0,z=1},
+	{x=0,y=0,z=-1}
+}
+
+local function place_and_update(mapblock_pos, building_def)
+	-- place target tile
+	local tile_pos, rotation = select_and_place(mapblock_pos, building_def)
+
+	-- update neighbors
+	for _, dir in ipairs(cardinal_directions) do
+		local neighbor_mapblock_pos = vector.add(mapblock_pos, dir)
+		local neighbor_building = building_lib.get_building_at_pos(neighbor_mapblock_pos)
+		if neighbor_building and neighbor_building.placement == "connected" then
+			select_and_place(neighbor_mapblock_pos, neighbor_building)
+		end
+	end
+
+	return tile_pos, rotation
 end
 
 building_lib.register_placement("connected", {
@@ -130,20 +176,8 @@ building_lib.register_placement("connected", {
 		return { x=1, y=1, z=1 }
 	end,
 	place = function(_, mapblock_pos, building_def, placement_options, callback)
-		local tile_pos, _, rotation = select_tile(mapblock_pos, building_def)
-
-		local catalog = mapblock_lib.get_catalog(building_def.catalog)
-		catalog:deserialize(tile_pos, mapblock_pos, {
-			transform = {
-				rotate = {
-					axis = "y",
-					angle = rotation
-				}
-			}
-		})
-
+		local tile_pos, rotation = place_and_update(mapblock_pos, building_def)
 		callback()
-
 		placement_options.rotation = rotation
 		placement_options.tile_pos = tile_pos
 	end

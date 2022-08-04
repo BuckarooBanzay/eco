@@ -10,7 +10,7 @@ building_lib.register_building("eco_buildings:loading_dock", {
 		{ on_solid_underground = true }
 	},
 	connections = {
-		["1,0,0"] = "street"
+		["0,0,1"] = "street"
 	},
 	catalog = MP .. "/schematics/loading_dock.zip"
 })
