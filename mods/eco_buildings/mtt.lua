@@ -63,8 +63,10 @@ mtt.register("select_tile", function(callback)
     assert(err == nil)
 
     local mapblock_data = building_lib.store:get(mapblock_pos2)
-    print(dump(mapblock_data))
-    assert(mapblock_data.placement_options and mapblock_data.placement_options.rotation == 180)
+    assert(mapblock_data.placement_options.rotation == 180)
+    assert(mapblock_data.placement_options.tile_pos.x == 1)
+    assert(mapblock_data.placement_options.tile_pos.y == 0)
+    assert(mapblock_data.placement_options.tile_pos.z == 0)
 
     progress()
 end)

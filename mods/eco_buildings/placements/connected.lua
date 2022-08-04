@@ -79,27 +79,18 @@ local function select_tile(mapblock_pos, building_def)
 				local other_pos = vector.add(mapblock_pos, string_to_pos(dir))
 				local other_building = building_lib.get_building_at_pos(other_pos)
 
-				print(dump({
-					other_pos = other_pos,
-					rotation = rotation,
-					tile_pos = tile_pos
-				}))
-
 				if other_building then
-					-- TODO: rotate
-					local conn_match = match_connection(mapblock_pos, connection, other_pos, other_building.connections)
+					local other_placement_options = building_lib.get_placement_options(other_pos) or {}
+					local other_rotation = other_placement_options.rotation or 0
+					local other_connections = rotate_connections(other_building.connections, other_rotation)
 
-					print(dump({
-						conn_match = conn_match,
-						connection = connection,
-						rotation = rotation
-					}))
-
+					local conn_match = match_connection(mapblock_pos, connection, other_pos, other_connections)
 					if not conn_match then
 						matches = false
 						break
 					end
 				else
+					matches = false
 					break
 				end
 			end
