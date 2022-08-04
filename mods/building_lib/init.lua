@@ -24,3 +24,7 @@ dofile(MP .. "/placements/simple.lua")
 dofile(MP .. "/can_build.lua")
 dofile(MP .. "/do_build.lua")
 dofile(MP .. "/chat.lua")
+
+if minetest.get_modpath("mtt") and mtt.enabled then
+	dofile(MP .. "/mtt.lua")
+end
