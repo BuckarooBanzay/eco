@@ -51,3 +51,16 @@ building_lib.register_building("eco_buildings:street", {
 	},
 	catalog = MP .. "/schematics/street.zip"
 })
+
+building_lib.register_building("eco_buildings:street_slope", {
+	placement = "simple",
+	groups = {
+		street = true
+	},
+	ground_conditions = {
+		{ on_slope = true },
+		{ on_solid_underground = true }
+	},
+	catalog = MP .. "/schematics/street.zip"
+	-- TODO: offset/size
+})

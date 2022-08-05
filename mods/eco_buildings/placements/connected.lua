@@ -89,7 +89,7 @@ local function select_tile(mapblock_pos, building_def)
 							matches = false
 							break
 						end
-					elseif other_building.placement == "simple" then
+					elseif other_building.connections then
 						local other_placement_options = building_lib.get_placement_options(other_pos) or {}
 						local other_rotation = other_placement_options.rotation or 0
 						local other_connections = rotate_connections(other_building.connections, other_rotation)
@@ -99,8 +99,6 @@ local function select_tile(mapblock_pos, building_def)
 							matches = false
 							break
 						end
-					-- else
-						-- unknown placement type
 					end
 				else
 					matches = false
