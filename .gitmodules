@@ -16,3 +16,6 @@
 [submodule "mods/building_lib"]
 	path = mods/building_lib
 	url = https://github.com/BuckarooBanzay/building_lib
+[submodule "mods/building_lib_overview"]
+	path = mods/building_lib_overview
+	url = https://github.com/BuckarooBanzay/building_lib_overview/

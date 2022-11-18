@@ -8,30 +8,13 @@ building_lib.register_building("eco_mapgen:terrain_surface", {
         cache = true
 	},
 	replace = {
-		["default:cobble"] = "default:dirt_with_grass"
+		["eco:cobble"] = "eco:grass"
 	},
 	groups = {
 		flat_surface = true,
 		support = true
 	},
-	overview = "default:dirt_with_grass"
-})
-
-building_lib.register_building("eco_mapgen:terrain_surface_dry", {
-	catalog = {
-		filename = MP .. "/schematics/terrain.zip",
-		offset = {x=0, y=0, z=0},
-		size = {x=1, y=1, z=1},
-        cache = true
-	},
-	replace = {
-		["default:cobble"] = "default:dirt_with_dry_grass"
-	},
-	groups = {
-		flat_surface = true,
-		support = true
-	},
-	overview = "default:dirt_with_dry_grass"
+	overview = "eco:grass"
 })
 
 building_lib.register_building("eco_mapgen:terrain_underground", {
@@ -42,13 +25,13 @@ building_lib.register_building("eco_mapgen:terrain_underground", {
         cache = true
 	},
 	replace = {
-		["default:cobble"] = "default:stone"
+		["eco:cobble"] = "eco:stone"
 	},
 	groups = {
 		flat_surface = true,
 		support = true
 	},
-	overview = "default:stone"
+	overview = "eco:stone"
 })
 
 building_lib.register_building("eco_mapgen:terrain_slope_inner", {
@@ -58,7 +41,7 @@ building_lib.register_building("eco_mapgen:terrain_slope_inner", {
 		size = {x=1, y=1, z=1},
         cache = true
 	},
-	overview = "moreblocks:slope_stone_inner"
+	overview = "eco:slope_stone_inner"
 })
 
 building_lib.register_building("eco_mapgen:terrain_slope", {
@@ -72,7 +55,7 @@ building_lib.register_building("eco_mapgen:terrain_slope", {
 	groups = {
 		terrain_slope = true
 	},
-	overview = "moreblocks:slope_stone"
+	overview = "eco:slope_stone"
 })
 
 building_lib.register_building("eco_mapgen:terrain_slope_outer", {
@@ -82,7 +65,7 @@ building_lib.register_building("eco_mapgen:terrain_slope_outer", {
 		size = {x=1, y=1, z=1},
         cache = true
 	},
-	overview = "moreblocks:slope_stone_outer"
+	overview = "eco:slope_stone_outer"
 })
 
 building_lib.register_building("eco_mapgen:water", {
@@ -91,10 +74,10 @@ building_lib.register_building("eco_mapgen:water", {
         cache = true
 	},
 	replace = {
-		["full_block"] = "default:water_source"
+		["full_block"] = "eco:water_source"
 	},
 	groups = {
 		water = true
 	},
-	overview = "wool:blue"
+	overview = "eco:water_source"
 })

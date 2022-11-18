@@ -13,18 +13,6 @@ local mapgen = building_lib.create_mapgen({
                 slope_outer = "eco_mapgen:terrain_slope_outer",
                 water = "eco_mapgen:water"
             }
-        },{
-            name = "dry",
-            temperature = 10,
-            humidity = 20,
-            buildings = {
-                underground = "eco_mapgen:terrain_underground",
-                surface = "eco_mapgen:terrain_surface_dry",
-                slope = "eco_mapgen:terrain_slope",
-                slope_inner = "eco_mapgen:terrain_slope_inner",
-                slope_outer = "eco_mapgen:terrain_slope_outer",
-                water = "eco_mapgen:water"
-            }
         }
     },
     from_y = -5,
