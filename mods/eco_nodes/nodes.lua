@@ -17,11 +17,24 @@ local nodes = {
     ["dirt"] = {
         sounds = eco_nodes.node_sound_dirt()
     },
+    ["dry_dirt"] = {
+        sounds = eco_nodes.node_sound_dirt()
+    },
     ["grass"] = {
         sounds = eco_nodes.node_sound_dirt(),
         tiles = {
             "eco_grass.png", "eco_dirt.png", {
                 name = "eco_dirt.png^eco_grass_side.png",
+			    tileable_vertical = false
+            }
+        },
+        moreblocks = true
+    },
+    ["dry_grass"] = {
+        sounds = eco_nodes.node_sound_dirt(),
+        tiles = {
+            "eco_dry_grass.png", "eco_dry_dirt.png", {
+                name = "eco_dry_dirt.png^eco_dry_grass_side.png",
 			    tileable_vertical = false
             }
         },

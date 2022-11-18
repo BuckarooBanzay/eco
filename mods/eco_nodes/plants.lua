@@ -13,19 +13,6 @@ local flowers = {
     "tulip",
     "tulip_black",
     "viola",
-    "grass_1",
-    "grass_2",
-    "grass_3",
-    "grass_4",
-    "grass_5"
-}
-
-local grass = {
-    "grass_1",
-    "grass_2",
-    "grass_3",
-    "grass_4",
-    "grass_5"
 }
 
 for _, flowername in ipairs(flowers) do
@@ -34,8 +21,11 @@ for _, flowername in ipairs(flowers) do
     })
 end
 
-for _, grassname in ipairs(grass) do
-    eco_nodes.register_plant(grassname, {
-        texture = "eco_" .. grassname .. ".png"
+for i = 1,5 do
+    eco_nodes.register_plant("grass_" .. i, {
+        texture = "eco_grass_" .. i .. ".png"
+    })
+    eco_nodes.register_plant("dry_grass_" .. i, {
+        texture = "eco_dry_grass_" .. i .. ".png"
     })
 end

@@ -41,7 +41,11 @@ building_lib.register_building("eco_mapgen:terrain_slope_inner", {
 		size = {x=1, y=1, z=1},
         cache = true
 	},
-	overview = "eco:slope_stone_inner"
+	replace = {
+		["eco:slope_stone_inner"] = "eco:slope_grass_inner",
+		["eco:slope_stone"] = "eco:slope_grass"
+	},
+	overview = "eco:slope_grass_inner"
 })
 
 building_lib.register_building("eco_mapgen:terrain_slope", {
@@ -51,11 +55,14 @@ building_lib.register_building("eco_mapgen:terrain_slope", {
 		size = {x=1, y=1, z=1},
         cache = true
 	},
+	replace = {
+		["eco:slope_stone"] = "eco:slope_grass"
+	},
 	rotation_offset = 90,
 	groups = {
 		terrain_slope = true
 	},
-	overview = "eco:slope_stone"
+	overview = "eco:slope_grass"
 })
 
 building_lib.register_building("eco_mapgen:terrain_slope_outer", {
@@ -65,7 +72,11 @@ building_lib.register_building("eco_mapgen:terrain_slope_outer", {
 		size = {x=1, y=1, z=1},
         cache = true
 	},
-	overview = "eco:slope_stone_outer"
+	replace = {
+		["eco:slope_stone_outer"] = "eco:slope_grass_outer",
+		["eco:slope_stone"] = "eco:slope_grass"
+	},
+	overview = "eco:slope_grass_outer"
 })
 
 building_lib.register_building("eco_mapgen:water", {
