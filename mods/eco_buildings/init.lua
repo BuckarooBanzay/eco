@@ -2,13 +2,9 @@ eco_buildings = {}
 
 local MP = minetest.get_modpath("eco_buildings")
 
-dofile(MP .. "/placements/connected.lua")
-dofile(MP .. "/conditions.lua")
 dofile(MP .. "/street.lua")
 dofile(MP .. "/park.lua")
 dofile(MP .. "/strut.lua")
-dofile(MP .. "/foundation.lua")
-dofile(MP .. "/loading_dock.lua")
 
 if minetest.get_modpath("mtt") and mtt.enabled then
     dofile(MP .. "/mtt.lua")

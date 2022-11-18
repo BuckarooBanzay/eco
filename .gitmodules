@@ -13,3 +13,6 @@
 [submodule "mods/mtt"]
 	path = mods/mtt
 	url = https://github.com/buckaroobanzay/mtt
+[submodule "mods/building_lib"]
+	path = mods/building_lib
+	url = https://github.com/BuckarooBanzay/building_lib
