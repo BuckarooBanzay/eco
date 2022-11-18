@@ -9,7 +9,6 @@ eco nodes mod
 
 ## Media
 
-* `models/torch*` CC-BY SA 3.0 https://github.com/minetest/minetest_game
 * `textures/eco_flowers*` CC-BY SA 4.0 https://gitlab.com/Df458/rpg16
 * `textures/eco_acacia*` CC-BY SA 4.0 https://gitlab.com/Df458/rpg16
 * `textures/eco_jungle*` CC-BY SA 4.0 https://gitlab.com/Df458/rpg16
