@@ -15,10 +15,12 @@ local nodes = {
         moreblocks = true
     },
     ["dirt"] = {
-        sounds = eco_nodes.node_sound_dirt()
+        sounds = eco_nodes.node_sound_dirt(),
+        moreblocks = true
     },
     ["dry_dirt"] = {
-        sounds = eco_nodes.node_sound_dirt()
+        sounds = eco_nodes.node_sound_dirt(),
+        moreblocks = true
     },
     ["grass"] = {
         sounds = eco_nodes.node_sound_dirt(),

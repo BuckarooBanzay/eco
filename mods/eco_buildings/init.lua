@@ -5,6 +5,7 @@ eco_buildings = {}
 dofile(MP .. "/util/streetname.lua")
 dofile(MP .. "/conditions.lua")
 dofile(MP .. "/street.lua")
+dofile(MP .. "/dirt_street.lua")
 dofile(MP .. "/park.lua")
 
 if minetest.get_modpath("mtt") and mtt.enabled then
