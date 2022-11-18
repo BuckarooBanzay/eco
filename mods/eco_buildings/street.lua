@@ -48,7 +48,7 @@ building_lib.register_building("eco_buildings:street_slope", {
 	overview = function(rel_mapblock_pos)
 		if vector.equals(rel_mapblock_pos, {x=0,y=0,z=0}) then
 			-- only show lower slope part in overview
-			return { name="eco:slope_stone", param2 = 3 }
+			return { name="eco:slope_stone_block", param2 = 3 }
 		end
 	end
 })
