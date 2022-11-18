@@ -44,7 +44,10 @@ local nodes = {
     ["copperpatina"] = {tiles = {"moreblocks_copperpatina.png"}},
     ["coal_checker"] = {tiles = {"moreblocks_coal_checker.png"}},
     ["clean_glass"] = {tiles = {"moreblocks_clean_glass.png"}},
-    ["grey_bricks"] = {tiles = {"moreblocks_grey_bricks.png"}},
+    ["grey_bricks"] = {
+        tiles = {"moreblocks_grey_bricks.png"},
+        moreblocks = true
+    },
     ["cactus_brick"] = {tiles = {"moreblocks_cactus_brick.png"}},
     ["obsidian_block"] = {
         sounds = eco_nodes.node_sound_stone()
