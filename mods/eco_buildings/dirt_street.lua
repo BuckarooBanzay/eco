@@ -38,8 +38,6 @@ local street_tile_conditions = {
 		["*"] = { empty = true },
 		["underground"] = { group = "flat_surface" }
 	},{
-		["*"] = { empty = true, near_support = true }
-	},{
 		["*"] = { group = "street_flat"}
 	}
 }
