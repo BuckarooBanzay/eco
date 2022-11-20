@@ -48,7 +48,7 @@ building_lib.register_building("eco_buildings:street_slope", {
 	overview = function(rel_mapblock_pos)
 		if vector.equals(rel_mapblock_pos, {x=0,y=0,z=0}) then
 			-- only show lower slope part in overview
-			return { name="eco:slope_stone_block", param2 = 3 }
+			return { name="eco:slope_gravel", param2 = 3 }
 		end
 	end
 })
@@ -83,7 +83,7 @@ building_lib.register_building("eco_buildings:street_tunnel", {
 		street_connecting = true,
 		street_tunnel = true
 	},
-	overview = "eco:slab_stone_block_2"
+	overview = "eco:slab_gravel_2"
 })
 
 local street_tile_conditions = {
@@ -123,7 +123,7 @@ building_lib.register_building("eco_buildings:street_straight", {
 		street_flat = true,
 		street_connecting = true
 	},
-	overview = "eco:slab_stone_block_2"
+	overview = "eco:slab_gravel_2"
 })
 
 building_lib.register_building("eco_buildings:street_all_sides", {
@@ -163,7 +163,7 @@ building_lib.register_building("eco_buildings:street_all_sides", {
 		street_connecting = true
 	},
 	conditions = street_tile_conditions,
-	overview = "eco:slab_stone_block_2"
+	overview = "eco:slab_gravel_2"
 })
 
 building_lib.register_building("eco_buildings:street_t", {
@@ -198,7 +198,7 @@ building_lib.register_building("eco_buildings:street_t", {
 		street_connecting = true
 	},
 	conditions = street_tile_conditions,
-	overview = "eco:slab_stone_block_2"
+	overview = "eco:slab_gravel_2"
 })
 
 building_lib.register_building("eco_buildings:street_corner", {
@@ -228,7 +228,7 @@ building_lib.register_building("eco_buildings:street_corner", {
 		street_connecting = true
 	},
 	conditions = street_tile_conditions,
-	overview = "eco:slab_stone_block_2"
+	overview = "eco:slab_gravel_2"
 })
 
 building_lib.register_autoplacer("street", {

@@ -7,6 +7,8 @@ dofile(MP .. "/conditions.lua")
 dofile(MP .. "/street.lua")
 dofile(MP .. "/dirt_street.lua")
 dofile(MP .. "/park.lua")
+dofile(MP .. "/block.lua")
+dofile(MP .. "/strut.lua")
 
 if minetest.get_modpath("mtt") and mtt.enabled then
     dofile(MP .. "/mtt.lua")
