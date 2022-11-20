@@ -2,7 +2,8 @@ local MP = minetest.get_modpath("eco_buildings")
 
 local disable_orientation = {
 	["eco:stone_bricks"] = true,
-	["eco:grey_bricks"] = true
+	["eco:grey_bricks"] = true,
+	["street_signs:signs_basic"] = true
 }
 
 local content_street_sign = minetest.get_content_id("street_signs:sign_basic")
