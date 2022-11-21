@@ -52,7 +52,8 @@ function eco_nodes.register_tree(treename, cfg)
     eco_nodes.register(treename .. "_wood", {
         description = "eco '" .. treename .. "' wood",
         tiles = {cfg.textures.wood},
-        sounds = eco_nodes.node_sound_wood()
+        sounds = eco_nodes.node_sound_wood(),
+        moreblocks = true
     })
 
     eco_nodes.register(treename .. "_leaves", {
