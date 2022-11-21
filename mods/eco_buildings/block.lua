@@ -3,7 +3,7 @@ local MP = minetest.get_modpath("eco_buildings")
 building_lib.register_building("eco_buildings:block", {
 	catalog = MP .. "/schematics/full.zip",
 	conditions = {
-        {
+		{
 			-- flat surface
 			["*"] = { empty = true },
 			["underground"] = { group = "flat_surface"}
@@ -23,9 +23,9 @@ building_lib.register_building("eco_buildings:block", {
 		}
 	},
 	groups = {
-        flat_surface = true
+		flat_surface = true
 	},
-    replace = {
+	replace = {
 		["full_block"] = "eco:stone"
 	},
 	overview = "eco:stone"
