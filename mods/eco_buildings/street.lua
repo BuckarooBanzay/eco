@@ -81,7 +81,7 @@ building_lib.register_building("eco_buildings:street_tunnel", {
 	},
 	groups = {
 		street = true,
-		street_connecting = true,
+		street_gravel = true,
 		street_tunnel = true
 	},
 	overview = "eco:slab_gravel_2"
@@ -94,7 +94,7 @@ local street_tile_conditions = {
 	},{
 		["*"] = { empty = true, near_support = true }
 	},{
-		["*"] = { group = "street_flat"}
+		["*"] = { group = "street_gravel"}
 	}
 }
 
@@ -121,7 +121,7 @@ building_lib.register_building("eco_buildings:street_straight", {
 	conditions = street_tile_conditions,
 	groups = {
 		street = true,
-		street_flat = true,
+		street_gravel = true,
 		street_connecting = true
 	},
 	overview = "eco:slab_gravel_2"
@@ -160,7 +160,7 @@ building_lib.register_building("eco_buildings:street_all_sides", {
 	disable_orientation = disable_orientation,
 	groups = {
 		street = true,
-		street_flat = true,
+		street_gravel = true,
 		street_connecting = true
 	},
 	conditions = street_tile_conditions,
@@ -195,7 +195,7 @@ building_lib.register_building("eco_buildings:street_t", {
 	disable_orientation = disable_orientation,
 	groups = {
 		street = true,
-		street_flat = true,
+		street_gravel = true,
 		street_connecting = true
 	},
 	conditions = street_tile_conditions,
@@ -225,7 +225,7 @@ building_lib.register_building("eco_buildings:street_corner", {
 	disable_orientation = disable_orientation,
 	groups = {
 		street = true,
-		street_flat = true,
+		street_gravel = true,
 		street_connecting = true
 	},
 	conditions = street_tile_conditions,
@@ -233,7 +233,7 @@ building_lib.register_building("eco_buildings:street_corner", {
 })
 
 building_lib.register_autoplacer("street", {
-	propagate = { group = "street_flat" },
+	propagate = { group = "street_gravel" },
 	buildings = {
 		{
 			name = "eco_buildings:street_all_sides",

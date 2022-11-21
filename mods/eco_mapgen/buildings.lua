@@ -45,6 +45,9 @@ building_lib.register_building("eco_mapgen:terrain_slope_inner", {
 		["eco:slope_stone_inner"] = "eco:slope_grass_inner",
 		["eco:slope_stone"] = "eco:slope_grass"
 	},
+	groups = {
+		terrain_slope_inner = true
+	},
 	overview = "eco:slope_grass_inner"
 })
 
@@ -75,6 +78,9 @@ building_lib.register_building("eco_mapgen:terrain_slope_outer", {
 	replace = {
 		["eco:slope_stone_outer"] = "eco:slope_grass_outer",
 		["eco:slope_stone"] = "eco:slope_grass"
+	},
+	groups = {
+		terrain_slope_outer = true
 	},
 	overview = "eco:slope_grass_outer"
 })

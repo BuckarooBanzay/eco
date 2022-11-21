@@ -7,6 +7,19 @@ building_lib.register_building("eco_buildings:block", {
 			-- flat surface
 			["*"] = { empty = true },
 			["underground"] = { group = "flat_surface"}
+		},{
+			-- slope
+			["*"] = { group = "terrain_slope" },
+		},{
+			-- slope inner
+			["*"] = { group = "terrain_slope_inner" },
+		},{
+			-- slope outer
+			["*"] = { group = "terrain_slope_outer" },
+		},{
+			-- on water
+			["*"] = { group = "water" },
+			["underground"] = { group = "flat_surface"}
 		}
 	},
 	groups = {
