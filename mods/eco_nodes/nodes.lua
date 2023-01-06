@@ -42,10 +42,19 @@ local nodes = {
         },
         moreblocks = true
     },
-    ["steel_block"] = {},
+    ["steel_block"] = {
+        moreblocks = true
+    },
     ["copperpatina"] = {tiles = {"moreblocks_copperpatina.png"}},
     ["coal_checker"] = {tiles = {"moreblocks_coal_checker.png"}},
-    ["clean_glass"] = {tiles = {"moreblocks_clean_glass.png"}},
+    ["clean_glass"] = {
+        tiles = {"moreblocks_clean_glass.png"},
+        moreblocks = true,
+        drawtype = "glasslike_framed_optional",
+        use_texture_alpha = "clip",
+        sunlight_propagates = true,
+        paramtype = "light"
+    },
     ["grey_bricks"] = {
         tiles = {"moreblocks_grey_bricks.png"},
         moreblocks = true
