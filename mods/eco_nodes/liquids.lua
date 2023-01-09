@@ -42,6 +42,45 @@ minetest.register_node(":eco:water_source", {
 	groups = {water = 3, liquid = 3, cools_lava = 1}
 })
 
+minetest.register_node(":eco:water_static", {
+	description = "Water Source",
+	drawtype = "glasslike",
+	waving = 3,
+	tiles = {
+		{
+			name = "eco_river_water_source_animated.png",
+			backface_culling = false,
+			animation = {
+				type = "vertical_frames",
+				aspect_w = 16,
+				aspect_h = 16,
+				length = 2.0,
+			},
+		},
+		{
+			name = "eco_river_water_source_animated.png",
+			backface_culling = true,
+			animation = {
+				type = "vertical_frames",
+				aspect_w = 16,
+				aspect_h = 16,
+				length = 2.0,
+			},
+		},
+	},
+	use_texture_alpha = "blend",
+	paramtype = "light",
+	walkable = false,
+	pointable = false,
+	diggable = false,
+	buildable_to = true,
+	is_ground_content = false,
+	drop = "",
+	drowning = 1,
+	post_effect_color = {a = 103, r = 30, g = 60, b = 90},
+	groups = {water = 3, liquid = 3, cools_lava = 1}
+})
+
 minetest.register_node(":eco_nodes:water_flowing", {
 	description = "Flowing Water",
 	drawtype = "flowingliquid",

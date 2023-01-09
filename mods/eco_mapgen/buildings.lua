@@ -96,5 +96,5 @@ building_lib.register_building("eco_mapgen:water", {
 	groups = {
 		water = true
 	},
-	overview = "eco:water_source"
+	overview = "eco:water_static"
 })
