@@ -1,80 +1,40 @@
 
-building_lib.register_building("building_lib_transport:route_start", {
+building_lib.register_building("building_lib_transport:route_straight", {
 	placement = "dummy",
     transport = {
-        routes = {
-            {
-                from = {x=0, y=0, z=0},
-                to = {x=1, y=0, z=0},
-                points = {
-                    {x=7.5, y=3, z=7.5},
-                    {x=16, y=3, z=7.5}
-                }
+        left = {
+            type = "street",
+            points = {
+                {x=0, y=3, z=3},
+                {x=16, y=3, z=3}
+            }
+        },
+        right = {
+            type = "street",
+            points = {
+                {x=16, y=3, z=13},
+                {x=0, y=3, z=13}
             }
         }
     }
 })
 
-building_lib.register_building("building_lib_transport:route_middle", {
-	placement = "dummy",
-    transport = {
-        routes = {
-            {
-                from = {x=-1, y=0, z=0},
-                to = {x=1, y=0, z=0},
-                points = {
-                    {x=0, y=3, z=7.5},
-                    {x=16, y=3, z=7.5}
-                }
-            }
-        }
-    }
-})
-
-building_lib.register_building("building_lib_transport:route_end", {
-	placement = "dummy",
-    transport = {
-        routes = {
-            {
-                from = {x=-1, y=0, z=0},
-                to = {x=0, y=0, z=0},
-                points = {
-                    {x=0, y=3, z=7.5},
-                    {x=7.5, y=3, z=7.5}
-                }
-            }
-        }
-    }
-})
+building_lib_transport.register_connection_rotated(
+    "building_lib_transport:route_straight", "left",
+    { x=1, y=0, z=0 },
+    "building_lib_transport:route_straight", "left"
+)
 
 mtt.register("route", function(callback)
-    -- create buildings to test route against
-    -- x ->
-    -- 0        1       2
-    -- [start]  [middle] [end]
+
     local playername = "singleplayer"
-    assert(building_lib.build({x=0, y=0, z=0}, playername, "building_lib_transport:route_start"))
-    assert(building_lib.build({x=1, y=0, z=0}, playername, "building_lib_transport:route_middle"))
-    assert(building_lib.build({x=2, y=0, z=0}, playername, "building_lib_transport:route_end"))
+    assert(building_lib.build({x=0, y=0, z=0}, playername, "building_lib_transport:route_straight"))
+    assert(building_lib.build({x=1, y=0, z=0}, playername, "building_lib_transport:route_straight"))
+    assert(building_lib.build({x=2, y=0, z=0}, playername, "building_lib_transport:route_straight"))
 
-    local route = building_lib_transport.create_route()
-    assert(route)
-    assert(not route:add({x=-1, y=0, z=0})) -- no building
-    assert(route:add({x=0, y=0, z=0})) -- start
-    assert(route:add({x=1, y=0, z=0})) -- middle
-    assert(route:add({x=2, y=0, z=0})) -- end
-
-    local mb_pos, fraction = route:get_pos()
-    assert(vector.equals(mb_pos, {x=0, y=0, z=0}))
-    assert(fraction >= 0 and fraction <= 0.1)
-
-    mb_pos, fraction = route:move(0.5)
-    assert(vector.equals(mb_pos, {x=0, y=0, z=0}))
-    assert(fraction >= 0.4 and fraction <= 0.6)
-
-    mb_pos, fraction = route:move(0.5)
-    assert(vector.equals(mb_pos, {x=1, y=0, z=0}))
-    assert(fraction >= 0 and fraction <= 0.1)
+    -- end of mb1
+    local connections = building_lib_transport.get_connections({x=0, y=0, z=0}, {x=16, y=3, z=3})
+    print(dump(connections))
 
     callback()
 end)
