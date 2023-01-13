@@ -1,14 +1,38 @@
 
--- "{mapblock_pos}/{path_name}" -> { name, speed }
-local active_vehicles = {}
+-- table with keys pointing to mapblocks that have moving vehicles in it
+-- hash(mapblock_pos) -> true
+local active_mapblocks = {}
 
-function building_lib_transport.format_key(mapblock_pos, path_name)
-    return minetest.pos_to_string(mapblock_pos) .. "/" .. path_name
+-- TODO: persist in mod_storage
+
+-- sets or removes the active mapblock entry
+local function set_active_mapblock_flag(mapblock_pos)
+    -- check current mapblock for moving vehicles
+    local hash = minetest.hash_node_position(mapblock_pos)
+    active_mapblocks[hash] = false
+    local vehicles = building_lib_transport.get_mapblock_vehicles(mapblock_pos)
+    for _, v in pairs(vehicles) do
+        if v.speed > 0 then
+            -- mark as active
+            active_mapblocks[hash] = true
+        end
+    end
 end
 
-function building_lib_transport.parse_key(key)
-    local pos_str, path_name = string.match(key, "^([^/]+)/(.*)$")
-    return minetest.string_to_pos(pos_str), path_name
+-- placement / removal / query
+
+function building_lib_transport.remove_active_vehicle(vehicle)
+    local vehicles = building_lib_transport.get_mapblock_vehicles(vehicle.mapblock_pos)
+    vehicles[vehicle.path_name] = nil
+    building_lib_transport.set_mapblock_vehicles(vehicle.mapblock_pos, vehicles)
+    set_active_mapblock_flag(vehicle.mapblock_pos)
+end
+
+-- TODO: remove all vehicles in a mapblock
+
+function building_lib_transport.get_active_vehicle(mapblock_pos, path_name)
+    local vehicles = building_lib_transport.get_mapblock_vehicles(mapblock_pos)
+    return vehicles[path_name]
 end
 
 function building_lib_transport.place_vehicle(name, mapblock_pos, path_name)
@@ -23,6 +47,7 @@ function building_lib_transport.place_vehicle(name, mapblock_pos, path_name)
     local active_vehicle = {
         name = name,
         speed = 0,
+        position = 0,
         last_update = os.time(),
         next_update = os.time(),
         -- duplicated info for lookups
@@ -30,61 +55,23 @@ function building_lib_transport.place_vehicle(name, mapblock_pos, path_name)
         path_name = path_name
     }
 
-    -- place in inactive store
-    local data = building_lib_transport.store:get(mapblock_pos)
-    if not data.vehicles then
-        data.vehicles = {}
-    end
-
-    data.vehicles[path_name] = active_vehicle
-    building_lib_transport.store:set(mapblock_pos, data)
+    local vehicles = building_lib_transport.get_mapblock_vehicles(mapblock_pos)
+    vehicles[path_name] = active_vehicle
+    building_lib_transport.set_mapblock_vehicles(mapblock_pos, vehicles)
 
     return active_vehicle
 end
 
-function building_lib_transport.update_vehicle(vehicle)
-    -- TODO
-end
+-- movement / update functions
 
-function building_lib_transport.remove_vehicle(vehicle)
-    -- remove from active store
-    local key = building_lib_transport.format_key(vehicle.mapblock_pos, vehicle.path_name)
-    if active_vehicles[key] then
-        active_vehicles[key] = nil
-        return
-    end
-
-    -- remove from inactive store
-    local data = building_lib_transport.store:get(vehicle.mapblock_pos)
-    if not data.vehicles then
-        return
-    end
-
-    data.vehicles[vehicle.path_name] = nil
-    building_lib_transport.store:set(vehicle.mapblock_pos, data)
-end
-
-function building_lib_transport.get_active_vehicle(mapblock_pos, path_name)
-    -- check active vehicles
-    local active_vehicle = active_vehicles[building_lib_transport.format_key(mapblock_pos, path_name)]
-
-    if not active_vehicle then
-        -- check inactive vehicles
-        local data = building_lib_transport.store:get(mapblock_pos)
-        if data and data.vehicles and data.vehicles[path_name] then
-            return data.vehicles[path_name]
-        end
-    end
+function building_lib_transport.update_active_vehicle(vehicle)
+    set_active_mapblock_flag(vehicle.mapblock_pos)
 end
 
 function building_lib_transport.move_active_vehicles()
-    local now = os.time()
-    for _, active_vehicle in pairs(active_vehicles) do
-        if active_vehicle.next_update < now then
-            -- update pending
-            -- TODO
-
-            active_vehicle.last_update = now
-        end
+    for hash in pairs(active_mapblocks) do
+        local mapblock_pos = minetest.get_position_from_hash(hash)
+        local vehicles = building_lib_transport.get_mapblock_vehicles(mapblock_pos)
+        -- TODO: move stuff
     end
 end
