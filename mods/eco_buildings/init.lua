@@ -11,6 +11,7 @@ dofile(MP .. "/block.lua")
 dofile(MP .. "/strut.lua")
 dofile(MP .. "/stone_quarry.lua")
 dofile(MP .. "/forestry.lua")
+dofile(MP .. "/plot.lua")
 
 if minetest.get_modpath("mtt") and mtt.enabled then
     dofile(MP .. "/mtt.lua")
