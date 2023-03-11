@@ -53,13 +53,13 @@ local function add_influence(pos, name, value)
     eco_influence.store:set(pos, groups)
 end
 
-local function apply_influence(mapblock_pos1, mapblock_pos2, name, value)
+local function apply_influence(mapblock_pos1, mapblock_pos2, name, value, factor)
     -- clamp max value to 10
     value = math.min(10, value)
 
     -- inner box
     apply_cube(mapblock_pos1, mapblock_pos2, function(mapblock_pos)
-        add_influence(mapblock_pos, name, value)
+        add_influence(mapblock_pos, name, value*factor)
     end)
 
     for influence=value-1,1,-1 do
@@ -67,7 +67,7 @@ local function apply_influence(mapblock_pos1, mapblock_pos2, name, value)
         mapblock_pos1 = vector.subtract(mapblock_pos1, 1)
         mapblock_pos2 = vector.add(mapblock_pos2, 1)
         apply_box(mapblock_pos1, mapblock_pos2, function(mapblock_pos)
-            add_influence(mapblock_pos, name, influence)
+            add_influence(mapblock_pos, name, influence*factor)
         end)
     end
 end
@@ -78,7 +78,7 @@ local function apply_influence_groups(mapblock_pos, size, groups, factor)
     end
     local mapblock_pos2 = vector.add(mapblock_pos, vector.subtract(size,1))
     for name, value in pairs(groups) do
-        apply_influence(mapblock_pos, mapblock_pos2, name, value*factor)
+        apply_influence(mapblock_pos, mapblock_pos2, name, value, factor)
     end
 end
 

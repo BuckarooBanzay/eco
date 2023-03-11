@@ -33,5 +33,13 @@ mtt.register("influence", function(callback)
     assert(eco_influence.get({ x=0, y=3, z=0 }, "noise") == 1)
     assert(eco_influence.get({ x=0, y=4, z=0 }, "noise") == 0)
 
+    success, err = building_lib.remove({ x=0, y=0, z=0 })
+    assert(not err)
+    assert(success)
+
+    assert(eco_influence.get({ x=0, y=0, z=0 }, "noise") == 0)
+    assert(eco_influence.get({ x=0, y=1, z=0 }, "noise") == 0)
+    assert(eco_influence.get({ x=0, y=2, z=0 }, "noise") == 0)
+
     callback()
 end)
