@@ -23,8 +23,7 @@ influence_groups = {
 local influence = eco_influence.get({ x=0, y=0, z=0 }, "noisy")
 influence = 1 -- defaults to 0
 
--- recalculate region
--- should be called if a building is placed or removed
--- TODO: doesn't scale right now
-eco_influence.calculate({ x=-5, y=-5, z=-5 }, { x=5, y=5, z=5 })
+-- clear region or single position
+-- NOTE: only to be used if buildings were manually removed (WE, other maptools)
+eco_influence.clear({ x=-5, y=-5, z=-5 }, { x=5, y=5, z=5 })
 ```
