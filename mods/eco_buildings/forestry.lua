@@ -5,6 +5,7 @@ building_lib.register_building("eco_buildings:forestry", {
 	conditions = {
 		{
 			["*"] = { empty_or_group = "plot" },
+			["base"] = { group = "plot "},
 			["underground"] = { group = "flat_surface"}
 		}
 	},
