@@ -5,12 +5,8 @@ eco_influence = {
 
 local function apply_cube(p1, p2, fn)
     p1, p2 = mapblock_lib.sort_pos(p1, p2)
-    for x=p1.x,p2.x do
-        for y=p1.y,p2.y do
-            for z=p1.z,p2.z do
-                fn({x=x,y=y,z=z})
-            end
-        end
+    for pos in mapblock_lib.pos_iterator(p1, p2) do
+        fn(pos)
     end
 end
 
