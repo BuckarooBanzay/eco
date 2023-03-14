@@ -86,6 +86,11 @@ building_lib.register_on("placed", function(mapblock_pos, _, building_def, _, si
     apply_influence_groups(mapblock_pos, size, building_def.influence, 1)
 end)
 
+building_lib.register_on("replaced", function(mapblock_pos, _, old_building_def, new_building_def, _, size)
+    apply_influence_groups(mapblock_pos, size, old_building_def.influence, -1)
+    apply_influence_groups(mapblock_pos, size, new_building_def.influence, 1)
+end)
+
 building_lib.register_on("placed_mapgen", function(mapblock_pos, building_def)
     apply_influence_groups(mapblock_pos, {x=1,y=1,z=1}, building_def.influence, 1)
 end)
