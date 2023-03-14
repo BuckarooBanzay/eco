@@ -4,12 +4,9 @@ building_lib.register_building("eco_buildings:park", {
 	catalog = MP .. "/schematics/park.zip",
 	conditions = {
 		{
-			-- flat surface
-			["*"] = { empty = true },
+			["*"] = { empty_or_group = "plot_2x2" },
+			["base"] = { group = "plot_2x2" },
 			["underground"] = { group = "flat_surface"}
-		},{
-			-- on existing plot
-			["base"] = { group = "plot_2x2" }
 		}
 	},
 	groups = {
