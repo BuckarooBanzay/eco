@@ -13,7 +13,8 @@ for _, suffix in ipairs(plots) do
             }
         },
         groups = {
-            plot = true
+            plot = true,
+            ["plot_" .. suffix] = true
         },
         overview = "eco:slab_stone_2"
     })

@@ -7,6 +7,9 @@ building_lib.register_building("eco_buildings:park", {
 			-- flat surface
 			["*"] = { empty = true },
 			["underground"] = { group = "flat_surface"}
+		},{
+			-- on existing plot
+			["base"] = { group = "plot_2x2" }
 		}
 	},
 	groups = {
