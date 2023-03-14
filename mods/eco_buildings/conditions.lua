@@ -22,3 +22,19 @@ building_lib.register_condition("near_support", {
 		return false
 	end
 })
+
+-- empty or group match
+building_lib.register_condition("empty_or_group", {
+    can_build = function(mapblock_pos, value)
+        local building_def = building_lib.get_building_def_at(mapblock_pos)
+        if not building_def then
+            -- empty
+            return true
+        end
+		if building_def and building_def.groups and building_def.groups[value] then
+            -- group match
+			return true
+		end
+		return false
+    end
+})
