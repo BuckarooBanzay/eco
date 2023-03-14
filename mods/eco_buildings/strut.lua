@@ -17,6 +17,9 @@ building_lib.register_building("eco_buildings:strut", {
 			["underground"] = { group = "support"}
 		}
 	},
+	remove_conditions = {
+		{["above"] = { empty = true }}
+	},
 	groups = {
 		strut = true,
 		support = true

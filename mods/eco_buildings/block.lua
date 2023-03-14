@@ -22,6 +22,9 @@ building_lib.register_building("eco_buildings:block", {
 			["underground"] = { group = "flat_surface"}
 		}
 	},
+	remove_conditions = {
+		{["above"] = { empty = true }}
+	},
 	groups = {
 		flat_surface = true
 	},
