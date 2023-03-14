@@ -1,26 +1,6 @@
 
-local bakedclay = {
-    ["white"] = {},
-    ["yellow"] = {},
-    ["black"] = {},
-    ["natural"] = {},
-    ["dark_grey"] = {},
-    ["dark_green"] = {},
-    ["pink"] = {},
-    ["grey"] = {},
-    ["magenta"] = {},
-    ["brown"] = {},
-    ["green"] = {},
-    ["cyan"] = {},
-    ["blue"] = {},
-    ["red"] = {},
-    ["violet"] = {},
-    ["orange"] = {}
-}
-
-for name, def in pairs(bakedclay) do
-    name = "baked_clay_" .. name
-    def.moreblocks = true
-    def.tiles = {name .. ".png"}
-    eco_nodes.register(name, def)
-end
+eco_nodes.register("baked_clay_white", {
+    tiles = {"baked_clay_white.png"},
+    moreblocks = true,
+    unifieddyes = true
+})

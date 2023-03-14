@@ -4,10 +4,21 @@ function eco_nodes.register(name, def)
     def.tiles = def.tiles or {"eco_" .. name .. ".png"}
     def.groups = def.groups or { cracky = 1 }
 
+    if def.unifieddyes then
+        def.paramtype2 = "color"
+        def.groups.ud_param2_colorable = 1
+        def.palette = "unifieddyes_palette_extended.png"
+    end
+
     minetest.register_node(":eco:" .. name, def)
 
     if def.moreblocks then
         local stairsdef = table.copy(def)
+        if def.unifieddyes then
+            -- split palette
+            stairsdef.palette = "unifieddyes_palette_colorwallmounted.png"
+        end
+
         if #stairsdef.tiles > 1 and stairsdef.drawtype and stairsdef.drawtype:find("glass") then
             stairsdef.tiles = {stairsdef.tiles[1]}
             stairsdef.paramtype2 = nil

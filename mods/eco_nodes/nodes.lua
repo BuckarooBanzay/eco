@@ -1,11 +1,5 @@
 
 local nodes = {
-    ["brick"] = {
-        tiles = {
-            "eco_brick.png^[transformFX",
-            "eco_brick.png"
-        }
-    },
     ["cobble"] = {
         sounds = eco_nodes.node_sound_stone(),
         moreblocks = true
@@ -43,13 +37,15 @@ local nodes = {
         moreblocks = true
     },
     ["steel_block"] = {
-        moreblocks = true
+        moreblocks = true,
+        unifieddyes = true
     },
     ["copperpatina"] = {tiles = {"moreblocks_copperpatina.png"}},
     ["coal_checker"] = {tiles = {"moreblocks_coal_checker.png"}},
     ["clean_glass"] = {
         tiles = {"moreblocks_clean_glass.png"},
         moreblocks = true,
+        unifieddyes = true,
         drawtype = "glasslike_framed_optional",
         use_texture_alpha = "clip",
         sunlight_propagates = true,
@@ -72,7 +68,18 @@ local nodes = {
     },
     ["silver_sand"] = {
         sounds = eco_nodes.node_sound_stone(),
-        moreblocks = true
+        moreblocks = true,
+        unifieddyes = true
+    },
+    ["silver_sandstone_block"] = {
+        sounds = eco_nodes.node_sound_stone(),
+        moreblocks = true,
+        unifieddyes = true
+    },
+    ["silver_sandstone_brick"] = {
+        sounds = eco_nodes.node_sound_stone(),
+        moreblocks = true,
+        unifieddyes = true
     },
     ["sand"] = {
         sounds = eco_nodes.node_sound_stone(),
@@ -91,7 +98,8 @@ local nodes = {
         drawtype = "glasslike_framed_optional",
         use_texture_alpha = "clip",
         sunlight_propagates = true,
-        paramtype = "light"
+        paramtype = "light",
+        unifieddyes = true
     },
 }
 

@@ -25,3 +25,6 @@
 [submodule "mods/signs_lib"]
 	path = mods/signs_lib
 	url = https://github.com/mt-mods/signs_lib/
+[submodule "mods/unifieddyes"]
+	path = mods/unifieddyes
+	url = https://github.com/mt-mods/unifieddyes
