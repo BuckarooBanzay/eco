@@ -31,5 +31,5 @@ building_lib.register_building("eco_buildings:strut", {
 			}
 		end
 	end,
-	overview = "eco:grey_bricks"
+	overview = "eco:silver_sandstone_brick"
 })
