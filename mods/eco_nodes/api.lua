@@ -17,6 +17,7 @@ function eco_nodes.register(name, def)
         if def.unifieddyes then
             -- split palette
             stairsdef.palette = "unifieddyes_palette_colorwallmounted.png"
+            stairsdef.paramtype2 = "colorfacedir"
         end
 
         if #stairsdef.tiles > 1 and stairsdef.drawtype and stairsdef.drawtype:find("glass") then
