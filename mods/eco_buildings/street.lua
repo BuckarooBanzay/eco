@@ -1,22 +1,30 @@
 local MP = minetest.get_modpath("eco_buildings")
 
+local has_street_signs = minetest.get_modpath("street_signs")
+
 local disable_orientation = {
 	["eco:stone_bricks"] = true,
 	["eco:silver_sandstone_brick"] = true,
 	["street_signs:sign_basic"] = true
 }
 
-local content_street_sign = minetest.get_content_id("street_signs:sign_basic")
+-- no-op per default
+local function on_streetsign_metadata() end
 
-local function on_streetsign_metadata(pos, content_id, meta)
-	if content_id == content_street_sign then
-		-- write street name
-		local mapblock_pos = mapblock_lib.get_mapblock(pos)
-		local z_streetname = eco_buildings.get_street_name(mapblock_pos.x * 3)
-		local x_streetname = eco_buildings.get_street_name((mapblock_pos.z * 3) + 2048)
-		local txt = z_streetname .. "\n" .. x_streetname
-		meta:set_string("infotext", txt)
-		meta:set_string("text", txt)
+if has_street_signs then
+	-- add streetsign metadata callback
+	local content_street_sign = minetest.get_content_id("street_signs:sign_basic")
+
+	on_streetsign_metadata = function(pos, content_id, meta)
+		if content_id == content_street_sign then
+			-- write street name
+			local mapblock_pos = mapblock_lib.get_mapblock(pos)
+			local z_streetname = eco_buildings.get_street_name(mapblock_pos.x * 3)
+			local x_streetname = eco_buildings.get_street_name((mapblock_pos.z * 3) + 2048)
+			local txt = z_streetname .. "\n" .. x_streetname
+			meta:set_string("infotext", txt)
+			meta:set_string("text", txt)
+		end
 	end
 end
 
