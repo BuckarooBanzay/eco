@@ -13,6 +13,7 @@ eco_nodes.register("framed_glass", {
         { name = "framedglass_steel_frame.png", color = "white" },
 		"framedglass_whiteglass.png",
     },
+    inventory_image = minetest.inventorycube("framedglass_glass_face_inv_static.png"),
     drawtype = "glasslike_framed",
     use_texture_alpha = "blend",
     sunlight_propagates = true,

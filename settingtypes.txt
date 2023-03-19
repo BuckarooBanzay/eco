@@ -1,0 +1,2 @@
+# Enables the "edit" mode: all nodes can be broken "by hand"
+eco_edit_mode (eco editor mode) bool false
