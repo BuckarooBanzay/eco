@@ -2,7 +2,7 @@
 if minetest.settings:get_bool("eco_edit_mode", false) then
     -- enable edit mode, the hand can break anything
     minetest.override_item("", {
-        range = 15,
+        range = 30,
         tool_capabilities = {
             groupcaps = {
                 cracky = {
@@ -14,4 +14,9 @@ if minetest.settings:get_bool("eco_edit_mode", false) then
             }
         }
     })
+
+    -- creative mode
+    minetest.register_on_placenode(function()
+        return true
+    end)
 end

@@ -4,8 +4,8 @@ local MP = minetest.get_modpath(minetest.get_current_modname())
 eco_nodes = {}
 dofile(MP .. "/api.lua")
 
--- tools(s)
-dofile(MP .. "/tools.lua")
+-- edit mode
+dofile(MP .. "/edit.lua")
 
 -- sounds
 dofile(MP .. "/sounds.lua")
