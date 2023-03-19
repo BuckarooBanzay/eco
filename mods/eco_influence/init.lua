@@ -78,27 +78,27 @@ local function apply_influence_groups(mapblock_pos, size, groups, factor)
     end
 end
 
-building_lib.register_on("placed", function(mapblock_pos, _, building_def, _, size)
-    apply_influence_groups(mapblock_pos, size, building_def.influence, 1)
+building_lib.register_on("placed", function(e)
+    apply_influence_groups(e.mapblock_pos, e.size, e.building_def.influence, 1)
 end)
 
-building_lib.register_on("replaced", function(mapblock_pos, _, old_building_def, _, old_size, new_building_def, _, size)
-    apply_influence_groups(mapblock_pos, old_size, old_building_def.influence, -1)
-    apply_influence_groups(mapblock_pos, size, new_building_def.influence, 1)
+building_lib.register_on("replaced", function(e)
+    apply_influence_groups(e.mapblock_pos, e.old_building_info.size, e.old_building_def.influence, -1)
+    apply_influence_groups(e.mapblock_pos, e.size, e.building_def.influence, 1)
 end)
 
-building_lib.register_on("placed_mapgen", function(mapblock_pos, building_def)
-    apply_influence_groups(mapblock_pos, {x=1,y=1,z=1}, building_def.influence, 1)
+building_lib.register_on("placed_mapgen", function(e)
+    apply_influence_groups(e.mapblock_pos, {x=1,y=1,z=1}, e.building_def.influence, 1)
 end)
 
-building_lib.register_on("removed", function(mapblock_pos, _, building_info)
-    local building_name = building_info.name
+building_lib.register_on("removed", function(e)
+    local building_name = e.building_info.name
     local building_def = building_lib.get_building(building_name)
     if not building_def then
         return
     end
-    local size = building_info.size
-    apply_influence_groups(mapblock_pos, size, building_def.influence, -1)
+    local size = e.building_info.size
+    apply_influence_groups(e.mapblock_pos, size, building_def.influence, -1)
 end)
 
 function eco_influence.get_groups(mapblock_pos)

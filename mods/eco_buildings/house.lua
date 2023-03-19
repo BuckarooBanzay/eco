@@ -33,6 +33,14 @@ building_lib.register_building("eco_buildings:house_1", {
 			["underground"] = { group = "flat_surface"}
 		}
 	},
+	markers = {
+		{
+			texture = "building_lib_arrow.png",
+			position = {x=1, y=0.2, z=2.5},
+			rotation = {x=math.pi/2, y=0, z=math.pi},
+			size = {x=10, y=10}
+		}
+	},
 	replace = replacement_randomizer({
 		base_color = {
 			["eco:slope_baked_clay_white_half_raised"] = {
