@@ -26,11 +26,3 @@ for name, def in pairs(bakedclay) do
 
     eco_nodes.register("baked_clay_" .. name, def)
 end
-
--- colorable and limited moreblocks support
-eco_nodes.register("baked_clay_colorable", {
-    tiles = {"baked_clay_white.png"},
-    sounds = eco_nodes.node_sound_stone(),
-    moreblocks = true,
-    unifieddyes = true
-})

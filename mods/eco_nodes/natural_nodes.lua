@@ -30,8 +30,7 @@ local nodes = {
     },
     ["silver_sand"] = {
         sounds = eco_nodes.node_sound_stone(),
-        moreblocks = true,
-        unifieddyes = true
+        moreblocks = true
     },
     ["ice"] = {
         groups= {

@@ -14,5 +14,5 @@ read_globals = {
 	"VoxelArea", "AreaStore",
 
 	-- mods
-	"stairsplus"
+	"stairsplus", "unifieddyes"
 }

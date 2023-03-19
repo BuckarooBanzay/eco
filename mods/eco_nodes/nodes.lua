@@ -15,7 +15,6 @@ local nodes = {
     ["steel_block_colorable"] = {
         sounds = eco_nodes.node_sound_metal(),
         tiles = {"eco_steel_block.png"},
-        moreblocks = true,
         unifieddyes = true
     },
     ["clean_glass"] = {
@@ -24,8 +23,7 @@ local nodes = {
         use_texture_alpha = "clip",
         sunlight_propagates = true,
         paramtype = "light",
-        moreblocks = true,
-        unifieddyes = true
+        moreblocks = true
     },
     ["silver_sandstone_block"] = {
         sounds = eco_nodes.node_sound_stone(),
@@ -34,7 +32,6 @@ local nodes = {
     ["silver_sandstone_block_colorable"] = {
         tiles = {"eco_silver_sandstone_block.png"},
         sounds = eco_nodes.node_sound_stone(),
-        moreblocks = true,
         unifieddyes = true
     },
     ["silver_sandstone_brick"] = {
@@ -44,7 +41,6 @@ local nodes = {
     ["silver_sandstone_brick_colorable"] = {
         tiles = {"eco_silver_sandstone_brick.png"},
         sounds = eco_nodes.node_sound_stone(),
-        moreblocks = true,
         unifieddyes = true
     }
 }

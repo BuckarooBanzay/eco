@@ -13,13 +13,9 @@ function eco_nodes.register(name, def)
     minetest.register_node(":eco:" .. name, def)
 
     if def.moreblocks then
-        local stairsdef = table.copy(def)
-        if def.unifieddyes then
-            -- split palette
-            stairsdef.palette = "unifieddyes_palette_colorwallmounted.png"
-            stairsdef.paramtype2 = "colorfacedir"
-        end
+        assert(not def.unifieddyes, "unifieddyes and moreblocks just results in weirdness")
 
+        local stairsdef = table.copy(def)
         if #stairsdef.tiles > 1 and stairsdef.drawtype and stairsdef.drawtype:find("glass") then
             stairsdef.tiles = {stairsdef.tiles[1]}
             stairsdef.paramtype2 = nil
