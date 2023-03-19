@@ -9,6 +9,7 @@ dofile(MP .. "/sounds.lua")
 
 -- nodes, items, etc
 dofile(MP .. "/nodes.lua")
+dofile(MP .. "/glass.lua")
 dofile(MP .. "/natural_nodes.lua")
 dofile(MP .. "/bakedclay.lua")
 dofile(MP .. "/trees.lua")

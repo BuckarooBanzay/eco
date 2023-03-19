@@ -17,14 +17,6 @@ local nodes = {
         tiles = {"eco_steel_block.png"},
         unifieddyes = true
     },
-    ["clean_glass"] = {
-        tiles = {"moreblocks_clean_glass.png"},
-        drawtype = "glasslike_framed_optional",
-        use_texture_alpha = "clip",
-        sunlight_propagates = true,
-        paramtype = "light",
-        moreblocks = true
-    },
     ["silver_sandstone_block"] = {
         sounds = eco_nodes.node_sound_stone(),
         moreblocks = true
