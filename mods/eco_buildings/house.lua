@@ -8,23 +8,17 @@ local MP = minetest.get_modpath("eco_buildings")
 local function replacement_randomizer(replacement_map)
 	return function()
 		local replacements = {}
+		for _, group in pairs(replacement_map) do
+			local sync_i
+			for src, choices in pairs(group) do
+				if not sync_i then
+					sync_i = math.random(#choices)
+				end
 
-		local sync_i
-		for src, choices in pairs(replacement_map.sync or {}) do
-			if not sync_i then
-				sync_i = math.random(#choices)
-			end
-
-			local new_nodename = choices[sync_i]
-			if src ~= new_nodename then
-				replacements[src] = new_nodename
-			end
-		end
-
-		for src, choices in pairs(replacement_map.random or {}) do
-			local new_nodename = choices[math.random(#choices)]
-			if src ~= new_nodename then
-				replacements[src] = new_nodename
+				local new_nodename = choices[sync_i]
+				if src ~= new_nodename then
+					replacements[src] = new_nodename
+				end
 			end
 		end
 		return replacements
@@ -40,7 +34,7 @@ building_lib.register_building("eco_buildings:house_1", {
 		}
 	},
 	replace = replacement_randomizer({
-		sync = {
+		base_color = {
 			["eco:slope_baked_clay_white_half_raised"] = {
 				"eco:slope_baked_clay_white_half_raised",
 				"eco:slope_baked_clay_blue_half_raised",
@@ -60,10 +54,36 @@ building_lib.register_building("eco_buildings:house_1", {
 				"eco:baked_clay_red"
 			},
 		},
-		random = {
+		floor = {
 			["eco:jungle_wood"] = {
 				"eco:jungle_wood",
 				"eco:oak_wood"
+			}
+		},
+		outdoor = {
+			["eco:grass_1"] = {
+				"eco:grass_1",
+				"eco:dry_grass_1"
+			},
+			["eco:grass_2"] = {
+				"eco:grass_2",
+				"eco:dry_grass_2"
+			},
+			["eco:grass_3"] = {
+				"eco:grass_3",
+				"eco:dry_grass_3"
+			},
+			["eco:grass_4"] = {
+				"eco:grass_4",
+				"eco:dry_grass_4"
+			},
+			["eco:grass_5"] = {
+				"eco:grass_5",
+				"eco:dry_grass_5"
+			},
+			["eco:grass"] = {
+				"eco:grass",
+				"eco:dry_grass"
 			}
 		}
 	}),
