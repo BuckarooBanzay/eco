@@ -7,3 +7,4 @@ cd ../eco_nodes && luacheck .
 cd ../eco_influence && luacheck .
 cd ../building_lib && luacheck .
 cd ../building_lib_overview && luacheck .
+cd ../building_lib_interconnect && luacheck .
