@@ -61,6 +61,13 @@ building_lib.register_building("eco_buildings:house_1", {
 				"eco:baked_clay_green",
 				"eco:baked_clay_red"
 			},
+			-- overview node
+			["eco:slab_baked_clay_white"] = {
+				"eco:slab_baked_clay_white",
+				"eco:slab_baked_clay_blue",
+				"eco:slab_baked_clay_green",
+				"eco:slab_baked_clay_red"
+			}
 		},
 		floor = {
 			["eco:jungle_wood"] = {
@@ -98,5 +105,8 @@ building_lib.register_building("eco_buildings:house_1", {
 	groups = {
 		house = true
 	},
-	overview = "eco:slab_baked_clay_white"
+	overview = function(_, event)
+		local nodename = event.replacements["eco:slab_baked_clay_white"] or "eco:slab_baked_clay_white"
+		return { name = nodename }
+	end
 })

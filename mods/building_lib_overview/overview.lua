@@ -1,5 +1,11 @@
 
-local function place_overview_node(mapblock_pos, overview_def, rotation, size)
+local function place_overview_node(e)
+
+    local mapblock_pos = e.mapblock_pos
+    local overview_def = e.building_def.overview
+    local rotation = e.rotation
+    local size = e.size
+
     size = size or {x=1, y=1, z=1}
     local mapblock_pos2 = vector.add(mapblock_pos, vector.subtract(size, 1))
 
@@ -15,7 +21,7 @@ local function place_overview_node(mapblock_pos, overview_def, rotation, size)
             minetest.set_node(node_pos, overview_def)
         elseif type(overview_def) == "function" then
             local rel_mapblock_pos = vector.subtract(offset_mapblock_pos, mapblock_pos)
-            local node = overview_def(rel_mapblock_pos)
+            local node = overview_def(rel_mapblock_pos, e)
             if node then
                 node.param2 = mapblock_lib.rotate_param2(node.name, node.param2 or 0, rotation)
                 minetest.set_node(node_pos, node)
@@ -25,15 +31,15 @@ local function place_overview_node(mapblock_pos, overview_def, rotation, size)
 end
 
 building_lib.register_on("placed_mapgen", function(e)
-    place_overview_node(e.mapblock_pos, e.building_def.overview, e.rotation)
+    place_overview_node(e)
 end)
 
 building_lib.register_on("placed", function(e)
-    place_overview_node(e.mapblock_pos, e.building_def.overview, e.rotation, e.size)
+    place_overview_node(e)
 end)
 
 building_lib.register_on("replaced", function(e)
-    place_overview_node(e.mapblock_pos, e.building_def.overview, e.rotation, e.size)
+    place_overview_node(e)
 end)
 
 building_lib.register_on("removed", function(e)
