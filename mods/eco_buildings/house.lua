@@ -75,6 +75,20 @@ building_lib.register_building("eco_buildings:house_1", {
 				"eco:oak_wood"
 			}
 		},
+		tree = {
+			["eco:oak_tree"] = {
+				"eco:oak_tree",
+				"eco:pine_tree",
+				"eco:acacia_tree",
+				"air"
+			},
+			["eco:oak_leaves"] = {
+				"eco:oak_leaves",
+				"eco:pine_leaves",
+				"eco:acacia_leaves",
+				"air"
+			}
+		},
 		outdoor = {
 			["eco:grass_1"] = {
 				"eco:grass_1",
