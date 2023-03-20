@@ -1,8 +1,3 @@
-building_lib.register_placement("dummy", {
-    check = function() return true end,
-    get_size = function() return {x=1,y=1,z=1} end,
-    place = function(_, _, _, _, _, callback) callback() end
-})
 
 building_lib.register_building("eco_influence:my_building", {
 	placement = "dummy",
@@ -12,6 +7,9 @@ building_lib.register_building("eco_influence:my_building", {
 })
 
 mtt.register("influence", function(callback)
+    -- clear store
+    building_lib.store:clear()
+
     local groups = eco_influence.get_groups({ x=0, y=0, z=0})
     assert(groups)
 
