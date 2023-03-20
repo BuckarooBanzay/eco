@@ -86,10 +86,14 @@ Built-in conditions:
 ## Events
 
 ```lua
-building_lib.register_on("placed", function(mapblock_pos, playername, building_def, rotation, size) end)
-building_lib.register_on("placed_over", function(mapblock_pos, playername, old_building_def, new_building_def, rotation, size) end)
-building_lib.register_on("placed_mapgen", function(mapblock_pos, building_def, rotation) end)
-building_lib.register_on("removed", function(mapblock_pos, playername, building_info) end)
+building_lib.register_on("placed", function(event) end)
+-- event payload fields: mapblock_pos, playername, building_def, rotation, size
+building_lib.register_on("placed_over", function(event) end)
+-- event payload fields: mapblock_pos, playername, old_building_def, new_building_def, rotation, size
+building_lib.register_on("placed_mapgen", function(event) end)
+-- event payload fields: mapblock_pos, playername, building_def, rotation, size
+building_lib.register_on("removed", function(event) end)
+-- event payload fields: mapblock_pos, playername, building_info
 ```
 
 ## Chat commands
