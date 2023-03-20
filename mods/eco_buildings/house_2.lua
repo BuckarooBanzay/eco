@@ -1,7 +1,7 @@
 local MP = minetest.get_modpath("eco_buildings")
 
-building_lib.register_building("eco_buildings:house_1", {
-	catalog = MP .. "/schematics/house_1.zip",
+building_lib.register_building("eco_buildings:house_2", {
+	catalog = MP .. "/schematics/house_2.zip",
 	conditions = {
 		{
 			["*"] = { empty = true },
@@ -11,7 +11,7 @@ building_lib.register_building("eco_buildings:house_1", {
 	markers = {
 		{
 			texture = "building_lib_arrow.png",
-			position = {x=1, y=0.2, z=2.5},
+			position = {x=1.5, y=0.2, z=2.5},
 			rotation = {x=math.pi/2, y=0, z=math.pi},
 			size = {x=10, y=10}
 		}
