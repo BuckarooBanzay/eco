@@ -122,7 +122,7 @@ minetest.register_chatcommand("influence_info", {
         local ppos = player:get_pos()
         local mapblock_pos = mapblock_lib.get_mapblock(ppos)
         local data = eco_influence.store:get(mapblock_pos)
-        return true, "Influecne-data for mapblock " .. minetest.pos_to_string(mapblock_pos) .. ": " .. dump(data)
+        return true, "Influence-data for mapblock " .. minetest.pos_to_string(mapblock_pos) .. ": " .. dump(data)
     end
 })
 
