@@ -1,5 +1,5 @@
 globals = {
-	"eco_influence"
+	"building_lib_influence"
 }
 
 read_globals = {
@@ -16,7 +16,5 @@ read_globals = {
 	-- mods
 	"mapblock_lib",
 	"building_lib",
-	"eco_mapgen",
-	"eco_buildings",
 	"mtt"
 }
