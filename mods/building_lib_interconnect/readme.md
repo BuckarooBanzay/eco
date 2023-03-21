@@ -5,7 +5,7 @@ Building interconnect mod
 
 ```lua
 -- building with an interconnection
-building_lib.register_building("buildings:water_line", {
+building_lib.register_building("buildings:water_pump", {
     -- other fields omitted
     interconnect = {
         groups = {
@@ -15,15 +15,22 @@ building_lib.register_building("buildings:water_line", {
 })
 
 local mapblock_pos = { x=0, y=0, z=0 }
-local network = building_lib_interconnect.get_network(mapblock_pos, "water")
+local group = "water"
+local network = building_lib_interconnect.get_network(mapblock_pos, group)
 network = {
     ["(0,0,0)"] = true,
     ["(0,0,1)"] = true,
     ["(0,0,2)"] = true
 }
 
-building_lib_interconnect.add_to_network(mapblock_pos, "water")
-building_lib_interconnect.remove_from_network(mapblock_pos, "water")
+-- (re-)scan manually
+building_lib_interconnect.scan(mapblock_pos, group)
+
+-- connect a region to the networks in cardinal directions
+building_lib_interconnect.connect(mapblock_pos1, mapblock_pos2, group)
+
+-- disconnect a region from the network
+building_lib_interconnect.disconnect(mapblock_pos1, mapblock_pos2, group)
 
 ```
 
