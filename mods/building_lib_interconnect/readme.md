@@ -8,29 +8,46 @@ Building interconnect mod
 building_lib.register_building("buildings:water_pump", {
     -- other fields omitted
     interconnect = {
-        groups = {
+        producer = {
+            water = 200
+        }
+    }
+})
+
+building_lib.register_building("buildings:water_pipe", {
+    -- other fields omitted
+    interconnect = {
+        connects = {
             water = true
         }
     }
 })
 
+building_lib.register_building("buildings:water_distribution", {
+    -- other fields omitted
+    interconnect = {
+        consumer = {
+            water = 50
+        }
+    }
+})
+
 local mapblock_pos = { x=0, y=0, z=0 }
-local group = "water"
-local network = building_lib_interconnect.get_network(mapblock_pos, group)
+local connection_type = "water"
+
+-- internal api
+local network = building_lib_interconnect.get_network(mapblock_pos, connection_type)
 network = {
-    ["(0,0,0)"] = true,
-    ["(0,0,1)"] = true,
-    ["(0,0,2)"] = true
+    consumers = {
+        { x=2, y=0, z=0 }
+    },
+    producers = {
+        { x=3, y=0, z=0 }
+    }
 }
 
--- (re-)scan manually
-building_lib_interconnect.scan(mapblock_pos, group)
-
--- connect a region to the networks in cardinal directions
-building_lib_interconnect.connect(mapblock_pos1, mapblock_pos2, group)
-
--- disconnect a region from the network
-building_lib_interconnect.disconnect(mapblock_pos1, mapblock_pos2, group)
+-- external api
+local is_powered = building_lib_interconnect.is_powered(mapblock_pos, connection_type)
 
 ```
 

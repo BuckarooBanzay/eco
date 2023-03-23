@@ -15,5 +15,6 @@ read_globals = {
 
 	-- mods
 	"building_lib",
+	"mapblock_lib",
 	"mtt"
 }

@@ -93,7 +93,7 @@ building_lib.register_on("placed_over", function(event) end)
 building_lib.register_on("placed_mapgen", function(event) end)
 -- event payload fields: mapblock_pos, playername, building_def, rotation, size
 building_lib.register_on("removed", function(event) end)
--- event payload fields: mapblock_pos, playername, building_info
+-- event payload fields: mapblock_pos, playername, old_building_def, building_info
 ```
 
 ## Chat commands
