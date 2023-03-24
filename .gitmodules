@@ -22,3 +22,9 @@
 [submodule "mods/unifieddyes"]
 	path = mods/unifieddyes
 	url = https://github.com/mt-mods/unifieddyes
+[submodule "mods/building_lib_overview"]
+	path = mods/building_lib_overview
+	url = https://github.com/BuckarooBanzay/building_lib_overview
+[submodule "mods/building_lib"]
+	path = mods/building_lib
+	url = https://github.com/BuckarooBanzay/building_lib
