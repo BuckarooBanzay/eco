@@ -4,50 +4,40 @@ Building interconnect mod
 # Api
 
 ```lua
--- building with an interconnection
-building_lib.register_building("buildings:water_pump", {
-    -- other fields omitted
-    interconnect = {
-        producer = {
-            water = 200
-        }
-    }
-})
-
+-- pipe connects water in +/-x direction
 building_lib.register_building("buildings:water_pipe", {
     -- other fields omitted
     interconnect = {
         connects = {
-            water = true
+            water = {
+                { x=1, y=0, z=0 },
+                { x=-1, y=0, z=0 }
+            }
         }
     }
 })
 
-building_lib.register_building("buildings:water_distribution", {
+-- pump connects on x+ side
+building_lib.register_building("buildings:water_pump", {
     -- other fields omitted
     interconnect = {
-        consumer = {
-            water = 50
+        connects_to = {
+            water = {
+                { x=1, y=0, z=0 }
+            }
         }
     }
 })
 
+-- api
 local mapblock_pos = { x=0, y=0, z=0 }
 local connection_type = "water"
 
--- internal api
-local network = building_lib_interconnect.get_network(mapblock_pos, connection_type)
+local pos_list = building_lib_interconnect.get_connections(mapblock_pos, connection_type)
 network = {
-    consumers = {
-        { x=2, y=0, z=0 }
-    },
-    producers = {
-        { x=3, y=0, z=0 }
-    }
+    { x=0, y=0, z=0 },
+    ...
 }
-
--- external api
-local is_powered = building_lib_interconnect.is_powered(mapblock_pos, connection_type)
 
 ```
 
