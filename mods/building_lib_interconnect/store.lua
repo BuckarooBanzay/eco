@@ -8,7 +8,7 @@ local network = minetest.serialize({
     connections = {
         -- list of connected building-origin-hashes (producers, consumers)
     },
-    nodes = {
+    links = {
         -- list of node-mapblock-hashes that make up the network
     }
 })
@@ -63,7 +63,7 @@ function building_lib_interconnect.create_network(connection_type)
         id = building_lib_interconnect.new_uuid(),
         type = connection_type,
         connections = {},
-        nodes = {}
+        links = {}
     }
 end
 
@@ -72,7 +72,7 @@ function building_lib_interconnect.remove_network(network)
         local mapblock_pos = minetest.get_position_from_hash(hash)
         building_lib_interconnect.remove_network_at_pos(mapblock_pos, network)
     end
-    for hash in pairs(network.nodes) do
+    for hash in pairs(network.links) do
         local mapblock_pos = minetest.get_position_from_hash(hash)
         building_lib_interconnect.remove_network_at_pos(mapblock_pos, network)
     end
@@ -81,15 +81,15 @@ end
 
 -- helpers
 
-function building_lib_interconnect.network_add_node(network, mapblock_pos)
+function building_lib_interconnect.network_add_link(network, mapblock_pos)
     local hash = minetest.hash_node_position(mapblock_pos)
-    network.nodes[hash] = true
+    network.links[hash] = true
     building_lib_interconnect.add_network_at_pos(mapblock_pos, network)
 end
 
-function building_lib_interconnect.network_remove_node(network, mapblock_pos)
+function building_lib_interconnect.network_remove_link(network, mapblock_pos)
     local hash = minetest.hash_node_position(mapblock_pos)
-    network.nodes[hash] = nil
+    network.links[hash] = nil
     building_lib_interconnect.remove_network_at_pos(mapblock_pos, network)
 end
 

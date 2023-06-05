@@ -16,8 +16,8 @@ mtt.register("interconnect:store", function(callback)
     local network = building_lib_interconnect.create_network("water")
     assert(network.id)
 
-    building_lib_interconnect.network_add_node(network, {x=1, y=2, z=3})
-    building_lib_interconnect.network_add_node(network, {x=1, y=3, z=3})
+    building_lib_interconnect.network_add_link(network, {x=1, y=2, z=3})
+    building_lib_interconnect.network_add_link(network, {x=1, y=3, z=3})
     building_lib_interconnect.network_add_connection(network, {x=5, y=0, z=0})
     building_lib_interconnect.set_network(network)
 
@@ -25,7 +25,7 @@ mtt.register("interconnect:store", function(callback)
     has_network({x=1, y=3, z=3}, network.id, true)
     has_network({x=5, y=0, z=0}, network.id, true)
 
-    building_lib_interconnect.network_remove_node(network, {x=1, y=2, z=3})
+    building_lib_interconnect.network_remove_link(network, {x=1, y=2, z=3})
     building_lib_interconnect.set_network(network)
 
     has_network({x=1, y=2, z=3}, network.id, false)
