@@ -31,6 +31,15 @@ function building_lib_interconnect.get_networks_at_pos(mapblock_pos)
     return networks
 end
 
+function building_lib_interconnect.get_network_at_pos(mapblock_pos, connection_type)
+    local networks = building_lib_interconnect.get_networks_at_pos(mapblock_pos)
+    for _, network in pairs(networks) do
+        if network.type == connection_type then
+            return network
+        end
+    end
+end
+
 function building_lib_interconnect.add_network_at_pos(mapblock_pos, network)
     local entry = pos_store:get(mapblock_pos) or {}
     entry.networks = entry.networks or {}
@@ -65,6 +74,23 @@ function building_lib_interconnect.create_network(connection_type)
         connections = {},
         links = {}
     }
+end
+
+function building_lib_interconnect.merge_networks(network1, network2)
+    -- merge all data from n2 into n1
+    for hash in pairs(network2.connections) do
+        local mapblock_pos = minetest.get_position_from_hash(hash)
+        building_lib_interconnect.network_remove_link(network2, mapblock_pos)
+        building_lib_interconnect.network_add_link(network1, mapblock_pos)
+    end
+    for hash in pairs(network2.links) do
+        local mapblock_pos = minetest.get_position_from_hash(hash)
+        building_lib_interconnect.network_remove_connection(network2, mapblock_pos)
+        building_lib_interconnect.network_add_connection(network1, mapblock_pos)
+    end
+
+    building_lib_interconnect.remove_network(network2)
+    building_lib_interconnect.set_network(network1)
 end
 
 function building_lib_interconnect.remove_network(network)
