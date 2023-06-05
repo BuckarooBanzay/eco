@@ -34,7 +34,7 @@ building_lib.register_building("test_ic:water_sink", {
     }
 })
 
-mtt.register("interconnect", function(callback)
+mtt.register("interconnect:scan", function(callback)
     -- clear store
     building_lib.store:clear()
 
