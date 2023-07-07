@@ -28,3 +28,6 @@
 [submodule "mods/building_lib"]
 	path = mods/building_lib
 	url = https://github.com/BuckarooBanzay/building_lib
+[submodule "mods/promise"]
+	path = mods/promise
+	url = https://github.com/mt-mods/promise
