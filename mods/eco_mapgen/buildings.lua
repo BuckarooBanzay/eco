@@ -1,6 +1,7 @@
 local MP = minetest.get_modpath("eco_mapgen")
 
 building_lib.register_building("eco_mapgen:terrain_surface", {
+	category = "terrain",
 	catalog = {
 		filename = MP .. "/schematics/terrain.zip",
 		offset = {x=0, y=0, z=0},
@@ -18,6 +19,7 @@ building_lib.register_building("eco_mapgen:terrain_surface", {
 })
 
 building_lib.register_building("eco_mapgen:terrain_underground", {
+	category = "terrain",
 	catalog = {
 		filename = MP .. "/schematics/terrain.zip",
 		offset = {x=0, y=0, z=0},
@@ -35,6 +37,7 @@ building_lib.register_building("eco_mapgen:terrain_underground", {
 })
 
 building_lib.register_building("eco_mapgen:terrain_slope_inner", {
+	category = "terrain",
 	catalog = {
 		filename = MP .. "/schematics/terrain.zip",
 		offset = {x=1, y=0, z=0},
@@ -52,6 +55,7 @@ building_lib.register_building("eco_mapgen:terrain_slope_inner", {
 })
 
 building_lib.register_building("eco_mapgen:terrain_slope", {
+	category = "terrain",
 	catalog = {
 		filename = MP .. "/schematics/terrain.zip",
 		offset = {x=2, y=0, z=0},
@@ -69,6 +73,7 @@ building_lib.register_building("eco_mapgen:terrain_slope", {
 })
 
 building_lib.register_building("eco_mapgen:terrain_slope_outer", {
+	category = "terrain",
 	catalog = {
 		filename = MP .. "/schematics/terrain.zip",
 		offset = {x=3, y=0, z=0},
@@ -86,6 +91,7 @@ building_lib.register_building("eco_mapgen:terrain_slope_outer", {
 })
 
 building_lib.register_building("eco_mapgen:water", {
+	category = "terrain",
 	catalog = {
 		filename = MP .. "/schematics/full.zip",
         cache = true

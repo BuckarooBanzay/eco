@@ -29,6 +29,7 @@ if has_street_signs then
 end
 
 building_lib.register_building("eco_buildings:street_slope", {
+	category = "street",
 	catalog = {
 		filename = MP .. "/schematics/street.zip",
 		offset = {x=0, y=0, z=0},
@@ -63,6 +64,7 @@ building_lib.register_building("eco_buildings:street_slope", {
 })
 
 building_lib.register_building("eco_buildings:street_tunnel", {
+	category = "street",
 	catalog = {
 		filename = MP .. "/schematics/street.zip",
 		offset = {x=2, y=0, z=2},
@@ -107,6 +109,7 @@ local street_tile_conditions = {
 }
 
 building_lib.register_building("eco_buildings:street_straight", {
+	category = "street",
 	catalog = {
 		filename = MP .. "/schematics/street.zip",
 		offset = {x=2, y=0, z=0},
@@ -136,6 +139,7 @@ building_lib.register_building("eco_buildings:street_straight", {
 })
 
 building_lib.register_building("eco_buildings:street_all_sides", {
+	category = "street",
 	catalog = {
 		filename = MP .. "/schematics/street.zip",
 		offset = {x=1, y=0, z=0},
@@ -176,6 +180,7 @@ building_lib.register_building("eco_buildings:street_all_sides", {
 })
 
 building_lib.register_building("eco_buildings:street_t", {
+	category = "street",
 	catalog = {
 		filename = MP .. "/schematics/street.zip",
 		offset = {x=3, y=0, z=0},
@@ -211,6 +216,7 @@ building_lib.register_building("eco_buildings:street_t", {
 })
 
 building_lib.register_building("eco_buildings:street_corner", {
+	category = "street",
 	catalog = {
 		filename = MP .. "/schematics/street.zip",
 		offset = {x=4, y=0, z=0},
