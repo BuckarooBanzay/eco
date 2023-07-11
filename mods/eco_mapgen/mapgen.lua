@@ -1,5 +1,5 @@
 
-local mapgen = building_lib.create_mapgen({
+eco_mapgen.mapgen = building_lib.create_mapgen({
     biomes = {
         {
             name = "default",
@@ -20,5 +20,4 @@ local mapgen = building_lib.create_mapgen({
     water_level = 0
 })
 
-minetest.register_on_generated(mapgen.on_generated)
-eco_mapgen.mapgen = mapgen
+minetest.register_on_generated(eco_mapgen.mapgen.on_generated)
