@@ -14,6 +14,15 @@ building_lib.register_building("buildings:very_noisy_thing", {
     }
 })
 
+--[[
+Example:
+* influence = { x = 2 }
+* superblock at origin: { x = 2 }
+* next superblock 10 mapblocks away: { x = 1 }
+
+General rule: node-distance = value * 160
+--]]
+
 -- get groups
 local influence_groups = building_lib_influence.get_groups({ x=0, y=0, z=0 })
 influence_groups = {
