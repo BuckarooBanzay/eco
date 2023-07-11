@@ -47,19 +47,28 @@ local function add_influence(superblock_pos, name, value)
     building_lib_influence.store:set(superblock_pos, groups)
 end
 
-local function apply_influence(superblock_pos, name, value, factor)
-    -- clamp max value to 10
-    value = math.min(10, value)
+local function apply_influence(superblock_pos, name, entry, factor)
+    -- defaults
+    entry.value = entry.value or 1
+    entry.reduction = entry.reduction or 1
 
-    add_influence(superblock_pos, name, value*factor)
+    -- origin superblock
+    add_influence(superblock_pos, name, entry.value*factor)
 
-    local superblock_pos1 = superblock_pos
-    local superblock_pos2 = superblock_pos
+    -- distribute up to 10 superblocks away
+    for distance=1,9 do
+        -- calculate influence at this distance
+        local influence = entry.value - (distance * entry.reduction)
+        if influence < 0 then
+            -- don't go further if the value is below zero
+            break
+        end
 
-    for influence=value-1,1,-1 do
-        -- increase box size
-        superblock_pos1 = vector.subtract(superblock_pos1, 1)
-        superblock_pos2 = vector.add(superblock_pos2, 1)
+        -- calculate box corners
+        local superblock_pos1 = vector.subtract(superblock_pos, distance)
+        local superblock_pos2 = vector.add(superblock_pos, distance)
+
+        -- apply influence value on box sides
         apply_box(superblock_pos1, superblock_pos2, function(p)
             add_influence(p, name, influence*factor)
         end)
@@ -71,8 +80,8 @@ local function apply_influence_groups(mapblock_pos, groups, factor)
         return
     end
     local superblock_pos = get_superblock_pos(mapblock_pos)
-    for name, value in pairs(groups) do
-        apply_influence(superblock_pos, name, value, factor)
+    for name, entry in pairs(groups) do
+        apply_influence(superblock_pos, name, entry, factor)
     end
 end
 

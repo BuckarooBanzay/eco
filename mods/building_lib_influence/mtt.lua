@@ -2,7 +2,10 @@
 building_lib.register_building("building_lib_influence:my_building", {
 	placement = "dummy",
     influence = {
-        noise = 4
+        noise = {
+            value = 4,
+            reduction = 1
+        }
     }
 })
 

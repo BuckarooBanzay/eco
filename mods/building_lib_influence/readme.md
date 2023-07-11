@@ -10,19 +10,22 @@ Environment influence mod
 building_lib.register_building("buildings:very_noisy_thing", {
     -- other fields omitted
     influence = {
-        noisy = 5 -- max-value: 10
+        noise = {
+            value = 5, -- base-value at origin-superblock
+            reduction = 1 -- reduction in each neighboring superblock
+        }
     }
 })
 
 --[[
 Example:
-* influence = { x = 2 }
+* influence = { x = { value = 2, reduction = 1 } }
 * superblock at origin: { x = 2 }
 * next superblock 10 mapblocks away: { x = 1 }
 
 General rule: node-distance = value * 160
 
-Two buildings with a value of "2" placed near each other (2d presentation):
+Two buildings with a value of "2" and reduction of "1" placed near each other (2d presentation):
 
   -- -- -- -- -- --
  |+1|+1|+1|  |  |  |
@@ -36,7 +39,7 @@ Two buildings with a value of "2" placed near each other (2d presentation):
  |  |  |+1|+1|+1|  |
   -- -- -- -- -- --
 
-A building with a value of "3"
+A building with a value of "3" and reduction of "1"
 
   -- -- -- -- -- --
  |+1|+1|+1|+1|+1|  |
