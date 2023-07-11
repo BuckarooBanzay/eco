@@ -1,6 +1,8 @@
 
 Environment influence mod
 
+**NOTE**: works in "superblocks" of 10^3 mapblocks
+
 # Api
 
 ```lua
