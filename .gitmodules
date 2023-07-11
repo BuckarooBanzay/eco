@@ -31,3 +31,6 @@
 [submodule "mods/promise"]
 	path = mods/promise
 	url = https://github.com/mt-mods/promise
+[submodule "mods/wield_events"]
+	path = mods/wield_events
+	url = https://github.com/mt-mods/wield_events
