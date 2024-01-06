@@ -34,3 +34,9 @@
 [submodule "mods/wield_events"]
 	path = mods/wield_events
 	url = https://github.com/mt-mods/wield_events
+[submodule "dev/mods/worldedit"]
+	path = dev/mods/worldedit
+	url = https://github.com/Uberi/Minetest-WorldEdit/
+[submodule "dev/mods/unified_inventory"]
+	path = dev/mods/unified_inventory
+	url = https://github.com/minetest-mods/unified_inventory/
