@@ -36,3 +36,16 @@ for name, entry in pairs(colors) do
         }
     })
 end
+
+minetest.register_entity("eco_transport:container_blue", {
+    initial_properties = {
+        visual = "mesh",
+        mesh = "eco_container.obj"
+    }
+})
+
+eco_transport.register_type("container-3", {
+    create_entity = function(pos, opts)
+        return minetest.add_entity(pos, "eco_transport:container_blue", minetest.serialize(opts))
+    end
+})
