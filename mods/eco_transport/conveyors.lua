@@ -16,13 +16,16 @@ building_lib.register_building("eco_transport:conveyor_straight", {
 
     transport = {
         routes = {
-            forward = {
+            {
+                -- z+
+                type = "container-3",
                 points = {
                     { x=3.5, y=4, z=-0.5 },
                     { x=3.5, y=4, z=15.5 }
                 }
-            },
-            backward = {
+            },{
+                -- z-
+                type = "container-3",
                 points = {
                     { x=11.5, y=4, z=-0.5 },
                     { x=11.5, y=4, z=15.5 }
