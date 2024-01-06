@@ -1,18 +1,10 @@
 name: luacheck
-
 on: [push, pull_request]
-
 jobs:
-  build:
-
+  luacheck:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-    - name: apt
-      run: sudo apt-get install -y luarocks
-    - name: luacheck install
-      run: luarocks install --local luacheck
-    - name: luacheck run
-      run: PATH=${PATH}:${HOME}/.luarocks/bin ./luacheck.sh
-
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Luacheck
+        uses: lunarmodules/luacheck@master
