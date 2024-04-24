@@ -10,7 +10,7 @@ jobs:
     - uses: buckaroobanzay/mtt@main
       with:
         test_mode: game
-        mtt_filter: "promise"
+        mtt_filter: "eco_transport"
         enable_coverage: "true"
     - name: Coveralls
       uses: coverallsapp/github-action@v1
