@@ -1,0 +1,14 @@
+name: test
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: buckaroobanzay/mtt@main
+      with:
+        test_mode: game
+        mtt_filter: "building_lib,promise"
+        enable_coverage: "true"
+    - name: Coveralls
+      uses: coverallsapp/github-action@v1
