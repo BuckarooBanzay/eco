@@ -10,7 +10,7 @@ jobs:
     - uses: buckaroobanzay/mtt@main
       with:
         test_mode: game
-        mtt_filter: "building_lib,promise"
+        mtt_filter: "promise"
         enable_coverage: "true"
     - name: Coveralls
       uses: coverallsapp/github-action@v1
