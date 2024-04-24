@@ -63,11 +63,8 @@ mtt.register("find_connected_route", function(callback)
         }
     }
 
-    local building_size = { x=1, y=1, z=1 }
-
-    local connected_route = eco_transport.find_connected_route(source_route, building_size, target_routes, target_offset)
-    assert(connected_route)
-    -- TODO
+    local connected_route = eco_transport.find_connected_route(source_route, target_routes, target_offset)
+    assert(connected_route == "main")
 
     callback()
 end)

@@ -69,13 +69,23 @@ function eco_transport.get_connected_route_dir(route, building_size)
     return dir
 end
 
-function eco_transport.find_connected_route(source_route, building_size, target_routes, target_offset)
-    -- TODO
-    local max = vector.subtract( vector.multiply(building_size, 16), 0.5)
-    local dir = eco_transport.get_connected_route_dir(source_route, building_size)
+-- finds a connecting route-name in the target routes with given offset (in mapblocks, origin to origin)
+function eco_transport.find_connected_route(source_route, target_routes, target_offset)
+    local target_offset_blocks = vector.multiply(target_offset, 16)
 
-    for name, route in pairs(target_routes) do
+    local last_source_point = source_route.points[#source_route.points]
+
+    for name, target_route in pairs(target_routes) do
+        if source_route.type ~= target_route.type then
+            break
+        end
+
+        local first_target_point_rel = target_route.points[1]
+        local first_target_point = vector.add(first_target_point_rel, target_offset_blocks)
+
+        if vector.equals(first_target_point, last_source_point) then
+            return name
+        end
     end
 
-    return {}
 end
