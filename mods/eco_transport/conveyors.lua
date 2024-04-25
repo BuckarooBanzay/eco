@@ -27,7 +27,15 @@ building_lib.register_building("eco_transport:producer", {
                 }
             }
         }
-    }
+    },
+    markers = {
+		{
+			texture = "building_lib_arrow.png",
+			position = {x=0.5, y=0.2, z=1.5},
+			rotation = {x=math.pi/2, y=0, z=math.pi},
+			size = {x=10, y=10}
+		}
+	}
 })
 
 -- consumer building
@@ -47,12 +55,20 @@ building_lib.register_building("eco_transport:consumer", {
                     { x=3.5, y=4, z=-0.5 },
                     { x=3.5, y=4, z=7.5 }
                 },
-                on_end = function(opts)
+                on_end = function()
                     return { action = "remove" }
                 end
             }
         }
-    }
+    },
+    markers = {
+		{
+			texture = "building_lib_arrow.png",
+			position = {x=0.5, y=0.2, z=-0.5},
+			rotation = {x=math.pi/2, y=0, z=0},
+			size = {x=10, y=10}
+		}
+	}
 })
 
 -- straight conveyor with 2 lanes
@@ -82,7 +98,20 @@ building_lib.register_building("eco_transport:conveyor_straight", {
                 }
             }
         }
-    }
+    },
+    markers = {
+		{
+			texture = "building_lib_arrow.png",
+			position = {x=0.5, y=0.2, z=-0.5},
+			rotation = {x=math.pi/2, y=0, z=0},
+			size = {x=10, y=10}
+		},{
+			texture = "building_lib_arrow.png",
+			position = {x=0.5, y=0.2, z=1.5},
+			rotation = {x=math.pi/2, y=0, z=math.pi},
+			size = {x=10, y=10}
+		}
+	}
 })
 
 minetest.register_chatcommand("transport_test", {
@@ -90,9 +119,12 @@ minetest.register_chatcommand("transport_test", {
 		local player = minetest.get_player_by_name(name)
 		local pos = player:get_pos()
 		local mapblock_pos = mapblock_lib.get_mapblock(pos)
-        eco_transport.add(mapblock_pos, "main", "container-3", {
+        local success, msg = eco_transport.add(mapblock_pos, "main", "container-3", {
             inventory = {"stuff"}
         })
+        if not success then
+            return false, msg
+        end
 		return true, "container added"
 	end
 })

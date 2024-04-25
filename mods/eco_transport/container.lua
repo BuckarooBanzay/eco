@@ -40,7 +40,14 @@ end
 minetest.register_entity("eco_transport:container_blue", {
     initial_properties = {
         visual = "mesh",
-        mesh = "eco_container.obj"
+        mesh = "eco_container.obj",
+        physical = false,
+		static_save = false,
+		collisionbox = {0, 0, 0, 0, 0, 0},
+        visual_size = { x=6, y=6, z=6 },
+        textures = {
+            "eco_container_top.png^[colorize:blue:150"
+        }
     }
 })
 
