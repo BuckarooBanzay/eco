@@ -22,8 +22,8 @@ building_lib.register_building("eco_transport:producer", {
                 -- middle to z+
                 type = "container-3",
                 points = {
-                    { x=3.5, y=4, z=7.5 },
-                    { x=3.5, y=4, z=15.5 }
+                    { x=5, y=3, z=7.5 },
+                    { x=5, y=3, z=15.5 }
                 }
             }
         }
@@ -52,8 +52,8 @@ building_lib.register_building("eco_transport:consumer", {
                 -- z- to middle
                 type = "container-3",
                 points = {
-                    { x=3.5, y=4, z=-0.5 },
-                    { x=3.5, y=4, z=7.5 }
+                    { x=5, y=3, z=-0.5 },
+                    { x=5, y=3, z=7.5 }
                 },
                 on_end = function()
                     return { action = "remove" }
@@ -85,16 +85,16 @@ building_lib.register_building("eco_transport:conveyor_straight", {
                 -- z+
                 type = "container-3",
                 points = {
-                    { x=3.5, y=4, z=-0.5 },
-                    { x=3.5, y=4, z=15.5 }
+                    { x=5, y=3, z=-0.5 },
+                    { x=5, y=3, z=15.5 }
                 }
             },
             lane2 = {
                 -- z-
                 type = "container-3",
                 points = {
-                    { x=11.5, y=4, z=-0.5 },
-                    { x=11.5, y=4, z=15.5 }
+                    { x=12, y=3, z=-0.5 },
+                    { x=12, y=3, z=15.5 }
                 }
             }
         }

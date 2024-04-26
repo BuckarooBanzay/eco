@@ -31,19 +31,16 @@ function eco_transport.add(mapblock_pos, route_name, type, opts)
         return false, "route '" .. route_name .. "' not found"
     end
 
-    local offset_pos = vector.multiply(origin, 16)
+    local offset_pos = vector.subtract(vector.multiply(origin, 16), 1)
     local start_pos_rel = route.points[1]
     local start_pos = vector.add(offset_pos, start_pos_rel)
     -- TODO
 
 
+    print(dump({
+        start_pos = start_pos,
+        offset_pos = offset_pos,
+        start_pos_rel = start_pos_rel
+    }))
     local entity = type_def.create_entity(start_pos, opts)
-end
-
--- routes
-
-function eco_transport.get_item(mapblock_pos, route_name)
-end
-
-function eco_transport.set_item(mapblock_pos, route_name, opts)
 end

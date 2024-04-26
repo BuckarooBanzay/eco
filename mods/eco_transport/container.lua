@@ -37,14 +37,19 @@ for name, entry in pairs(colors) do
     })
 end
 
+local selectionbox = {
+    -1.5, -1.5, -1.5,
+    1.5, 1.5, 1.5
+}
 minetest.register_entity("eco_transport:container_blue", {
     initial_properties = {
         visual = "mesh",
         mesh = "eco_container.obj",
-        physical = false,
+        physical = true,
 		static_save = false,
-		collisionbox = {0, 0, 0, 0, 0, 0},
-        visual_size = { x=6, y=6, z=6 },
+		collisionbox = selectionbox,
+        selectionbox = selectionbox,
+        visual_size = { x=10, y=10, z=10 },
         textures = {
             "eco_container_top.png^[colorize:blue:150"
         }
