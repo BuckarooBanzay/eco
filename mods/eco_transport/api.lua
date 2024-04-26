@@ -36,11 +36,5 @@ function eco_transport.add(mapblock_pos, route_name, type, opts)
     local start_pos = vector.add(offset_pos, start_pos_rel)
     -- TODO
 
-
-    print(dump({
-        start_pos = start_pos,
-        offset_pos = offset_pos,
-        start_pos_rel = start_pos_rel
-    }))
     local entity = type_def.create_entity(start_pos, opts)
 end

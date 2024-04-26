@@ -53,7 +53,21 @@ minetest.register_entity("eco_transport:container_blue", {
         textures = {
             "eco_container_top.png^[colorize:blue:150"
         }
-    }
+    },
+    on_activate = function(self, staticdata)
+        print(dump({
+            fn = "on_activate",
+            staticdata = staticdata
+        }))
+        self.data = minetest.deserialize(staticdata)
+    end,
+    on_step = function(self, dtime)
+        print(dump({
+            fn = "on_step",
+            dtime = dtime,
+            data = self.data
+        }))
+    end
 })
 
 eco_transport.register_type("container-3", {
