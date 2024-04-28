@@ -67,11 +67,19 @@ minetest.register_entity("eco_transport:container_blue", {
             dtime = dtime,
             data = self.data
         }))
+    end,
+    on_deactivate = function(self)
+        -- called if player away
+        print(dump({
+            fn = "on_deactivate",
+            data = self.data
+        }))
     end
 })
 
 eco_transport.register_type("container-3", {
     create_entity = function(pos, opts)
+        -- works in unloaded areas
         return minetest.add_entity(pos, "eco_transport:container_blue", minetest.serialize(opts))
     end
 })
