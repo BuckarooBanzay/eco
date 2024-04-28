@@ -51,17 +51,14 @@ building_lib.register_building("eco_buildings:dirt_street_straight", {
 		size = {x=1, y=1, z=1}
 	},
 	markers = {
-		{
-			texture = "building_lib_arrow.png",
-			position = {x=1.5, y=0.2, z=0.5},
-			rotation = {x=math.pi/2, y=0, z=math.pi/2},
-			size = {x=10, y=10}
-		},{
-			texture = "building_lib_arrow.png",
-			position = {x=-0.5, y=0.2, z=0.5},
-			rotation = {x=math.pi/2, y=0, z=-math.pi/2},
-			size = {x=10, y=10}
-		}
+		building_lib.create_marker("arrow", {
+			pos = { x=1 },
+			rotation = "x+"
+		}),
+		building_lib.create_marker("arrow", {
+			pos = { x=-1 },
+			rotation = "x-"
+		})
 	},
 	conditions = street_tile_conditions,
 	groups = {
@@ -80,27 +77,22 @@ building_lib.register_building("eco_buildings:dirt_street_all_sides", {
 		size = {x=1, y=1, z=1}
 	},
 	markers = {
-		{
-			texture = "building_lib_arrow.png",
-			position = {x=1.5, y=0.2, z=0.5},
-			rotation = {x=math.pi/2, y=0, z=math.pi/2},
-			size = {x=10, y=10}
-		},{
-			texture = "building_lib_arrow.png",
-			position = {x=-0.5, y=0.2, z=0.5},
-			rotation = {x=math.pi/2, y=0, z=-math.pi/2},
-			size = {x=10, y=10}
-		},{
-			texture = "building_lib_arrow.png",
-			position = {x=0.5, y=0.2, z=1.5},
-			rotation = {x=math.pi/2, y=0, z=math.pi},
-			size = {x=10, y=10}
-		},{
-			texture = "building_lib_arrow.png",
-			position = {x=0.5, y=0.2, z=-0.5},
-			rotation = {x=math.pi/2, y=0, z=0},
-			size = {x=10, y=10}
-		}
+		building_lib.create_marker("arrow", {
+			pos = { x=1 },
+			rotation = "x+"
+		}),
+		building_lib.create_marker("arrow", {
+			pos = { x=-1 },
+			rotation = "x-"
+		}),
+		building_lib.create_marker("arrow", {
+			pos = { z=1 },
+			rotation = "z+"
+		}),
+		building_lib.create_marker("arrow", {
+			pos = { z=-1 },
+			rotation = "z-"
+		})
 	},
 	groups = {
 		street = true,
@@ -119,22 +111,18 @@ building_lib.register_building("eco_buildings:dirt_street_t", {
 		size = {x=1, y=1, z=1}
 	},
 	markers = {
-		{
-			texture = "building_lib_arrow.png",
-			position = {x=1.5, y=0.2, z=0.5},
-			rotation = {x=math.pi/2, y=0, z=math.pi/2},
-			size = {x=10, y=10}
-		},{
-			texture = "building_lib_arrow.png",
-			position = {x=-0.5, y=0.2, z=0.5},
-			rotation = {x=math.pi/2, y=0, z=-math.pi/2},
-			size = {x=10, y=10}
-		},{
-			texture = "building_lib_arrow.png",
-			position = {x=0.5, y=0.2, z=1.5},
-			rotation = {x=math.pi/2, y=0, z=math.pi},
-			size = {x=10, y=10}
-		}
+		building_lib.create_marker("arrow", {
+			pos = { x=1 },
+			rotation = "x+"
+		}),
+		building_lib.create_marker("arrow", {
+			pos = { x=-1 },
+			rotation = "x-"
+		}),
+		building_lib.create_marker("arrow", {
+			pos = { z=1 },
+			rotation = "z+"
+		})
 	},
 	groups = {
 		street = true,
@@ -153,17 +141,14 @@ building_lib.register_building("eco_buildings:dirt_street_corner", {
 		size = {x=1, y=1, z=1}
 	},
 	markers = {
-		{
-			texture = "building_lib_arrow.png",
-			position = {x=-0.5, y=0.2, z=0.5},
-			rotation = {x=math.pi/2, y=0, z=-math.pi/2},
-			size = {x=10, y=10}
-		},{
-			texture = "building_lib_arrow.png",
-			position = {x=0.5, y=0.2, z=1.5},
-			rotation = {x=math.pi/2, y=0, z=math.pi},
-			size = {x=10, y=10}
-		}
+		building_lib.create_marker("arrow", {
+			pos = { x=-1 },
+			rotation = "x-"
+		}),
+		building_lib.create_marker("arrow", {
+			pos = { z=1 },
+			rotation = "z+"
+		})
 	},
 	groups = {
 		street = true,

@@ -3,12 +3,10 @@ local MP = minetest.get_modpath("eco_buildings")
 local plots = {
     ["1x1"] = {
         markers = {
-            {
-                texture = "building_lib_arrow.png",
-                position = {x=1.5, y=0.2, z=0.5},
-                rotation = {x=math.pi/2, y=0, z=math.pi/2},
-                size = {x=10, y=10}
-            }
+            building_lib.create_marker("arrow", {
+                pos = { x=1 },
+                rotation = "x+"
+            })
         }
     },
     ["2x1"] = {},

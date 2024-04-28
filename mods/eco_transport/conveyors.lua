@@ -10,12 +10,12 @@ local conditions = {
 
 -- producer building
 building_lib.register_building("eco_transport:producer", {
-	catalog = MP .. "/schematics/conveyor_straight.zip",
-	conditions = conditions,
-	groups = {
-		conveyor = true
-	},
-	overview = "eco:stone",
+    catalog = MP .. "/schematics/conveyor_straight.zip",
+    conditions = conditions,
+    groups = {
+        conveyor = true
+    },
+    overview = "eco:stone",
     transport = {
         routes = {
             main = {
@@ -29,23 +29,21 @@ building_lib.register_building("eco_transport:producer", {
         }
     },
     markers = {
-		{
-			texture = "building_lib_arrow.png",
-			position = {x=0.5, y=0.2, z=1.5},
-			rotation = {x=math.pi/2, y=0, z=math.pi},
-			size = {x=10, y=10}
-		}
-	}
+        building_lib.create_marker("arrow", {
+            pos = { z=1 },
+            rotation = "z+"
+        })
+    }
 })
 
 -- consumer building
 building_lib.register_building("eco_transport:consumer", {
-	catalog = MP .. "/schematics/conveyor_straight.zip",
-	conditions = conditions,
-	groups = {
-		conveyor = true
-	},
-	overview = "eco:stone",
+    catalog = MP .. "/schematics/conveyor_straight.zip",
+    conditions = conditions,
+    groups = {
+        conveyor = true
+    },
+    overview = "eco:stone",
     transport = {
         routes = {
             main = {
@@ -62,23 +60,21 @@ building_lib.register_building("eco_transport:consumer", {
         }
     },
     markers = {
-		{
-			texture = "building_lib_arrow.png",
-			position = {x=0.5, y=0.2, z=-0.5},
-			rotation = {x=math.pi/2, y=0, z=0},
-			size = {x=10, y=10}
-		}
-	}
+        building_lib.create_marker("arrow", {
+            pos = { z=-1 },
+            rotation = "z-"
+        })
+    }
 })
 
 -- straight conveyor with 2 lanes
 building_lib.register_building("eco_transport:conveyor_straight", {
-	catalog = MP .. "/schematics/conveyor_straight.zip",
+    catalog = MP .. "/schematics/conveyor_straight.zip",
     conditions = conditions,
-	groups = {
-		conveyor = true
-	},
-	overview = "eco:stone",
+    groups = {
+        conveyor = true
+    },
+    overview = "eco:stone",
     transport = {
         routes = {
             lane1 = {
@@ -100,31 +96,28 @@ building_lib.register_building("eco_transport:conveyor_straight", {
         }
     },
     markers = {
-		{
-			texture = "building_lib_arrow.png",
-			position = {x=0.5, y=0.2, z=-0.5},
-			rotation = {x=math.pi/2, y=0, z=0},
-			size = {x=10, y=10}
-		},{
-			texture = "building_lib_arrow.png",
-			position = {x=0.5, y=0.2, z=1.5},
-			rotation = {x=math.pi/2, y=0, z=math.pi},
-			size = {x=10, y=10}
-		}
-	}
+        building_lib.create_marker("arrow", {
+            pos = { z=-1 },
+            rotation = "z-"
+        }),
+        building_lib.create_marker("arrow", {
+            pos = { z=1 },
+            rotation = "z+"
+        })
+    }
 })
 
 minetest.register_chatcommand("transport_test", {
-	func = function(name)
-		local player = minetest.get_player_by_name(name)
-		local pos = player:get_pos()
-		local mapblock_pos = mapblock_lib.get_mapblock(pos)
+    func = function(name)
+        local player = minetest.get_player_by_name(name)
+        local pos = player:get_pos()
+        local mapblock_pos = mapblock_lib.get_mapblock(pos)
         local success, msg = eco_transport.add(mapblock_pos, "main", "container-3", {
             inventory = {"stuff"}
         })
         if not success then
             return false, msg
         end
-		return true, "container added"
+        return true, "container added"
 	end
 })

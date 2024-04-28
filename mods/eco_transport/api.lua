@@ -20,7 +20,7 @@ function eco_transport.add(mapblock_pos, route_name, type, opts)
         return false, "no building found at " .. minetest.pos_to_string(mapblock_pos)
     end
     if not building_def.transport then
-        return false, "building has not transport-definition"
+        return false, "building has no transport-definition"
     end
 
     local building_size = building_lib.get_building_size(building_def, rotation)

@@ -73,12 +73,10 @@ building_lib.register_building("eco_buildings:transmission_line_cable_holder", {
         transmission_line = true
     },
     markers = {
-        {
-            texture = "building_lib_arrow.png",
-            position = {x=1, y=0.2, z=0.5},
-            rotation = {x=math.pi/2, y=0, z=math.pi/2},
-            size = {x=10, y=10}
-        }
+        building_lib.create_marker("arrow", {
+            pos = { x=1 },
+            rotation = "x+"
+        })
     },
     overview = "eco:steel_block"
 })
@@ -99,12 +97,10 @@ building_lib.register_building("eco_buildings:transmission_line_cable", {
         transmission_line = true
     },
     markers = {
-        {
-            texture = "building_lib_arrow.png",
-            position = {x=1, y=0.2, z=0.5},
-            rotation = {x=math.pi/2, y=0, z=math.pi/2},
-            size = {x=10, y=10}
-        }
+        building_lib.create_marker("arrow", {
+            pos = { x=1 },
+            rotation = "x+"
+        })
     },
     overview = "eco:baked_clay_black"
 })
