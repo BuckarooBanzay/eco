@@ -44,8 +44,17 @@ function eco_transport.add(mapblock_pos, route_name, type, data)
         data = data
     }
 
-    local success, err_msg = eco_transport.add_entry(entry)
+    local success, err
+    success, err = eco_transport.add_entry(entry)
     if not success then
-        return false, "add_entry error: " .. err_msg
+        return false, "add_entry error: " .. err
     end
+
+    local pos_data
+    pos_data, err = eco_transport.get_position_data(entry)
+    if not pos_data then
+        return false, "add_entry error: " .. err
+    end
+
+    minetest.add_entity(pos_data.pos, "eco_transport:" .. entry.type, entry.id)
 end

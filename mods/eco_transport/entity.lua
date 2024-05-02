@@ -18,6 +18,15 @@ function eco_transport.register_entity_for_type(name, def)
             -- not updated yet or the entry has been updated
             if not self.last_update or entry.last_update > self.last_update then
                 print("would update " .. self.id .. ", last_update: " .. entry.last_update)
+                local data, err = eco_transport.get_position_data(entry)
+                if not data then
+                    print("get_position_data error: " .. err)
+                    self:remove()
+                    return
+                end
+
+                self:set_pos(data.pos)
+                self:set_velocity(data.velocity)
                 self.last_update = entry.last_update
             end
         end,

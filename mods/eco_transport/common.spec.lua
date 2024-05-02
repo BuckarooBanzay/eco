@@ -81,3 +81,26 @@ mtt.register("get_route_length", function(callback)
     assert(length == 16)
     callback()
 end)
+
+mtt.register("get_point_in_route", function(callback)
+    local route = {
+        type = "container-3",
+        points = {
+            { x=-0.5, y=0, z=0 },
+            { x=15.5, y=0, z=0 }
+        }
+    }
+    local p = eco_transport.get_point_in_route(route, 0)
+    assert(vector.equals(p, route.points[1]))
+
+    p = eco_transport.get_point_in_route(route, 16)
+    assert(vector.equals(p, route.points[2]))
+
+    p = eco_transport.get_point_in_route(route, 1)
+    assert(vector.equals(p, { x=0.5, y=0, z=0 }))
+
+    p = eco_transport.get_point_in_route(route, 10)
+    assert(vector.equals(p, { x=9.5, y=0, z=0 }))
+
+    callback()
+end)

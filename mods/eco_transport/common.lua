@@ -100,6 +100,74 @@ function eco_transport.get_route_length(route)
     return l
 end
 
+function eco_transport.get_position_data(entry)
+    local building_def, _, rotation = building_lib.get_building_def_at(entry.building_pos)
+    if not building_def then
+        return false, "no building found at " .. minetest.pos_to_string(entry.building_pos)
+    end
+    if not building_def.transport then
+        return false, "building has no transport-definition"
+    end
+
+    local building_size = building_lib.get_building_size(building_def, rotation)
+    local rotated_routes = eco_transport.rotate_routes(building_def.transport.routes, building_size, rotation)
+
+    local route = rotated_routes[entry.route_name]
+    if not route then
+        return false, "route '" .. entry.route_name .. "' not found"
+    end
+
+    -- calculate exact position and velocity
+    local offset_pos = vector.subtract(vector.multiply(entry.building_pos, 16), 1)
+    local start_pos_rel = route.points[1]
+    local pos = vector.add(offset_pos, start_pos_rel)
+    local direction = vector.direction(route.points[1], route.points[2])
+
+    return {
+        pos = pos,
+        velocity = direction
+    }
+end
+
+function eco_transport.get_point_in_route(route, node_count)
+    if node_count == 0 then
+        -- special case: start of route
+        return route.points[1]
+    end
+
+    if not route.length then
+        -- TODO: refactor and calculate on startup
+        -- calculate route-length and store it in the route-definition itself
+        route.length = eco_transport.get_route_length(route)
+    end
+
+    if node_count >= route.length then
+        -- special case: end of route
+        return route.points[#route.points]
+    end
+
+    local l = 0
+    for i=2,#route.points do
+        local p1 = route.points[i-1]
+        local p2 = route.points[i]
+
+        local diff = vector.distance(p1, p2)
+        if node_count < l + diff then
+            -- route segment matches
+            local direction = vector.direction(p1, p2)
+            local remaining_node_count = node_count - l
+            local dir_offset = vector.multiply(direction, remaining_node_count)
+
+            return vector.add(p1, dir_offset)
+        end
+
+        l = l + diff
+    end
+
+    -- no match: return end of route
+    return route.points[#route.points]
+end
+
 -- source: https://gist.github.com/jrus/3197011
 local random = math.random
 function eco_transport.new_uuid()

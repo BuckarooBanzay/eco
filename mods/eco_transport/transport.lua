@@ -24,7 +24,13 @@ local function update_position(entry, now)
         return false, "route '" .. entry.route_name .. "' not found"
     end
 
+    -- set start of route time if not set
+    if not entry.route_start_time then
+        entry.route_start_time = now
+    end
+
     if not route.length then
+        -- TODO: refactor and calculate on startup
         -- calculate route-length and store it in the route-definition itself
         route.length = eco_transport.get_route_length(route)
     end
@@ -40,7 +46,6 @@ local function update_position(entry, now)
 
     if entry.progress >= route.length then
         -- end of route
-        -- TODO: next route if possible
         local target_dir = eco_transport.get_connected_route_dir(route, building_size)
         local target_pos = vector.add(origin, target_dir)
         local target_building_def, _, target_rotation = building_lib.get_building_def_at(target_pos)
@@ -64,6 +69,7 @@ local function update_position(entry, now)
                 entry.route_name = new_route_name
                 entry.progress = 0
                 entry.building_pos = target_pos
+                entry.route_start_time = now
             end
         end
     end
@@ -74,21 +80,6 @@ local function update_position(entry, now)
     end
 
     entry.last_update = now
-
-    -- TODO: proper visibility check
-    if not eco_transport.is_visible(entry.id) then
-        -- calculate exact position and velocity
-        local offset_pos = vector.subtract(vector.multiply(entry.building_pos, 16), 1)
-        local start_pos_rel = route.points[1]
-        local start_pos = vector.add(offset_pos, start_pos_rel)
-        local direction = vector.direction(route.points[1], route.points[2])
-
-        -- TODO: proper activate/deactivate lifecycle
-        local entity = minetest.add_entity(start_pos, "eco_transport:" .. entry.type, entry.id)
-        entity:set_velocity(direction)
-        eco_transport.change_visibility(entry.id, true)
-    end
-
     entry.valid_until = minetest.get_us_time() + (1000*1000)
 
     return true
