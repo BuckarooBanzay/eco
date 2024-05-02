@@ -68,3 +68,16 @@ mtt.register("find_connected_route", function(callback)
 
     callback()
 end)
+
+mtt.register("get_route_length", function(callback)
+    local route = {
+        type = "container-3",
+        points = {
+            { x=-0.5, y=0, z=0 },
+            { x=15.5, y=0, z=0 }
+        }
+    }
+    local length = eco_transport.get_route_length(route)
+    assert(length == 16)
+    callback()
+end)

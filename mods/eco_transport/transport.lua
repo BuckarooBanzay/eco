@@ -8,7 +8,7 @@ local function update_position(entry, now)
         now = now
     }))
 
-    local building_def, _, rotation = building_lib.get_building_def_at(entry.building_pos)
+    local building_def, origin, rotation = building_lib.get_building_def_at(entry.building_pos)
     if not building_def then
         return false, "no building found at " .. minetest.pos_to_string(entry.building_pos)
     end
@@ -24,11 +24,60 @@ local function update_position(entry, now)
         return false, "route '" .. entry.route_name .. "' not found"
     end
 
+    if not route.length then
+        -- calculate route-length and store it in the route-definition itself
+        route.length = eco_transport.get_route_length(route)
+    end
+
+    -- set progress in nodes
+    if not entry.progress then
+        -- start of the route
+        entry.progress = 0
+    else
+        -- increment progress with current velocity
+        entry.progress = entry.progress + 1
+    end
+
+    if entry.progress >= route.length then
+        -- end of route
+        -- TODO: next route if possible
+        local target_dir = eco_transport.get_connected_route_dir(route, building_size)
+        local target_pos = vector.add(origin, target_dir)
+        local target_building_def, _, target_rotation = building_lib.get_building_def_at(target_pos)
+
+        if target_building_def and
+            target_building_def.transport and
+            target_building_def.transport.routes and
+            target_rotation then
+
+                local target_building_size = building_lib.get_building_size(target_building_def, target_rotation)
+                local target_routes = target_building_def.transport.routes
+            local rotated_target_routes = eco_transport.rotate_routes(target_routes, target_building_size, rotation)
+
+            local new_route_name = eco_transport.find_connected_route(route, rotated_target_routes, target_dir)
+            if new_route_name then
+
+                print(dump({
+                    fn = "new route",
+                    new_route_name = new_route_name
+                }))
+                entry.route_name = new_route_name
+                entry.progress = 0
+                entry.building_pos = target_pos
+            end
+        end
+    end
+
+    if entry.progress >= route.length then
+        -- next route not found, fix in end-position
+        entry.progress = route.length
+    end
+
     entry.last_update = now
 
     -- TODO: proper visibility check
     if not eco_transport.is_visible(entry.id) then
-        -- calculate exact position and velocity
+    -- calculate exact position and velocity
         local offset_pos = vector.subtract(vector.multiply(entry.building_pos, 16), 1)
         local start_pos_rel = route.points[1]
         local start_pos = vector.add(offset_pos, start_pos_rel)
@@ -74,12 +123,15 @@ function eco_transport.get_entry(id)
     return entries[id], visible_entries[id]
 end
 
-
 local function move_entries()
     local now = minetest.get_us_time()
-    for _, entry in pairs(entries) do
+    for id, entry in pairs(entries) do
         if entry.valid_until < now then
-            update_position(entry, now)
+            local success, err = update_position(entry, now)
+            if not success then
+                print("removing entry " .. entry.id .. " due to update_position-error: " .. err)
+                entries[id] = nil
+            end
         end
     end
     minetest.after(0.2, move_entries)

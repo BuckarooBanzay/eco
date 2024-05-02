@@ -28,7 +28,7 @@ function eco_transport.rotate_routes(routes, building_size, rotation)
         return routes
     end
 
-    local max = vector.subtract( vector.multiply(building_size, 16), 1)
+    local max = vector.subtract(vector.multiply(building_size, 16), 1)
     local rotated_routes = {}
 
     for name, route in pairs(routes) do
@@ -88,6 +88,16 @@ function eco_transport.find_connected_route(source_route, target_routes, target_
         end
     end
 
+end
+
+function eco_transport.get_route_length(route)
+    local l = 0
+    for i=2,#route.points do
+        local p1 = route.points[i-1]
+        local p2 = route.points[i]
+        l = l + vector.distance(p1, p2)
+    end
+    return l
 end
 
 -- source: https://gist.github.com/jrus/3197011
