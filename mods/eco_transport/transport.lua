@@ -1,12 +1,8 @@
+local micros_per_second = 1000*1000
 
 -- updates the position of an entry
 local function update_position(entry, now)
     now = now or minetest.get_us_time()
-    print(dump({
-        fn = "update_position",
-        entry = entry,
-        now = now
-    }))
 
     local building_def, origin, rotation = building_lib.get_building_def_at(entry.building_pos)
     if not building_def then
@@ -35,16 +31,16 @@ local function update_position(entry, now)
         route.length = eco_transport.get_route_length(route)
     end
 
-    -- set progress in nodes
-    if not entry.progress then
-        -- start of the route
-        entry.progress = 0
-    else
-        -- increment progress with current velocity
-        entry.progress = entry.progress + 1
-    end
+    -- how much time has passed since start of the route
+    local time_delta = (now - entry.route_start_time) / micros_per_second
+    -- nodes travelled since start
+    local nodes_travelled = entry.velocity * time_delta
+    local nodes_remaining = route.length - nodes_travelled
 
-    if entry.progress >= route.length then
+    entry.last_update = now
+    entry.valid_until = now + (nodes_remaining / entry.velocity * micros_per_second)
+
+    if nodes_travelled >= route.length then
         -- end of route
         local target_dir = eco_transport.get_connected_route_dir(route, building_size)
         local target_pos = vector.add(origin, target_dir)
@@ -61,26 +57,12 @@ local function update_position(entry, now)
 
             local new_route_name = eco_transport.find_connected_route(route, rotated_target_routes, target_dir)
             if new_route_name then
-
-                print(dump({
-                    fn = "new route",
-                    new_route_name = new_route_name
-                }))
                 entry.route_name = new_route_name
-                entry.progress = 0
                 entry.building_pos = target_pos
                 entry.route_start_time = now
             end
         end
     end
-
-    if entry.progress >= route.length then
-        -- next route not found, fix in end-position
-        entry.progress = route.length
-    end
-
-    entry.last_update = now
-    entry.valid_until = minetest.get_us_time() + (1000*1000)
 
     return true
 end

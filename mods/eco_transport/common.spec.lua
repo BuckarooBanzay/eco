@@ -90,17 +90,30 @@ mtt.register("get_point_in_route", function(callback)
             { x=15.5, y=0, z=0 }
         }
     }
-    local p = eco_transport.get_point_in_route(route, 0)
+    local p, v, segment_num = eco_transport.get_point_in_route(route, 0) -- start
     assert(vector.equals(p, route.points[1]))
+    assert(vector.equals(v, { x=1, y=0, z=0 }))
+    assert(segment_num == 1)
 
-    p = eco_transport.get_point_in_route(route, 16)
+    p, v, segment_num = eco_transport.get_point_in_route(route, 16) -- end
     assert(vector.equals(p, route.points[2]))
+    assert(vector.equals(v, { x=0, y=0, z=0 }))
+    assert(segment_num == 2)
 
-    p = eco_transport.get_point_in_route(route, 1)
+    p, v, segment_num = eco_transport.get_point_in_route(route, 32) -- over the end
+    assert(vector.equals(p, route.points[2]))
+    assert(vector.equals(v, { x=0, y=0, z=0 }))
+    assert(segment_num == 2)
+
+    p, v, segment_num = eco_transport.get_point_in_route(route, 1)
     assert(vector.equals(p, { x=0.5, y=0, z=0 }))
+    assert(vector.equals(v, { x=1, y=0, z=0 }))
+    assert(segment_num == 1)
 
-    p = eco_transport.get_point_in_route(route, 10)
+    p, v, segment_num = eco_transport.get_point_in_route(route, 10)
     assert(vector.equals(p, { x=9.5, y=0, z=0 }))
+    assert(vector.equals(v, { x=1, y=0, z=0 }))
+    assert(segment_num == 1)
 
     callback()
 end)

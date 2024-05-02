@@ -1,3 +1,4 @@
+local micros_per_second = 1000*1000
 
 local function flip_point(axis, max, point)
     point[axis] = max[axis] - point[axis]
@@ -100,7 +101,9 @@ function eco_transport.get_route_length(route)
     return l
 end
 
-function eco_transport.get_position_data(entry)
+function eco_transport.get_position_data(entry, now)
+    now = now or minetest.get_us_time()
+
     local building_def, _, rotation = building_lib.get_building_def_at(entry.building_pos)
     if not building_def then
         return false, "no building found at " .. minetest.pos_to_string(entry.building_pos)
@@ -117,22 +120,30 @@ function eco_transport.get_position_data(entry)
         return false, "route '" .. entry.route_name .. "' not found"
     end
 
-    -- calculate exact position and velocity
+    -- how much time (in seconds) has passed since start of the route
+    local time_delta = (now - entry.route_start_time) / micros_per_second
+    -- nodes travelled since start
+    local nodes_travelled = entry.velocity * time_delta
+
+    local pos_rel, direction = eco_transport.get_point_in_route(route, nodes_travelled)
+
     local offset_pos = vector.subtract(vector.multiply(entry.building_pos, 16), 1)
-    local start_pos_rel = route.points[1]
-    local pos = vector.add(offset_pos, start_pos_rel)
-    local direction = vector.direction(route.points[1], route.points[2])
+    local pos_abs = vector.add(pos_rel, offset_pos)
 
     return {
-        pos = pos,
+        pos = pos_abs,
         velocity = direction
     }
 end
 
+local zero_velocity = { x=0, y=0, z=0 }
+
+-- returns the point in the route, the velocity and the segment-number with given nodes
 function eco_transport.get_point_in_route(route, node_count)
     if node_count == 0 then
         -- special case: start of route
-        return route.points[1]
+        local direction = vector.direction(route.points[1], route.points[2])
+        return route.points[1], direction, 1
     end
 
     if not route.length then
@@ -143,7 +154,7 @@ function eco_transport.get_point_in_route(route, node_count)
 
     if node_count >= route.length then
         -- special case: end of route
-        return route.points[#route.points]
+        return route.points[#route.points], zero_velocity, #route.points
     end
 
     local l = 0
@@ -158,14 +169,14 @@ function eco_transport.get_point_in_route(route, node_count)
             local remaining_node_count = node_count - l
             local dir_offset = vector.multiply(direction, remaining_node_count)
 
-            return vector.add(p1, dir_offset)
+            return vector.add(p1, dir_offset), direction, i-1
         end
 
         l = l + diff
     end
 
     -- no match: return end of route
-    return route.points[#route.points]
+    return route.points[#route.points], zero_velocity, #route.points
 end
 
 -- source: https://gist.github.com/jrus/3197011

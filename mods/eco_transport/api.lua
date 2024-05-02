@@ -41,6 +41,7 @@ function eco_transport.add(mapblock_pos, route_name, type, data)
         type = type,
         route_name = route_name,
         building_pos = origin,
+        velocity = 2,
         data = data
     }
 
