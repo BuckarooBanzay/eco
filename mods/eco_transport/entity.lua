@@ -20,9 +20,9 @@ function eco_transport.register_entity_for_type(name, def)
                 return
             end
 
+            -- TODO: only update if changed
             self.object:set_pos(data.pos)
             self.object:set_velocity(data.velocity)
-            self.last_update = entry.last_update
         end,
         on_deactivate = function(self)
             -- called if player away

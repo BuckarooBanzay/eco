@@ -107,7 +107,6 @@ local function move_entries()
             end
         end
     end
-    minetest.after(0.2, move_entries)
 end
 
-minetest.after(0.2, move_entries)
+minetest.register_globalstep(move_entries)

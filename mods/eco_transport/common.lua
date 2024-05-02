@@ -125,14 +125,15 @@ function eco_transport.get_position_data(entry, now)
     -- nodes travelled since start
     local nodes_travelled = entry.velocity * time_delta
 
-    local pos_rel, direction = eco_transport.get_point_in_route(route, nodes_travelled)
+    local pos_rel, direction, segment_num = eco_transport.get_point_in_route(route, nodes_travelled)
 
     local offset_pos = vector.subtract(vector.multiply(entry.building_pos, 16), 1)
     local pos_abs = vector.add(pos_rel, offset_pos)
 
     return {
         pos = pos_abs,
-        velocity = direction
+        velocity = direction,
+        segment_num = segment_num
     }
 end
 
