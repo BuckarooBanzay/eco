@@ -15,6 +15,7 @@ local box = {
     }
 }
 
+-- containers in node form
 for name, entry in pairs(colors) do
     minetest.register_node("eco_transport:container_" .. name, {
         description = "Container",
@@ -41,11 +42,13 @@ local selectionbox = {
     -1.5, -1.5, -1.5,
     1.5, 1.5, 1.5
 }
-minetest.register_entity("eco_transport:container_blue", {
+
+-- transport container
+eco_transport.register_type("container_3", {
     initial_properties = {
         visual = "mesh",
         mesh = "eco_container.obj",
-        physical = true,
+        physical = false,
 		static_save = false,
 		collisionbox = selectionbox,
         selectionbox = selectionbox,
@@ -53,33 +56,5 @@ minetest.register_entity("eco_transport:container_blue", {
         textures = {
             "eco_container_top.png^[colorize:blue:150"
         }
-    },
-    on_activate = function(self, staticdata)
-        print(dump({
-            fn = "on_activate",
-            staticdata = staticdata
-        }))
-        self.data = minetest.deserialize(staticdata)
-    end,
-    on_step = function(self, dtime)
-        print(dump({
-            fn = "on_step",
-            dtime = dtime,
-            data = self.data
-        }))
-    end,
-    on_deactivate = function(self)
-        -- called if player away
-        print(dump({
-            fn = "on_deactivate",
-            data = self.data
-        }))
-    end
-})
-
-eco_transport.register_type("container-3", {
-    create_entity = function(pos, opts)
-        -- works in unloaded areas
-        return minetest.add_entity(pos, "eco_transport:container_blue", minetest.serialize(opts))
-    end
+    }
 })

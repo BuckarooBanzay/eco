@@ -4,6 +4,8 @@ eco_transport = {}
 
 dofile(MP .. "/api.lua")
 dofile(MP .. "/common.lua")
+dofile(MP .. "/entity.lua")
+dofile(MP .. "/transport.lua")
 dofile(MP .. "/container.lua")
 dofile(MP .. "/conveyors.lua")
 

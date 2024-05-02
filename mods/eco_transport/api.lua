@@ -5,6 +5,7 @@ local types = {}
 
 function eco_transport.register_type(name, def)
     types[name] = def
+    eco_transport.register_entity_for_type(name, def)
 end
 
 function eco_transport.get_type(name)
@@ -13,8 +14,12 @@ end
 
 -- transport lifecycle
 
-function eco_transport.add(mapblock_pos, route_name, type, opts)
+function eco_transport.add(mapblock_pos, route_name, type, data)
     local type_def = eco_transport.get_type(type)
+    if not type_def then
+        return false, "transport type not found: " .. type
+    end
+
     local building_def, origin, rotation = building_lib.get_building_def_at(mapblock_pos)
     if not building_def then
         return false, "no building found at " .. minetest.pos_to_string(mapblock_pos)
@@ -31,10 +36,16 @@ function eco_transport.add(mapblock_pos, route_name, type, opts)
         return false, "route '" .. route_name .. "' not found"
     end
 
-    local offset_pos = vector.subtract(vector.multiply(origin, 16), 1)
-    local start_pos_rel = route.points[1]
-    local start_pos = vector.add(offset_pos, start_pos_rel)
-    -- TODO
+    local entry = {
+        id = eco_transport.new_uuid(),
+        type = type,
+        route_name = route_name,
+        building_pos = origin,
+        data = data
+    }
 
-    local entity = type_def.create_entity(start_pos, opts)
+    local success, err_msg = eco_transport.add_entry(entry)
+    if not success then
+        return false, "add_entry error: " .. err_msg
+    end
 end

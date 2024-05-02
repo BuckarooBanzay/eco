@@ -115,7 +115,7 @@ minetest.register_chatcommand("transport_test", {
         local player = minetest.get_player_by_name(name)
         local pos = player:get_pos()
         local mapblock_pos = mapblock_lib.get_mapblock(pos)
-        local success, msg = eco_transport.add(mapblock_pos, "main", "container-3", {
+        local success, msg = eco_transport.add(mapblock_pos, "main", "container_3", {
             inventory = {"stuff"}
         })
         if not success then
