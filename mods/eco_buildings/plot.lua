@@ -3,10 +3,11 @@ local MP = minetest.get_modpath("eco_buildings")
 local plots = {
     ["1x1"] = {
         markers = {
-            building_lib.create_marker("arrow", {
+            {
+                type = "arrow",
                 pos = { x=1 },
                 rotation = "x+"
-            })
+            }
         }
     },
     ["2x1"] = {},

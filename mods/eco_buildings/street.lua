@@ -79,14 +79,15 @@ building_lib.register_building("eco_buildings:street_tunnel", {
 		size = {x=1, y=1, z=1}
 	},
 	markers = {
-		building_lib.create_marker("arrow", {
+		{
+			type = "arrow",
 			pos = { x=1 },
 			rotation = "x+"
-		}),
-		building_lib.create_marker("arrow", {
+		},{
+			type = "arrow",
 			pos = { x=-1 },
 			rotation = "x-"
-		})
+		}
 	},
 	disable_orientation = disable_orientation,
 	conditions = {
@@ -122,14 +123,15 @@ building_lib.register_building("eco_buildings:street_straight", {
 	},
 	influence = street_influence,
 	markers = {
-		building_lib.create_marker("arrow", {
+		{
+			type = "arrow",
 			pos = { x=1 },
 			rotation = "x+"
-		}),
-		building_lib.create_marker("arrow", {
+		},{
+			type = "arrow",
 			pos = { x=-1 },
 			rotation = "x-"
-		})
+		}
 	},
 	disable_orientation = disable_orientation,
 	conditions = street_tile_conditions,
@@ -150,22 +152,23 @@ building_lib.register_building("eco_buildings:street_all_sides", {
 	},
 	influence = street_influence,
 	markers = {
-		building_lib.create_marker("arrow", {
+		{
+			type = "arrow",
 			pos = { x=1 },
 			rotation = "x+"
-		}),
-		building_lib.create_marker("arrow", {
+		},{
+			type = "arrow",
 			pos = { x=-1 },
 			rotation = "x-"
-		}),
-		building_lib.create_marker("arrow", {
+		},{
+			type = "arrow",
 			pos = { z=1 },
 			rotation = "z+"
-		}),
-		building_lib.create_marker("arrow", {
+		},{
+			type = "arrow",
 			pos = { z=-1 },
 			rotation = "z-"
-		})
+		}
 	},
 	on_metadata = on_streetsign_metadata,
 	disable_orientation = disable_orientation,
@@ -187,18 +190,19 @@ building_lib.register_building("eco_buildings:street_t", {
 	},
 	influence = street_influence,
 	markers = {
-		building_lib.create_marker("arrow", {
+		{
+			type = "arrow",
 			pos = { x=1 },
 			rotation = "x+"
-		}),
-		building_lib.create_marker("arrow", {
+		},{
+			type = "arrow",
 			pos = { x=-1 },
 			rotation = "x-"
-		}),
-		building_lib.create_marker("arrow", {
+		},{
+			type = "arrow",
 			pos = { z=1 },
 			rotation = "z+"
-		})
+		}
 	},
 	on_metadata = on_streetsign_metadata,
 	disable_orientation = disable_orientation,
@@ -220,14 +224,15 @@ building_lib.register_building("eco_buildings:street_corner", {
 	},
 	influence = street_influence,
 	markers = {
-		building_lib.create_marker("arrow", {
+		{
+			type = "arrow",
 			pos = { x=-1 },
 			rotation = "x-"
-		}),
-		building_lib.create_marker("arrow", {
+		},{
+			type = "arrow",
 			pos = { z=1 },
 			rotation = "z+"
-		})
+		}
 	},
 	on_metadata = on_streetsign_metadata,
 	disable_orientation = disable_orientation,

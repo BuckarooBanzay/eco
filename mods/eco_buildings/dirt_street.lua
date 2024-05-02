@@ -51,14 +51,15 @@ building_lib.register_building("eco_buildings:dirt_street_straight", {
 		size = {x=1, y=1, z=1}
 	},
 	markers = {
-		building_lib.create_marker("arrow", {
+		{
+			type = "arrow",
 			pos = { x=1 },
 			rotation = "x+"
-		}),
-		building_lib.create_marker("arrow", {
+		},{
+			type = "arrow",
 			pos = { x=-1 },
 			rotation = "x-"
-		})
+		}
 	},
 	conditions = street_tile_conditions,
 	groups = {
@@ -77,22 +78,23 @@ building_lib.register_building("eco_buildings:dirt_street_all_sides", {
 		size = {x=1, y=1, z=1}
 	},
 	markers = {
-		building_lib.create_marker("arrow", {
+		{
+			type = "arrow",
 			pos = { x=1 },
 			rotation = "x+"
-		}),
-		building_lib.create_marker("arrow", {
+		},{
+			type = "arrow",
 			pos = { x=-1 },
 			rotation = "x-"
-		}),
-		building_lib.create_marker("arrow", {
+		},{
+			type = "arrow",
 			pos = { z=1 },
 			rotation = "z+"
-		}),
-		building_lib.create_marker("arrow", {
+		},{
+			type = "arrow",
 			pos = { z=-1 },
 			rotation = "z-"
-		})
+		}
 	},
 	groups = {
 		street = true,
@@ -111,18 +113,19 @@ building_lib.register_building("eco_buildings:dirt_street_t", {
 		size = {x=1, y=1, z=1}
 	},
 	markers = {
-		building_lib.create_marker("arrow", {
+		{
+			type = "arrow",
 			pos = { x=1 },
 			rotation = "x+"
-		}),
-		building_lib.create_marker("arrow", {
+		},{
+			type = "arrow",
 			pos = { x=-1 },
 			rotation = "x-"
-		}),
-		building_lib.create_marker("arrow", {
+		},{
+			type = "arrow",
 			pos = { z=1 },
 			rotation = "z+"
-		})
+		}
 	},
 	groups = {
 		street = true,
@@ -141,14 +144,15 @@ building_lib.register_building("eco_buildings:dirt_street_corner", {
 		size = {x=1, y=1, z=1}
 	},
 	markers = {
-		building_lib.create_marker("arrow", {
+		{
+			type = "arrow",
 			pos = { x=-1 },
 			rotation = "x-"
-		}),
-		building_lib.create_marker("arrow", {
+		},{
+			type = "arrow",
 			pos = { z=1 },
 			rotation = "z+"
-		})
+		}
 	},
 	groups = {
 		street = true,

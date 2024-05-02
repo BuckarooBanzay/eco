@@ -29,10 +29,11 @@ building_lib.register_building("eco_transport:producer", {
         }
     },
     markers = {
-        building_lib.create_marker("arrow", {
+        {
+            type = "arrow",
             pos = { z=1 },
             rotation = "z+"
-        })
+        }
     }
 })
 
@@ -60,10 +61,11 @@ building_lib.register_building("eco_transport:consumer", {
         }
     },
     markers = {
-        building_lib.create_marker("arrow", {
+        {
+            type = "arrow",
             pos = { z=-1 },
             rotation = "z-"
-        })
+        }
     }
 })
 
@@ -96,14 +98,15 @@ building_lib.register_building("eco_transport:conveyor_straight", {
         }
     },
     markers = {
-        building_lib.create_marker("arrow", {
+        {
+            type = "arrow",
             pos = { z=-1 },
             rotation = "z-"
-        }),
-        building_lib.create_marker("arrow", {
+        },{
+            type = "arrow",
             pos = { z=1 },
             rotation = "z+"
-        })
+        }
     }
 })
 

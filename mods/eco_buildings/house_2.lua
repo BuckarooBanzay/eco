@@ -9,10 +9,11 @@ building_lib.register_building("eco_buildings:house_2", {
 		}
 	},
 	markers = {
-		building_lib.create_marker("arrow", {
+		{
+			type = "arrow",
 			pos = { x=1, z=3 },
 			rotation = "z+"
-		})
+		}
 	},
 	replace = eco_buildings.replacement_randomizer({
 		base_color = {
