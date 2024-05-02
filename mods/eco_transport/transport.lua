@@ -50,8 +50,8 @@ local function update_position(entry, now)
             target_building_def.transport.routes and
             target_rotation then
 
-                local target_building_size = building_lib.get_building_size(target_building_def, target_rotation)
-                local target_routes = target_building_def.transport.routes
+            local target_building_size = building_lib.get_building_size(target_building_def, target_rotation)
+            local target_routes = target_building_def.transport.routes
             local rotated_target_routes = eco_transport.rotate_routes(target_routes, target_building_size, rotation)
 
             local new_route_name = eco_transport.find_connected_route(route, rotated_target_routes, target_dir)
@@ -77,7 +77,7 @@ local function update_position(entry, now)
 
     -- TODO: proper visibility check
     if not eco_transport.is_visible(entry.id) then
-    -- calculate exact position and velocity
+        -- calculate exact position and velocity
         local offset_pos = vector.subtract(vector.multiply(entry.building_pos, 16), 1)
         local start_pos_rel = route.points[1]
         local start_pos = vector.add(offset_pos, start_pos_rel)
