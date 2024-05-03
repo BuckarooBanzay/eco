@@ -76,6 +76,14 @@ function eco_transport.find_connected_route(source_route, target_routes, target_
 
     local last_source_point = source_route.points[#source_route.points]
 
+    print(dump({
+        fn = "find_connected_route",
+        source_route = source_route,
+        target_offset = target_offset,
+        last_source_point = last_source_point,
+        target_offset_blocks = target_offset_blocks
+    }))
+
     for name, target_route in pairs(target_routes) do
         if source_route.type ~= target_route.type then
             break
@@ -83,6 +91,13 @@ function eco_transport.find_connected_route(source_route, target_routes, target_
 
         local first_target_point_rel = target_route.points[1]
         local first_target_point = vector.add(first_target_point_rel, target_offset_blocks)
+
+        print(dump({
+            fn = "find_connected_route (for)",
+            target_route = target_route,
+            first_target_point = first_target_point,
+            first_target_point_rel = first_target_point_rel
+        }))
 
         if vector.equals(first_target_point, last_source_point) then
             return name
