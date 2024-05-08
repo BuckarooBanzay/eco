@@ -44,7 +44,7 @@ local function update_position(entry, now)
         -- end of route
         local target_dir = eco_transport.get_connected_route_dir(route, building_size)
         local target_pos = vector.add(origin, target_dir)
-        local target_building_def, _, target_rotation = building_lib.get_building_def_at(target_pos)
+        local target_building_def, target_origin, target_rotation = building_lib.get_building_def_at(target_pos)
 
         if target_building_def and
             target_building_def.transport and
@@ -52,6 +52,7 @@ local function update_position(entry, now)
             target_rotation then
 
             local target_building_size = building_lib.get_building_size(target_building_def, target_rotation)
+            local target_pos_delta = vector.subtract(target_origin, origin)
             local target_routes = target_building_def.transport.routes
             local rotated_target_routes = eco_transport.rotate_routes(
                 target_routes,
@@ -59,10 +60,10 @@ local function update_position(entry, now)
                 target_rotation
             )
 
-            local new_route_name = eco_transport.find_connected_route(route, rotated_target_routes, target_dir)
+            local new_route_name = eco_transport.find_connected_route(route, rotated_target_routes, target_pos_delta)
             if new_route_name then
                 entry.route_name = new_route_name
-                entry.building_pos = target_pos
+                entry.building_pos = target_origin
                 entry.route_start_time = now
             end
         end
