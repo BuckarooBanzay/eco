@@ -53,7 +53,11 @@ local function update_position(entry, now)
 
             local target_building_size = building_lib.get_building_size(target_building_def, target_rotation)
             local target_routes = target_building_def.transport.routes
-            local rotated_target_routes = eco_transport.rotate_routes(target_routes, target_building_size, rotation)
+            local rotated_target_routes = eco_transport.rotate_routes(
+                target_routes,
+                target_building_size,
+                target_rotation
+            )
 
             local new_route_name = eco_transport.find_connected_route(route, rotated_target_routes, target_dir)
             if new_route_name then

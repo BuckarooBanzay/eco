@@ -24,15 +24,15 @@ building_lib.register_building("eco_transport:conveyor_end", {
             right = {
                 type = "container-3",
                 points = {
-                    { x=12, y=3, z=3 },
-                    { x=12, y=3, z=15.5 }
+                    { x=11, y=2, z=2 },
+                    { x=11, y=2, z=15.5 }
                 }
             },
             left = {
                 type = "container-3",
                 points = {
-                    { x=5, y=3, z=15.5 },
-                    { x=5, y=3, z=3 }
+                    { x=4, y=2, z=15.5 },
+                    { x=4, y=2, z=2 }
                 }
             }
         }
@@ -66,15 +66,15 @@ building_lib.register_building("eco_transport:conveyor_straight", {
             right = {
                 type = "container-3",
                 points = {
-                    { x=12, y=3, z=-0.5 },
-                    { x=12, y=3, z=15.5 }
+                    { x=11, y=2, z=-0.5 },
+                    { x=11, y=2, z=15.5 }
                 }
             },
             left = {
                 type = "container-3",
                 points = {
-                    { x=5, y=3, z=15.5 },
-                    { x=5, y=3, z=-0.5 }
+                    { x=4, y=2, z=15.5 },
+                    { x=4, y=2, z=-0.5 }
                 }
             }
         }
@@ -116,17 +116,17 @@ building_lib.register_building("eco_transport:conveyor_corner", {
             right = {
                 type = "container-3",
                 points = {
-                    { x=12, y=3, z=-0.5 },
-                    { x=12, y=3, z=5 },
-                    { x=15.5, y=3, z=5 }
+                    { x=11, y=2, z=-0.5 },
+                    { x=11, y=2, z=4 },
+                    { x=15.5, y=2, z=4 }
                 }
             },
             left = {
                 type = "container-3",
                 points = {
-                    { x=15.5, y=3, z=12 },
-                    { x=5, y=3, z=12 },
-                    { x=5, y=3, z=-0.5 }
+                    { x=15.5, y=2, z=11 },
+                    { x=4, y=2, z=11 },
+                    { x=4, y=2, z=-0.5 }
                 }
             }
         }
@@ -168,19 +168,19 @@ building_lib.register_building("eco_transport:conveyor_levelshift", {
             right = {
                 type = "container-3",
                 points = {
-                    { x=12, y=3, z=-0.5 },
-                    { x=12, y=3, z=8 },
-                    { x=12, y=19, z=8 },
-                    { x=12, y=19, z=15.5 }
+                    { x=11, y=2, z=-0.5 },
+                    { x=11, y=2, z=7 },
+                    { x=11, y=18, z=7 },
+                    { x=11, y=18, z=15.5 }
                 }
             },
             left = {
                 type = "container-3",
                 points = {
-                    { x=5, y=19, z=15.5 },
-                    { x=5, y=19, z=8 },
-                    { x=5, y=3, z=8 },
-                    { x=5, y=3, z=-0.5 }
+                    { x=4, y=18, z=15.5 },
+                    { x=4, y=18, z=7 },
+                    { x=4, y=2, z=7 },
+                    { x=4, y=2, z=-0.5 }
                 }
             }
         }

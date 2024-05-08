@@ -157,7 +157,7 @@ function eco_transport.get_position_data(entry, now)
 
     local pos_rel, direction, segment_num = eco_transport.get_point_in_route(route, nodes_travelled)
 
-    local offset_pos = vector.subtract(vector.multiply(entry.building_pos, 16), 1)
+    local offset_pos = vector.multiply(entry.building_pos, 16)
     local pos_abs = vector.add(pos_rel, offset_pos)
 
     return {
