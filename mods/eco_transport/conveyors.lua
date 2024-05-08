@@ -206,8 +206,6 @@ building_lib.register_building("eco_transport:conveyor_levelshift", {
     }
 })
 
-
-
 minetest.register_chatcommand("transport_test", {
     func = function(name)
         local player = minetest.get_player_by_name(name)
@@ -220,5 +218,21 @@ minetest.register_chatcommand("transport_test", {
             return false, msg
         end
         return true, "container added"
+	end
+})
+
+minetest.register_chatcommand("dump_route", {
+    params = "[routename]",
+    func = function(name, param)
+        local player = minetest.get_player_by_name(name)
+        local pos = player:get_pos()
+        local mapblock_pos = mapblock_lib.get_mapblock(pos)
+        local route, err = eco_transport.get_route(mapblock_pos, param)
+        if err then
+            return false, err
+        end
+
+        print(dump(route))
+        return true, dump(route)
 	end
 })

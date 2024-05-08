@@ -70,6 +70,27 @@ function eco_transport.get_connected_route_dir(route, building_size)
     return dir
 end
 
+-- returns the rotated route with name
+function eco_transport.get_route(mapblock_pos, routename)
+    local building_def, _, rotation = building_lib.get_building_def_at(mapblock_pos)
+    if not building_def then
+        return false, "no building found at " .. minetest.pos_to_string(mapblock_pos)
+    end
+    if not building_def.transport then
+        return false, "building has no transport-definition"
+    end
+
+    local building_size = building_lib.get_building_size(building_def, rotation)
+    local rotated_routes = eco_transport.rotate_routes(building_def.transport.routes, building_size, rotation)
+
+    local route = rotated_routes[routename]
+    if not route then
+        return false, "route '" .. routename .. "' not found"
+    end
+
+    return route
+end
+
 -- finds a connecting route-name in the target routes with given offset (in mapblocks, origin to origin)
 function eco_transport.find_connected_route(source_route, target_routes, target_offset)
     local target_offset_blocks = vector.multiply(target_offset, 16)
@@ -119,20 +140,9 @@ end
 function eco_transport.get_position_data(entry, now)
     now = now or minetest.get_us_time()
 
-    local building_def, _, rotation = building_lib.get_building_def_at(entry.building_pos)
-    if not building_def then
-        return false, "no building found at " .. minetest.pos_to_string(entry.building_pos)
-    end
-    if not building_def.transport then
-        return false, "building has no transport-definition"
-    end
-
-    local building_size = building_lib.get_building_size(building_def, rotation)
-    local rotated_routes = eco_transport.rotate_routes(building_def.transport.routes, building_size, rotation)
-
-    local route = rotated_routes[entry.route_name]
-    if not route then
-        return false, "route '" .. entry.route_name .. "' not found"
+    local route, err = eco_transport.get_route(entry.building_pos, entry.route_name)
+    if err then
+        return err
     end
 
     -- how much time (in seconds) has passed since start of the route
