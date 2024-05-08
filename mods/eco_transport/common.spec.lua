@@ -31,7 +31,6 @@ mtt.register("rotate_routes", function(callback)
     -- 180°
     rotated_routes = eco_transport.rotate_routes(routes, building_size, 180)
     assert(rotated_routes.main.type == "container-3")
-    print(dump(rotated_routes))
     assert(vector.equals(rotated_routes.main.points[1], { x=11, y=3, z=-0.5 }))
     assert(vector.equals(rotated_routes.main.points[2], { x=11, y=3, z=15.5 }))
 
@@ -39,19 +38,27 @@ mtt.register("rotate_routes", function(callback)
 end)
 
 mtt.register("get_connected_route_dir", function(callback)
+    -- simple one-mapblock direction
     local route = {
         points = {
             { x=-0.5, y=0, z=0 },
             { x=15.5, y=0, z=0 }
         }
     }
-
     local building_size = { x=1, y=1, z=1 }
-
     local dir = eco_transport.get_connected_route_dir(route, building_size)
-    assert(dir.x == 1)
-    assert(dir.y == 0)
-    assert(dir.z == 0)
+    assert(vector.equals(dir, { x=1, y=0, z=0 }))
+
+    -- multi-mapblock building
+    route = {
+        points = {
+            { x=-0.5, y=0, z=0 },
+            { x=15.5, y=20, z=0 }
+        }
+    }
+    building_size = { x=1, y=2, z=1 }
+    dir = eco_transport.get_connected_route_dir(route, building_size)
+    assert(vector.equals(dir, { x=1, y=1, z=0 }))
 
     callback()
 end)

@@ -59,11 +59,14 @@ function eco_transport.get_connected_route_dir(route, building_size)
     local last_point = route.points[#route.points]
     for _, axis in ipairs({"x", "y", "z"}) do
         if last_point[axis] == min[axis] then
+            -- axis into negative direction
             dir[axis] = -1
-            break
         elseif last_point[axis] == max[axis] then
+            -- axis out of the building
             dir[axis] = building_size[axis]
-            break
+        else
+            -- not connected, figure out in which mapblock we are in
+            dir[axis] = math.floor((last_point[axis] + 0.5) / 16)
         end
     end
 
