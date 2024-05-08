@@ -207,11 +207,12 @@ building_lib.register_building("eco_transport:conveyor_levelshift", {
 })
 
 minetest.register_chatcommand("transport_test", {
-    func = function(name)
+    params = "[routename]",
+    func = function(name, param)
         local player = minetest.get_player_by_name(name)
         local pos = player:get_pos()
         local mapblock_pos = mapblock_lib.get_mapblock(pos)
-        local success, msg = eco_transport.add(mapblock_pos, "right", "container_3", {
+        local success, msg = eco_transport.add(mapblock_pos, param, "container_3", {
             inventory = {"stuff"}
         })
         if not success then

@@ -96,12 +96,14 @@ function eco_transport.find_connected_route(source_route, target_routes, target_
     local target_offset_blocks = vector.multiply(target_offset, 16)
 
     local last_source_point = source_route.points[#source_route.points]
+    local last_source_point_rel = vector.subtract(last_source_point, target_offset_blocks)
 
     print(dump({
         fn = "find_connected_route",
         source_route = source_route,
         target_offset = target_offset,
         last_source_point = last_source_point,
+        last_source_point_rel = last_source_point_rel,
         target_offset_blocks = target_offset_blocks
     }))
 
@@ -111,16 +113,19 @@ function eco_transport.find_connected_route(source_route, target_routes, target_
         end
 
         local first_target_point_rel = target_route.points[1]
-        local first_target_point = vector.add(first_target_point_rel, target_offset_blocks)
 
         print(dump({
             fn = "find_connected_route (for)",
+            name = name,
             target_route = target_route,
-            first_target_point = first_target_point,
             first_target_point_rel = first_target_point_rel
         }))
 
-        if vector.equals(first_target_point, last_source_point) then
+        if vector.equals(first_target_point_rel, last_source_point_rel) then
+            print(dump({
+                fn = "route found",
+                name = name
+            }))
             return name
         end
     end
