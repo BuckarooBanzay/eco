@@ -31,3 +31,6 @@
 [submodule "mods/wield_events"]
 	path = mods/wield_events
 	url = https://github.com/mt-mods/wield_events
+[submodule "mods/isogen"]
+	path = mods/isogen
+	url = https://github.com/BuckarooBanzay/isogen/
