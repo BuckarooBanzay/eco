@@ -29,14 +29,16 @@ function eco_nodes.register_stone(stonename, cfg)
         description = "eco '" .. stonename .. "' stone",
         tiles = {cfg.textures.stone},
         sounds = eco_nodes.node_sound_stone(),
-        moreblocks = cfg.moreblocks
+        moreblocks = cfg.moreblocks,
+        mapcolor = cfg.mapcolor
     })
 
     eco_nodes.register(stonename .. "_block", {
         description = "eco '" .. stonename .. "' block",
         tiles = {cfg.textures.block},
         sounds = eco_nodes.node_sound_stone(),
-        moreblocks = cfg.moreblocks
+        moreblocks = cfg.moreblocks,
+        mapcolor = cfg.mapcolor
     })
 
     eco_nodes.register(stonename .. "_brick", {
@@ -44,7 +46,8 @@ function eco_nodes.register_stone(stonename, cfg)
         tiles = {cfg.textures.brick},
         paramtype2 = "facedir",
         sounds = eco_nodes.node_sound_stone(),
-        moreblocks = cfg.moreblocks
+        moreblocks = cfg.moreblocks,
+        mapcolor = cfg.mapcolor
     })
 end
 
