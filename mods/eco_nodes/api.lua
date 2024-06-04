@@ -57,14 +57,16 @@ function eco_nodes.register_tree(treename, cfg)
         tiles = {cfg.textures.tree_top, cfg.textures.tree_top, cfg.textures.tree},
         paramtype2 = "facedir",
         sounds = eco_nodes.node_sound_wood(),
-        on_place = minetest.rotate_node
+        on_place = minetest.rotate_node,
+        mapcolor = { r=182, g=155, b=124 }
     })
 
     eco_nodes.register(treename .. "_wood", {
         description = "eco '" .. treename .. "' wood",
         tiles = {cfg.textures.wood},
         sounds = eco_nodes.node_sound_wood(),
-        moreblocks = true
+        moreblocks = true,
+        mapcolor = { r=221, g=184, b=128 }
     })
 
     eco_nodes.register(treename .. "_leaves", {
@@ -72,7 +74,8 @@ function eco_nodes.register_tree(treename, cfg)
         tiles = {cfg.textures.leaves},
         sunlight_propagates = true,
 		paramtype = "light",
-        drawtype = "allfaces_optional"
+        drawtype = "allfaces_optional",
+        mapcolor = { r=34, g=52, b=29 }
     })
 end
 
