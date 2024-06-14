@@ -39,11 +39,10 @@ building_lib.register_building("eco_buildings:street_slope", {
 	category = "street",
 	catalog = {
 		filename = MP .. "/schematics/street.zip",
-		offset = {x=0, y=0, z=0},
+		offset = {x=3, y=0, z=1},
 		size = {x=1, y=2, z=1}
 	},
 	influence = street_influence,
-	rotation_offset = 180,
 	disable_orientation = disable_orientation,
 	conditions = {
 		{
@@ -75,7 +74,7 @@ building_lib.register_building("eco_buildings:street_tunnel", {
 	category = "street",
 	catalog = {
 		filename = MP .. "/schematics/street.zip",
-		offset = {x=2, y=0, z=2},
+		offset = {x=1, y=0, z=2},
 		size = {x=1, y=1, z=1}
 	},
 	markers = {
@@ -118,7 +117,7 @@ building_lib.register_building("eco_buildings:street_straight", {
 	category = "street",
 	catalog = {
 		filename = MP .. "/schematics/street.zip",
-		offset = {x=2, y=0, z=0},
+		offset = {x=1, y=0, z=0},
 		size = {x=1, y=1, z=1}
 	},
 	influence = street_influence,
@@ -147,7 +146,7 @@ building_lib.register_building("eco_buildings:street_all_sides", {
 	category = "street",
 	catalog = {
 		filename = MP .. "/schematics/street.zip",
-		offset = {x=1, y=0, z=0},
+		offset = {x=0, y=0, z=0},
 		size = {x=1, y=1, z=1}
 	},
 	influence = street_influence,
@@ -185,7 +184,7 @@ building_lib.register_building("eco_buildings:street_t", {
 	category = "street",
 	catalog = {
 		filename = MP .. "/schematics/street.zip",
-		offset = {x=3, y=0, z=0},
+		offset = {x=2, y=0, z=0},
 		size = {x=1, y=1, z=1}
 	},
 	influence = street_influence,
@@ -219,7 +218,7 @@ building_lib.register_building("eco_buildings:street_corner", {
 	category = "street",
 	catalog = {
 		filename = MP .. "/schematics/street.zip",
-		offset = {x=4, y=0, z=0},
+		offset = {x=3, y=0, z=0},
 		size = {x=1, y=1, z=1}
 	},
 	influence = street_influence,
