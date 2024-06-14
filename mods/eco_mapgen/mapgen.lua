@@ -21,3 +21,5 @@ eco_mapgen.mapgen = building_lib.create_mapgen({
 })
 
 minetest.register_on_generated(eco_mapgen.mapgen.on_generated)
+minetest.register_alias("mapgen_stone", "eco:stone")
+minetest.register_alias("mapgen_water_source", "eco:water_source")
