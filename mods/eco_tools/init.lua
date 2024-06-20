@@ -39,10 +39,30 @@ local function get_formspec(itemstack)
         end
     end
 
+    local building_fs = {}
+
+    for i, building_def in ipairs(building_list) do
+        local xo = (i-1) * 2
+        table.insert(
+            building_fs,
+            string.format("image_button[0,%d;2,2;%s;%s;]",
+                xo, building_lib.get_preview_texture(building_def), building_def.name)
+        )
+        table.insert(
+            building_fs,
+            string.format("label[2,%d;%s]", xo, building_def.name)
+        )
+    end
+
     return "size[10,10;]" ..
         "real_coordinates[true]" ..
         "dropdown[0.5,0.5;9,0.8;category;" .. cat_list .. ";" .. selected_category_index .. "]" ..
-        "textlist[0.5,1.5;9,7.5;buildingname;" .. textlist .. ";" .. selected_building .. "]" ..
+        "scroll_container[0.5,1.5;8.5,8;scroll;vertical]" ..
+        table.concat(building_fs) ..
+--        "textlist[0,0;8.5,15;buildingname;" .. textlist .. ";" .. selected_building .. "]" ..
+        "scroll_container_end[]" ..
+        "scrollbaroptions[]" ..
+        "scrollbar[9,1.5;0.5,7.5;vertical;scroll;0]" ..
         "button_exit[0.5,9;9,0.8;back;Back]"
 end
 
