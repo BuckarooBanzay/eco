@@ -3,67 +3,7 @@ local formname = "eco_placer_configure"
 local function get_formspec(itemstack)
     local meta = itemstack:get_meta()
     local selected_category = meta:get_string("category") or "_uncategorized"
-    local building_list = building_lib.get_buildings_by_category(selected_category)
-
-    local selected_buildingname = meta:get_string("buildingname")
-    if not selected_buildingname or selected_buildingname == "" then
-        selected_buildingname = building_list[1]
-    end
-
-    local selected_building = 1
-    local textlist = ""
-
-    for i, building_def in ipairs(building_list) do
-        if selected_buildingname == building_def.name then
-            selected_building = i
-        end
-
-        textlist = textlist .. building_def.name
-        if i < #building_list then
-            textlist = textlist .. ","
-        end
-    end
-
-    local categories = building_lib.get_building_categories()
-    local selected_category_index = 1
-    local cat_list = ""
-
-    for i, category in ipairs(categories) do
-        if category == selected_category then
-            selected_category_index = i
-        end
-
-        cat_list = cat_list .. category
-        if i < #categories then
-            cat_list = cat_list .. ","
-        end
-    end
-
-    local building_fs = {}
-
-    for i, building_def in ipairs(building_list) do
-        local xo = (i-1) * 2
-        table.insert(
-            building_fs,
-            string.format("image_button[0,%d;2,2;%s;%s;]",
-                xo, building_lib.get_preview_texture(building_def), building_def.name)
-        )
-        table.insert(
-            building_fs,
-            string.format("label[2,%d;%s]", xo, building_def.name)
-        )
-    end
-
-    return "size[10,10;]" ..
-        "real_coordinates[true]" ..
-        "dropdown[0.5,0.5;9,0.8;category;" .. cat_list .. ";" .. selected_category_index .. "]" ..
-        "scroll_container[0.5,1.5;8.5,8;scroll;vertical]" ..
-        table.concat(building_fs) ..
---        "textlist[0,0;8.5,15;buildingname;" .. textlist .. ";" .. selected_building .. "]" ..
-        "scroll_container_end[]" ..
-        "scrollbaroptions[]" ..
-        "scrollbar[9,1.5;0.5,7.5;vertical;scroll;0]" ..
-        "button_exit[0.5,9;9,0.8;back;Back]"
+    
 end
 
 minetest.register_on_player_receive_fields(function(player, f, fields)

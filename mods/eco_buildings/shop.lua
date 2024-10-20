@@ -2,6 +2,7 @@ local MP = minetest.get_modpath("eco_buildings")
 
 building_lib.register_building("eco_buildings:shop_1", {
 	catalog = MP .. "/schematics/shop_1.zip",
+	category = "shop",
 	conditions = {
 		{
 			["*"] = { empty = true },

@@ -16,7 +16,7 @@ local function get_fs()
         background9[0,0;20,10;panel_blue.png;true;20]
         bgcolor[;true]
 
-        dropdown[0.5,0.5;9,0.8;category;Streets,Plots;1]
+        dropdown[0.5,0.5;9,0.8;category;Streets,Plots,Terrain;1]
 
         textlist[0.5,1.5;9,8;buildingname;Street straight,Street all sides;2]
 

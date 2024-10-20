@@ -19,6 +19,7 @@ local plots = {
 for suffix, overrides in pairs(plots) do
     local def = {
         catalog = MP .. "/schematics/plot_" .. suffix .. ".zip",
+        category = "plot",
         conditions = {
             {
                 -- flat surface

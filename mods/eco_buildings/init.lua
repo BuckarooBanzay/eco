@@ -3,6 +3,7 @@ local MP = minetest.get_modpath("eco_buildings")
 eco_buildings = {}
 
 dofile(MP .. "/util/streetname.lua")
+dofile(MP .. "/categories.lua")
 dofile(MP .. "/randomizer.lua")
 dofile(MP .. "/conditions.lua")
 dofile(MP .. "/street.lua")
