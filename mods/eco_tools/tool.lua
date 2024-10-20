@@ -1,9 +1,88 @@
 local formname = "eco_placer_configure"
 
+local function get_tool_data(meta)
+    -- categories
+    local categories = eco_api.get_category_list()
+    local category_index = 1
+    local category = meta:get_string("category")
+    if category == "" then
+        -- default to first category
+        category = categories[1]
+    else
+        -- find out index
+        for i, c in ipairs(categories) do
+            if c == category then
+                category_index = i
+            end
+        end
+    end
+
+    -- buildings
+    local building_list = eco_api.get_buildings_in_category(category)
+    local buildingname_index = 1
+    local buildingname = meta:get_string("buildingname")
+    if buildingname == "" then
+        -- default to first building in category
+        buildingname = building_list[1].name
+    else
+        -- find out index
+        for i, def in ipairs(building_list) do
+            if def.name == buildingname then
+                buildingname_index = i
+            end
+        end
+    end
+
+    return {
+        category = category,
+        category_index = category_index,
+        buildingname = buildingname,
+        buildingname_index = buildingname_index
+    }
+end
+
 local function get_formspec(itemstack)
     local meta = itemstack:get_meta()
-    local selected_category = meta:get_string("category") or "_uncategorized"
-    
+    local data = get_tool_data(meta)
+
+    -- categories
+    local categories = eco_api.get_category_list()
+    local category_str = table.concat(categories, ",")
+
+    -- buildings
+    local building_list = eco_api.get_buildings_in_category(data.category)
+    local buildingname_list = {}
+    for _, building_def in ipairs(building_list) do
+        table.insert(buildingname_list, building_def.name)
+    end
+    local building_str = table.concat(buildingname_list, ",")
+
+    -- get building preview
+    local preview = building_lib.get_building_preview(data.buildingname)
+    local width = 8
+    local height = 4
+    local ratio = math.min(width/preview.width, height/preview.height)
+    height = preview.height * ratio
+    width = preview.width * ratio
+    local img_offset_x = (8 - width) / 2
+
+    return [[
+        size[20,10;]
+        real_coordinates[true]
+        background9[0,0;20,10;panel_blue.png;true;20]
+        bgcolor[;true]
+
+        dropdown[0.5,0.5;9,0.8;category;]] .. category_str .. [[;]] .. data.category_index .. [[]
+
+        textlist[0.5,1.5;9,8;buildingname;]] .. building_str .. [[;]] .. data.buildingname_index .. [[]
+
+        image[]] .. (11 + img_offset_x) .. [[,0;]] .. width .. "," .. height .. [[;[png:]] .. preview.png .. [[]
+
+        textarea[11,5;10,5;;;stuff
+        and things]
+
+        image_button_exit[11,8.7;8,1;buttonLong_grey.png;exit;Exit;true;false;buttonLong_grey_pressed.png]
+    ]]
 end
 
 minetest.register_on_player_receive_fields(function(player, f, fields)
@@ -17,15 +96,20 @@ minetest.register_on_player_receive_fields(function(player, f, fields)
         return
     end
 
+    local itemstack = player:get_wielded_item()
+    if itemstack:get_name() ~= "eco_tools:placer" then
+        return
+    end
+
+    local meta = itemstack:get_meta()
+    local data = get_tool_data(meta)
+
     if fields.buildingname then
         local parts = fields.buildingname:split(":")
         if parts[1] == "CHG" then
-            local itemstack = player:get_wielded_item()
-            local meta = itemstack:get_meta()
-            local selected_category = meta:get_string("category") or "_uncategorized"
 
             local selected = tonumber(parts[2])
-            local building_list = building_lib.get_buildings_by_category(selected_category)
+            local building_list = eco_api.get_buildings_in_category(data.category)
 
             local building = building_list[selected]
             if not building then
@@ -35,11 +119,12 @@ minetest.register_on_player_receive_fields(function(player, f, fields)
             meta:set_string("buildingname", building.name)
             meta:set_string("description", "Selected building: '" .. building.name .. "'")
             player:set_wielded_item(itemstack)
+            minetest.show_formspec(player:get_player_name(), formname, get_formspec(itemstack))
         end
     elseif fields.category then
-        local itemstack = player:get_wielded_item()
-        local meta = itemstack:get_meta()
+        local building_list = eco_api.get_buildings_in_category(fields.category)
         meta:set_string("category", fields.category)
+        meta:set_string("buildingname", building_list[1].name)
         player:set_wielded_item(itemstack)
         minetest.show_formspec(player:get_player_name(), formname, get_formspec(itemstack))
     end
