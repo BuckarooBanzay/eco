@@ -37,6 +37,7 @@ end
 
 building_lib.register_building("eco_buildings:street_slope", {
 	category = "street",
+	description = "Stone street slope",
 	tags = {"street", "slope"},
 	catalog = {
 		filename = MP .. "/schematics/street.zip",

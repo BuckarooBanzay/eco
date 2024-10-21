@@ -46,14 +46,18 @@ local function get_formspec(itemstack)
     local data = get_tool_data(meta)
 
     -- categories
-    local categories = eco_api.get_category_list()
-    local category_str = table.concat(categories, ",")
+    local categories = eco_api.get_categories()
+    local category_list = {}
+    for _, c in pairs(categories) do
+        table.insert(category_list, c.description)
+    end
+    local category_str = table.concat(category_list, ",")
 
     -- buildings
     local building_list = eco_api.get_buildings_in_category(data.category)
     local buildingname_list = {}
     for _, building_def in ipairs(building_list) do
-        table.insert(buildingname_list, building_def.name)
+        table.insert(buildingname_list, building_def.description or building_def.name)
     end
     local building_str = table.concat(buildingname_list, ",")
 
@@ -110,13 +114,22 @@ minetest.register_on_player_receive_fields(function(player, f, fields)
             end
 
             meta:set_string("buildingname", building.name)
-            meta:set_string("description", "Selected building: '" .. building.name .. "'")
+            meta:set_string("description", "Selected building: '" .. (building.description or building.name) .. "'")
             player:set_wielded_item(itemstack)
             minetest.show_formspec(player:get_player_name(), formname, get_formspec(itemstack))
         end
     elseif fields.category then
-        local building_list = eco_api.get_buildings_in_category(fields.category)
-        meta:set_string("category", fields.category)
+        local categories = eco_api.get_categories()
+        local category
+        for name, cat_def in pairs(categories) do
+            -- map from description to technical name
+            if not category or cat_def.description == fields.category then
+                category = name
+            end
+        end
+        local building_list = eco_api.get_buildings_in_category(category)
+
+        meta:set_string("category", category)
         meta:set_string("buildingname", building_list[1].name)
         player:set_wielded_item(itemstack)
         minetest.show_formspec(player:get_player_name(), formname, get_formspec(itemstack))

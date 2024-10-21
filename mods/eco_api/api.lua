@@ -17,6 +17,10 @@ function eco_api.get_category(name)
     return categories[name]
 end
 
+function eco_api.get_categories()
+    return categories
+end
+
 -- name -> list<building_def>
 local building_category_map = {}
 
@@ -37,7 +41,7 @@ minetest.register_on_mods_loaded(function()
     -- sort
     for _, list in pairs(building_category_map) do
         table.sort(list, function(b1, b2)
-            return b1.name < b2.name
+            return (b1.description or b1.name) < (b2.description or b2.name)
         end)
     end
 end)
