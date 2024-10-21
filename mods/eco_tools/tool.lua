@@ -66,23 +66,16 @@ local function get_formspec(itemstack)
     width = preview.width * ratio
     local img_offset_x = (8 - width) / 2
 
-    return [[
-        size[20,10;]
-        real_coordinates[true]
-        background9[0,0;20,10;panel_blue.png;true;20]
-        bgcolor[;true]
-
+    return eco_ui.formspec_primary(20, 10) .. [[
         dropdown[0.5,0.5;9,0.8;category;]] .. category_str .. [[;]] .. data.category_index .. [[]
 
         textlist[0.5,1.5;9,8;buildingname;]] .. building_str .. [[;]] .. data.buildingname_index .. [[]
 
-        image[]] .. (11 + img_offset_x) .. [[,0;]] .. width .. "," .. height .. [[;[png:]] .. preview.png .. [[]
+        image[]] .. (11 + img_offset_x) .. [[,1;]] .. width .. "," .. height .. [[;[png:]] .. preview.png .. [[]
 
-        textarea[11,5;10,5;;;stuff
+        textarea[11,6;10,5;;;stuff
         and things]
-
-        image_button_exit[11,8.7;8,1;buttonLong_grey.png;exit;Exit;true;false;buttonLong_grey_pressed.png]
-    ]]
+    ]] .. eco_ui.button_close(19, 0.1, 0.9, 0.9)
 end
 
 minetest.register_on_player_receive_fields(function(player, f, fields)
