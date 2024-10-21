@@ -4,10 +4,9 @@ local plots = {
     ["1x1"] = {
         markers = {
             {
-                texture = "building_lib_arrow.png",
-                position = {x=1.5, y=0.2, z=0.5},
-                rotation = {x=math.pi/2, y=0, z=math.pi/2},
-                size = {x=10, y=10}
+                type = "arrow",
+                pos = { x=1 },
+                rotation = "x+"
             }
         }
     },
@@ -20,6 +19,7 @@ local plots = {
 for suffix, overrides in pairs(plots) do
     local def = {
         catalog = MP .. "/schematics/plot_" .. suffix .. ".zip",
+        category = "plot",
         conditions = {
             {
                 -- flat surface

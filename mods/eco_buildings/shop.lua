@@ -2,6 +2,7 @@ local MP = minetest.get_modpath("eco_buildings")
 
 building_lib.register_building("eco_buildings:shop_1", {
 	catalog = MP .. "/schematics/shop_1.zip",
+	category = "shop",
 	conditions = {
 		{
 			["*"] = { empty = true },
@@ -10,10 +11,9 @@ building_lib.register_building("eco_buildings:shop_1", {
 	},
 	markers = {
 		{
-			texture = "building_lib_arrow.png",
-			position = {x=1, y=0.2, z=2.5},
-			rotation = {x=math.pi/2, y=0, z=math.pi},
-			size = {x=10, y=10}
+			type = "arrow",
+			pos = { x=0.5, z=2 },
+			rotation = "z+"
 		}
 	},
 	replace = eco_buildings.replacement_randomizer({

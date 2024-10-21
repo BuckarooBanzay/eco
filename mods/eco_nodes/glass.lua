@@ -5,7 +5,8 @@ eco_nodes.register("clean_glass", {
     use_texture_alpha = "clip",
     sunlight_propagates = true,
     paramtype = "light",
-    moreblocks = true
+    moreblocks = true,
+    mapcolor = { r=247, g=247, b=247, a=50 }
 })
 
 eco_nodes.register("framed_glass", {
@@ -18,5 +19,6 @@ eco_nodes.register("framed_glass", {
     use_texture_alpha = "blend",
     sunlight_propagates = true,
     paramtype = "light",
-    unifieddyes = true
+    unifieddyes = true,
+    mapcolor = { r=247, g=247, b=247, a=50 }
 })

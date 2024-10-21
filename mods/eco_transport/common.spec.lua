@@ -1,0 +1,141 @@
+
+mtt.register("rotate_routes", function(callback)
+    local routes = {
+        main = {
+            type = "container-3",
+            points = {
+                { x=-0.5, y=0, z=0 },
+                { x=15.5, y=0, z=0 }
+            }
+        }
+    }
+
+    local building_size = { x=1, y=1, z=1 }
+
+    -- 90°
+    local rotated_routes = eco_transport.rotate_routes(routes, building_size, 90)
+    assert(rotated_routes.main.type == "container-3")
+    assert(vector.equals(rotated_routes.main.points[1], { x=0, y=0, z=15.5 }))
+    assert(vector.equals(rotated_routes.main.points[2], { x=0, y=0, z=-0.5 }))
+
+    routes = {
+        main = {
+            type = "container-3",
+            points = {
+                { x=4, y=3, z=15.5 },
+                { x=4, y=3, z=-0.5 }
+            }
+        }
+    }
+
+    -- 180°
+    rotated_routes = eco_transport.rotate_routes(routes, building_size, 180)
+    assert(rotated_routes.main.type == "container-3")
+    assert(vector.equals(rotated_routes.main.points[1], { x=11, y=3, z=-0.5 }))
+    assert(vector.equals(rotated_routes.main.points[2], { x=11, y=3, z=15.5 }))
+
+    callback()
+end)
+
+mtt.register("get_connected_route_dir", function(callback)
+    -- simple one-mapblock direction
+    local route = {
+        points = {
+            { x=-0.5, y=0, z=0 },
+            { x=15.5, y=0, z=0 }
+        }
+    }
+    local building_size = { x=1, y=1, z=1 }
+    local dir = eco_transport.get_connected_route_dir(route, building_size)
+    assert(vector.equals(dir, { x=1, y=0, z=0 }))
+
+    -- multi-mapblock building
+    route = {
+        points = {
+            { x=-0.5, y=0, z=0 },
+            { x=15.5, y=20, z=0 }
+        }
+    }
+    building_size = { x=1, y=2, z=1 }
+    dir = eco_transport.get_connected_route_dir(route, building_size)
+    assert(vector.equals(dir, { x=1, y=1, z=0 }))
+
+    callback()
+end)
+
+
+mtt.register("find_connected_route", function(callback)
+    local target_routes = {
+        main = {
+            type = "container-3",
+            points = {
+                { x=-0.5, y=0, z=0 },
+                { x=15.5, y=0, z=0 }
+            }
+        }
+    }
+
+    local target_offset = { x=1, y=0, z=0 }
+
+    local source_route = {
+        type = "container-3",
+        points = {
+            { x=-0.5, y=0, z=0 },
+            { x=15.5, y=0, z=0 }
+        }
+    }
+
+    local connected_route = eco_transport.find_connected_route(source_route, target_routes, target_offset)
+    assert(connected_route == "main")
+
+    callback()
+end)
+
+mtt.register("get_route_length", function(callback)
+    local route = {
+        type = "container-3",
+        points = {
+            { x=-0.5, y=0, z=0 },
+            { x=15.5, y=0, z=0 }
+        }
+    }
+    local length = eco_transport.get_route_length(route)
+    assert(length == 16)
+    callback()
+end)
+
+mtt.register("get_point_in_route", function(callback)
+    local route = {
+        type = "container-3",
+        points = {
+            { x=-0.5, y=0, z=0 },
+            { x=15.5, y=0, z=0 }
+        }
+    }
+    local p, v, segment_num = eco_transport.get_point_in_route(route, 0) -- start
+    assert(vector.equals(p, route.points[1]))
+    assert(vector.equals(v, { x=1, y=0, z=0 }))
+    assert(segment_num == 1)
+
+    p, v, segment_num = eco_transport.get_point_in_route(route, 16) -- end
+    assert(vector.equals(p, route.points[2]))
+    assert(vector.equals(v, { x=0, y=0, z=0 }))
+    assert(segment_num == 2)
+
+    p, v, segment_num = eco_transport.get_point_in_route(route, 32) -- over the end
+    assert(vector.equals(p, route.points[2]))
+    assert(vector.equals(v, { x=0, y=0, z=0 }))
+    assert(segment_num == 2)
+
+    p, v, segment_num = eco_transport.get_point_in_route(route, 1)
+    assert(vector.equals(p, { x=0.5, y=0, z=0 }))
+    assert(vector.equals(v, { x=1, y=0, z=0 }))
+    assert(segment_num == 1)
+
+    p, v, segment_num = eco_transport.get_point_in_route(route, 10)
+    assert(vector.equals(p, { x=9.5, y=0, z=0 }))
+    assert(vector.equals(v, { x=1, y=0, z=0 }))
+    assert(segment_num == 1)
+
+    callback()
+end)

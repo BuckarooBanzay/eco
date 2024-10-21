@@ -15,6 +15,7 @@ local box = {
     }
 }
 
+-- containers in node form
 for name, entry in pairs(colors) do
     minetest.register_node("eco_transport:container_" .. name, {
         description = "Container",
@@ -36,3 +37,24 @@ for name, entry in pairs(colors) do
         }
     })
 end
+
+local selectionbox = {
+    -1.5, -1.5, -1.5,
+    1.5, 1.5, 1.5
+}
+
+-- transport container
+eco_transport.register_type("container_3", {
+    initial_properties = {
+        visual = "mesh",
+        mesh = "eco_container.obj",
+        physical = false,
+		static_save = false,
+		collisionbox = selectionbox,
+        selectionbox = selectionbox,
+        visual_size = { x=10, y=10, z=10 },
+        textures = {
+            "eco_container_top.png^[colorize:blue:150"
+        }
+    }
+})

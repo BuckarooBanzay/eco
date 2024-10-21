@@ -1,5 +1,5 @@
 
-building_lib.register_on("placed", function(e)
+building_lib.register_on("placed", function()--e)
     -- TODO: check if building has connections
     -- TODO: check each connection for networks
     -- TODO: merge networks if needed

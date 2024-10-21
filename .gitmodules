@@ -10,9 +10,6 @@
 [submodule "mods/mtzip"]
 	path = mods/mtzip
 	url = https://github.com/BuckarooBanzay/mtzip
-[submodule "mods/mtt"]
-	path = mods/mtt
-	url = https://github.com/buckaroobanzay/mtt
 [submodule "mods/street_signs"]
 	path = mods/street_signs
 	url = https://github.com/mt-mods/street_signs
@@ -34,3 +31,6 @@
 [submodule "mods/wield_events"]
 	path = mods/wield_events
 	url = https://github.com/mt-mods/wield_events
+[submodule "mods/isogen"]
+	path = mods/isogen
+	url = https://github.com/BuckarooBanzay/isogen/

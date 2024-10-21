@@ -10,10 +10,9 @@ building_lib.register_building("eco_buildings:house_2", {
 	},
 	markers = {
 		{
-			texture = "building_lib_arrow.png",
-			position = {x=1.5, y=0.2, z=2.5},
-			rotation = {x=math.pi/2, y=0, z=math.pi},
-			size = {x=10, y=10}
+			type = "arrow",
+			pos = { x=1, z=3 },
+			rotation = "z+"
 		}
 	},
 	replace = eco_buildings.replacement_randomizer({

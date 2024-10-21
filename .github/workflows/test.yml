@@ -1,19 +1,16 @@
 name: test
-
 on: [push, pull_request]
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-    strategy:
-      matrix:
-        ENGINE_VERSION: [5.4.0, 5.5.0, latest]
-
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v2
       with:
-        submodules: 'recursive'
-    - name: test
-      run: docker-compose up --exit-code-from sut
+        submodules: 'true'
+    - uses: buckaroobanzay/mtt@main
+      with:
+        test_mode: game
+        mtt_filter: "eco_transport"
+        enable_coverage: "true"
+    - name: Coveralls
+      uses: coverallsapp/github-action@v1
