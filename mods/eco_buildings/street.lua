@@ -279,13 +279,6 @@ building_lib.register_autoplacer("street", {
 				["(-1,0,0)"] = { group = "street" }
 			}
 		},{
-			name = "eco_buildings:street_straight",
-			rotations = {0, 90},
-			conditions = {
-				["(1,0,0)"] = { group = "street" },
-				["(-1,0,0)"] = { group = "street" }
-			}
-		},{
 			name = "eco_buildings:street_tunnel",
 			rotations = {0, 90, 180, 270},
 			conditions = {
@@ -298,6 +291,18 @@ building_lib.register_autoplacer("street", {
 			conditions = {
 				["(0,0,-1)"] = { group = "street" },
 				["(0,1,1)"] = { group = "street" }
+			}
+		},{
+			name = "eco_buildings:street_straight",
+			rotations = {0, 90},
+			conditions = {
+				["(-1,0,0)"] = { group = "street" }
+			}
+		},{
+			name = "eco_buildings:street_straight",
+			rotations = {0, 90},
+			conditions = {
+				["(1,0,0)"] = { group = "street" }
 			}
 		}
 	}
