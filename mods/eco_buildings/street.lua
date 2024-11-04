@@ -97,6 +97,7 @@ building_lib.register_building("eco_buildings:street_tunnel", {
 			["*"] = { group = "support" }
 		}
 	},
+	ignore_placed_rotation = true,
 	groups = {
 		street = true,
 		street_gravel = true,
