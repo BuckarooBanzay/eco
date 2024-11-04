@@ -67,7 +67,7 @@ building_lib.register_building("eco_buildings:street_slope", {
 	overview = function(rel_mapblock_pos)
 		if vector.equals(rel_mapblock_pos, {x=0,y=0,z=0}) then
 			-- only show lower slope part in overview
-			return { name="eco:slope_gravel", param2 = 3 }
+			return { name="eco:slope_gravel", param2 = 0 }
 		end
 	end
 })
@@ -296,8 +296,8 @@ building_lib.register_autoplacer("street", {
 			name = "eco_buildings:street_slope",
 			rotations = {0, 90, 180, 270},
 			conditions = {
-				["(-1,0,0)"] = { group = "street" },
-				["(1,1,0)"] = { group = "street" }
+				["(0,0,-1)"] = { group = "street" },
+				["(0,1,1)"] = { group = "street" }
 			}
 		}
 	}
