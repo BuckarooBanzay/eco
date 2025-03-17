@@ -4,8 +4,7 @@ building_lib.register_building("eco_buildings:forestry", {
 	catalog = MP .. "/schematics/forestry.zip",
 	conditions = {
 		{
-			["*"] = { empty_or_group = "plot" },
-			["base"] = { group = "plot"},
+			["*"] = { empty = true },
 			["underground"] = { group = "flat_surface"}
 		}
 	},
