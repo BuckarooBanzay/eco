@@ -39,6 +39,14 @@ local nodes = {
         tiles = {"eco_silver_sandstone_brick.png"},
         sounds = eco_nodes.node_sound_stone(),
         unifieddyes = true
+    },
+    ["meselamp"] = {
+        tiles = {"eco_meselamp.png"},
+        sounds = eco_nodes.node_sound_glass(),
+        sunlight_propagates = true,
+		paramtype = "light",
+        light_source = minetest.LIGHT_MAX,
+        unifieddyes = true
     }
 }
 
