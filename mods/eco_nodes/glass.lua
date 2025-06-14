@@ -6,5 +6,6 @@ eco_nodes.register("clean_glass", {
     sunlight_propagates = true,
     paramtype = "light",
     moreblocks = true,
-    mapcolor = { r=247, g=247, b=247, a=50 }
+    mapcolor = { r=247, g=247, b=247, a=50 },
+    sounds = eco_nodes.node_sound_glass()
 })

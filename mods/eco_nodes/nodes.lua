@@ -46,6 +46,14 @@ local nodes = {
         sunlight_propagates = true,
 		paramtype = "light",
         light_source = minetest.LIGHT_MAX,
+        moreblocks = true
+    },
+    ["meselamp_colored"] = {
+        tiles = {"eco_meselamp.png"},
+        sounds = eco_nodes.node_sound_glass(),
+        sunlight_propagates = true,
+		paramtype = "light",
+        light_source = minetest.LIGHT_MAX,
         unifieddyes = true
     }
 }
