@@ -34,3 +34,6 @@
 [submodule "mods/isogen"]
 	path = mods/isogen
 	url = https://github.com/BuckarooBanzay/isogen/
+[submodule "mods/vizlib"]
+	path = mods/vizlib
+	url = https://github.com/OgelGames/vizlib
