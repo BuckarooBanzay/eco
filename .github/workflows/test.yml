@@ -10,7 +10,7 @@ jobs:
     - uses: buckaroobanzay/mtt@main
       with:
         test_mode: game
-        mtt_filter: "eco_mapgen"
+        mtt_filter: "eco_api,eco_mapgen"
         enable_coverage: "true"
     - name: Coveralls
       uses: coverallsapp/github-action@v1
