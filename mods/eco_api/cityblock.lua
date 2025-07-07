@@ -31,47 +31,55 @@ function eco_api.get_cityblock_bounds(mapblock_pos)
 	return min, max
 end
 
-local player_shapes = {}
-local player_cityblock_positions = {}
-
-local function worker()
-    for _, player in ipairs(minetest.get_connected_players()) do
-        local playername = player:get_player_name()
+minetest.register_chatcommand("cityblock", {
+    func = function(playername)
+        local player = minetest.get_player_by_name(playername)
+        if not player then
+            return true, "no such player"
+        end
 
         local pos = player:get_pos()
         local mapblock_pos = mapblock_lib.get_mapblock(pos)
+
         local cityblock_pos = eco_api.get_cityblock_pos(mapblock_pos)
 
-        if player_cityblock_positions[playername] ~= minetest.pos_to_string(cityblock_pos) then
-            -- position changed
-            player_cityblock_positions[playername] = minetest.pos_to_string(cityblock_pos)
+        return true, string.format("Current cityblock: %s", minetest.pos_to_string(cityblock_pos))
+    end
+})
 
-            if player_shapes[playername] then
-                -- remove previous shape
-                vizlib.erase_shape(player_shapes[playername])
-            end
+-- preview boundaries in overview
 
-            -- create new shape
-            local mapblock_min, mapblock_max = eco_api.get_cityblock_bounds(mapblock_pos)
-            local min_pos = mapblock_lib.get_mapblock_bounds_from_mapblock(mapblock_min)
-            local _, max_pos = mapblock_lib.get_mapblock_bounds_from_mapblock(mapblock_max)
+local function check_player(player)
+    local pos = player:get_pos()
 
-            print(dump({
-                playername = playername,
-                min_pos = min_pos,
-                max_pos = max_pos
-            }))
-
-            player_shapes[playername] = vizlib.draw_area(min_pos, max_pos, {
-                infinite = true,
-                color = "#00FF00",
-                player = playername
-            })
-
-        end
+    if not building_lib_overview.is_in_overview(pos) then
+        return
     end
 
-    minetest.after(10, worker)
+    local mapblock_pos = building_lib_overview.overview_to_mapblock_pos(pos)
+    local mapblock_min, mapblock_max = eco_api.get_cityblock_bounds(mapblock_pos)
+    local pos1 = building_lib_overview.mapblock_pos_to_overview(mapblock_min)
+    local pos2 = building_lib_overview.mapblock_pos_to_overview(mapblock_max)
+
+    pos1 = vector.subtract(pos1, 0.5)
+    pos2 = vector.add(pos2, 0.5)
+
+    -- create shape
+    vizlib.draw_area(pos1, pos2, {
+        time = 2,
+        color = "#FF0000",
+        player = player:get_player_name()
+    })
+end
+
+minetest.register_on_joinplayer(check_player)
+
+local function worker()
+    for _, player in ipairs(minetest.get_connected_players()) do
+        check_player(player)
+    end
+
+    minetest.after(1, worker)
 end
 
 worker()

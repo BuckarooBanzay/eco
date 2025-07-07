@@ -6,5 +6,5 @@ globals = {
 
 read_globals = {
 	-- mods
-	"building_lib", "mapblock_lib", "mtt", "vizlib"
+	"building_lib", "building_lib_overview", "mapblock_lib", "mtt", "vizlib"
 }
