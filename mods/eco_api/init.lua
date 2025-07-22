@@ -6,6 +6,7 @@ eco_api = {
 
 dofile(MP .. "/api.lua")
 dofile(MP .. "/cityblock.lua")
+dofile(MP .. "/stats.lua")
 
 if minetest.get_modpath("mtt") and mtt.enabled then
     dofile(MP .. "/cityblock.spec.lua")
