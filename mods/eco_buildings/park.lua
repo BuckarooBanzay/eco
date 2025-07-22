@@ -12,7 +12,7 @@ building_lib.register_building("eco_buildings:park", {
 		park = true
 	},
 	stats = {
-		noise = -0.5
+		noise = -1
 	},
 	overview = "eco:slab_grass_quarter"
 })

@@ -17,6 +17,10 @@ building_lib.register_building("eco_buildings:stone_quarry", {
 	groups = {
 		quarry = true
 	},
+	stats = {
+		noise = 1,
+		industry = 1
+	},
 	overview = function(rel_mapblock_pos)
 		if rel_mapblock_pos.y == 0 then
 			return { name="eco:slab_cobble_quarter" }

@@ -93,6 +93,9 @@ building_lib.register_building("eco_buildings:house_2", {
 	groups = {
 		house = true
 	},
+	stats = {
+		residents = 1
+	},
 	overview = function(_, event)
 		local nodename = event.replacements["eco:slab_baked_clay_white"] or "eco:slab_baked_clay_white"
 		return { name = nodename }

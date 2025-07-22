@@ -11,5 +11,9 @@ building_lib.register_building("eco_buildings:forestry", {
 	groups = {
 		forest = true
 	},
+	stats = {
+		noise = 1,
+		industry = 1
+	},
 	overview = "eco:pine_wood"
 })
