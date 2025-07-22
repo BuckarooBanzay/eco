@@ -6,6 +6,4 @@ cd ../eco_transport && luacheck .
 cd ../eco_mapgen && luacheck .
 cd ../eco_nodes && luacheck .
 cd ../building_lib && luacheck .
-cd ../building_lib_influence && luacheck .
-cd ../building_lib_interconnect  && luacheck .
 cd ../building_lib_overview && luacheck .

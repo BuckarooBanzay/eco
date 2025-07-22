@@ -8,11 +8,8 @@ local disable_orientation = {
 	["street_signs:sign_basic"] = true
 }
 
-local street_influence = {
-	noise = {
-		value = 0.01, -- only affects current superblock
-		reduction = 1
-	}
+local street_stats = {
+	noise = 0.1
 }
 
 -- no-op per default
@@ -44,7 +41,7 @@ building_lib.register_building("eco_buildings:street_slope", {
 		offset = {x=3, y=0, z=1},
 		size = {x=1, y=2, z=1}
 	},
-	influence = street_influence,
+	stats = street_stats,
 	disable_orientation = disable_orientation,
 	conditions = {
 		{
@@ -125,7 +122,7 @@ building_lib.register_building("eco_buildings:street_straight", {
 		offset = {x=1, y=0, z=0},
 		size = {x=1, y=1, z=1}
 	},
-	influence = street_influence,
+	stats = street_stats,
 	markers = {
 		{
 			type = "arrow",
@@ -155,7 +152,7 @@ building_lib.register_building("eco_buildings:street_all_sides", {
 		offset = {x=0, y=0, z=0},
 		size = {x=1, y=1, z=1}
 	},
-	influence = street_influence,
+	stats = street_stats,
 	markers = {
 		{
 			type = "arrow",
@@ -193,7 +190,7 @@ building_lib.register_building("eco_buildings:street_t", {
 		offset = {x=2, y=0, z=0},
 		size = {x=1, y=1, z=1}
 	},
-	influence = street_influence,
+	stats = street_stats,
 	markers = {
 		{
 			type = "arrow",
@@ -228,7 +225,7 @@ building_lib.register_building("eco_buildings:street_corner", {
 		offset = {x=3, y=0, z=0},
 		size = {x=1, y=1, z=1}
 	},
-	influence = street_influence,
+	stats = street_stats,
 	markers = {
 		{
 			type = "arrow",
