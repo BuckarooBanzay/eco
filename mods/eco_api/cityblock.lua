@@ -82,5 +82,4 @@ local function worker()
     minetest.after(1, worker)
 end
 
-worker()
-
+minetest.after(1, worker)
