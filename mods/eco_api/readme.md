@@ -1,6 +1,6 @@
 
 
-# Cityblock design
+# superblock design
 
 Get/Set:
 
@@ -8,13 +8,13 @@ Get/Set:
 local mapblock_pos = { x=0, y=10, z=0 }
 
 -- read
-local cityblock = eco_api.get_cityblock(mapblock_pos)
+local superblock = eco_api.get_superblock(mapblock_pos)
 
 -- modify
-cityblock.whatever = 1234
+superblock.whatever = 1234
 
 -- write
-eco_api.set_cityblock(mapblock_pos, cityblock)
+eco_api.set_superblock(mapblock_pos, superblock)
 
 ```
 
