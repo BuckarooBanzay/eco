@@ -1,11 +1,10 @@
 local MP = core.get_modpath(core.get_current_modname())
 
-eco_api = {
-    store = core.get_mod_storage()
-}
+eco_api = {}
 
-dofile(MP .. "/api.lua")
+-- placement types
+dofile(MP .. "/placement.lua")
+dofile(MP .. "/placements/mapgen_v1.lua")
+
+-- template api
 dofile(MP .. "/template.lua")
-
-if core.get_modpath("mtt") and mtt.enabled then
-end
