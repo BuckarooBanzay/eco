@@ -1,8 +1,8 @@
 
-mtt.register("eco_mapgen building registration", function(callback)
-    local building = eco_api.get_building("eco_mapgen_terrain_simple")
-    assert(building)
-    assert(building.manifest)
-    assert(building.zip_file_path)
+mtt.register("eco_mapgen template registration", function(callback)
+    local template = eco_api.get_template("eco_mapgen_terrain_simple")
+    assert(template)
+    assert(template.manifest)
+    assert(template.zip_file_path)
     callback()
 end)

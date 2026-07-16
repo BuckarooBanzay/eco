@@ -1,5 +1,5 @@
 
-# building types
+# template types
 
 ## `mapgen`
 

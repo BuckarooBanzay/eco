@@ -5,7 +5,7 @@ eco_api = {
 }
 
 dofile(MP .. "/api.lua")
-dofile(MP .. "/building.lua")
+dofile(MP .. "/template.lua")
 
 if core.get_modpath("mtt") and mtt.enabled then
 end
