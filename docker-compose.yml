@@ -7,4 +7,4 @@ services:
     environment:
      INPUT_TEST_MODE: "game"
      INPUT_MAPGEN: "singlenode"
-     INPUT_MTT_FILTER: "eco_api"
+     INPUT_MTT_FILTER: "eco_api,eco_editor,eco_mapgen"

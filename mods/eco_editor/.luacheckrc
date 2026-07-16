@@ -1,5 +1,5 @@
 globals = {
-	"eco_api"
+	"eco_editor"
 }
 
 read_globals = {
@@ -10,5 +10,5 @@ read_globals = {
 	"VoxelArea", "AreaStore",
 	
 	-- mods
-	"mapblock_lib", "mtt"
+	"eco_api", "mapblock_lib", "mtt"
 }
