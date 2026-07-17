@@ -3,4 +3,6 @@ eco_api.register_template_path(MP .. "/templates")
 
 eco_editor = {}
 
+dofile(MP .. "/util.lua")
 dofile(MP .. "/edit.lua")
+dofile(MP .. "/buttons.lua")

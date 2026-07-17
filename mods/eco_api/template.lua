@@ -28,7 +28,6 @@ function eco_api.register_template_path(path)
     assert(core.path_exists(path), "template-path exists: '" .. path .. "'")
     -- register all templates in path
     for _, filename in ipairs(core.get_dir_list(path, false)) do
-        print(filename)
         local index = string.find(filename, "[.]json")
         if index then
             local prefix = string.sub(filename, 1, index-1)
@@ -48,9 +47,8 @@ end
 
 -- create and register global template path last (overrides any previously defined template)
 core.register_on_mods_loaded(function()
-    local world_template_path = core.get_worldpath() .. "/templates"
-    core.mkdir(world_template_path)
-    eco_api.register_template_path(world_template_path)
+    core.mkdir(eco_api.world_template_path)
+    eco_api.register_template_path(eco_api.world_template_path)
 end)
 
 function eco_api.get_template(name)

@@ -1,6 +1,8 @@
 local MP = core.get_modpath(core.get_current_modname())
 
-eco_api = {}
+eco_api = {
+    world_template_path = core.get_worldpath() .. "/templates"
+}
 
 -- placement types
 dofile(MP .. "/placement.lua")
