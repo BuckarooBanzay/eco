@@ -24,8 +24,11 @@ local function create_template(manifest, zip_file_path)
     return template
 end
 
+local template_paths = {}
+
 function eco_api.register_template_path(path)
     assert(core.path_exists(path), "template-path exists: '" .. path .. "'")
+    table.insert(template_paths, path)
     -- register all templates in path
     for _, filename in ipairs(core.get_dir_list(path, false)) do
         local index = string.find(filename, "[.]json")
@@ -45,6 +48,12 @@ function eco_api.register_template_path(path)
     end
 end
 
+function eco_api.reload_template_paths()
+    for _, path in ipairs(template_paths) do
+        eco_api.register_template_path(path)
+    end
+end
+
 -- create and register global template path last (overrides any previously defined template)
 core.register_on_mods_loaded(function()
     core.mkdir(eco_api.world_template_path)
@@ -53,4 +62,16 @@ end)
 
 function eco_api.get_template(name)
     return templates[name]
+end
+
+function eco_api.create_new_template(template_name)
+    local manifest = {
+        placement = "plain"
+    }
+    local zip_file_path = eco_api.world_template_path .. "/" .. template_name .. ".zip"
+
+    local template = create_template(manifest, zip_file_path)
+    templates[template_name] = template
+
+    return template
 end

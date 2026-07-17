@@ -18,14 +18,15 @@ core.register_node("eco_editor:button_save", {
         local mapblock_pos1 = vector.add(mapblock_pos, 1)
         local mapblock_pos2 = vector.add(mapblock_pos1, vector.add(template_size, -1))
 
-        mapblock_lib.create_catalog(path_prefix .. ".zip", mapblock_pos1, mapblock_pos2, {
-            callback = function()
-                -- reload templates from world path
-                eco_api.register_template_path(eco_api.world_template_path)
-
-                core.chat_send_player(player:get_player_name(), "Template saved in '" .. path_prefix .. "'")
-            end
-        })
+        local options = {
+            delay = 0
+        }
+        core.chat_send_player(player:get_player_name(), "Starting to save template '" .. template_name .. "'")
+        mapblock_lib.create_catalog(path_prefix .. ".zip", mapblock_pos1, mapblock_pos2, options):next(function()
+            -- reload templates from world path
+            eco_api.register_template_path(eco_api.world_template_path)
+            core.chat_send_player(player:get_player_name(), "Template saved in '" .. path_prefix .. "'")
+        end)
 
         core.safe_file_write(path_prefix .. ".json", core.write_json(template.manifest))
     end
@@ -37,13 +38,13 @@ core.register_node("eco_editor:button_exit", {
     on_punch = function(pos)
         local meta = core.get_meta(pos)
 
-        local mapblock_pos = core.string_to_pos(meta:get_string("origin_mapblock_pos"))
+        local mapblock_pos1 = core.string_to_pos(meta:get_string("origin_mapblock_pos"))
         local template_size = core.string_to_pos(meta:get_string("template_size"))
 
-        mapblock_lib.for_each(
-            mapblock_pos,
-            vector.add(mapblock_pos, vector.add(template_size, 1)),
-            mapblock_lib.clear_mapblock
-        )
+        local mapblock_pos2 = vector.add(mapblock_pos1, vector.add(template_size, 1))
+
+        for mapblock_pos in mapblock_lib.pos_iterator(mapblock_pos1, mapblock_pos2) do
+            mapblock_lib.clear_mapblock(mapblock_pos)
+        end
     end
 })
