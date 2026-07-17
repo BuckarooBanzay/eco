@@ -9,10 +9,10 @@ local function read_json(file)
     return core.parse_json(content)
 end
 
-local function create_template(manifest, zip_file_path)
+local function create_template(manifest, mapblocks_path)
     local template = {
         manifest = manifest,
-        zip_file_path = zip_file_path
+        mapblocks_path = mapblocks_path
     }
 
     -- place template in-world with selected placement engine
@@ -34,16 +34,16 @@ function eco_api.register_template_path(path)
         local index = string.find(filename, "[.]json")
         if index then
             local prefix = string.sub(filename, 1, index-1)
-            local zip_file_path = path .. "/" .. prefix .. ".zip"
+            local mapblocks_path = path .. "/" .. prefix .. ".zip"
             local json_file_path = path .. "/" .. prefix .. ".json"
 
-            assert(core.path_exists(zip_file_path), "zip file exists '" .. zip_file_path .. "'")
+            assert(core.path_exists(mapblocks_path), "zip file exists '" .. mapblocks_path .. "'")
 
             local manifest = read_json(json_file_path)
             assert(manifest, "manifest is readable: '" .. json_file_path .. "'")
             assert(eco_api.get_placement(manifest.placement), "placement exists: '" .. manifest.placement .. "'")
 
-            templates[prefix] = create_template(manifest, zip_file_path)
+            templates[prefix] = create_template(manifest, mapblocks_path)
         end
     end
 end
@@ -68,9 +68,9 @@ function eco_api.create_new_template(template_name)
     local manifest = {
         placement = "plain"
     }
-    local zip_file_path = eco_api.world_template_path .. "/" .. template_name .. ".zip"
+    local mapblocks_path = eco_api.world_template_path .. "/" .. template_name .. ".zip"
 
-    local template = create_template(manifest, zip_file_path)
+    local template = create_template(manifest, mapblocks_path)
     templates[template_name] = template
 
     return template

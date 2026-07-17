@@ -7,7 +7,7 @@ local function create_editor(playername, templatename)
 
     -- local template to edit
     local template = eco_api.get_template(templatename)
-    local catalog, err = mapblock_lib.get_catalog(template.zip_file_path)
+    local catalog, err = mapblock_lib.get_catalog(template.mapblocks_path)
     if err then
         -- something went wrong
         return true, "Error reading zip catalog: " .. err
@@ -96,7 +96,7 @@ core.register_chatcommand("eco_create", {
         local template = eco_api.create_new_template(template_name)
 
         -- create stub zipfile
-        mapblock_lib.create_empty_catalog(template.zip_file_path, size)
+        mapblock_lib.create_empty_catalog(template.mapblocks_path, size)
 
         -- start editor
         create_editor(name, template_name)

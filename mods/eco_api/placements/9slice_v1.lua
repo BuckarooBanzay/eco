@@ -29,7 +29,7 @@ end
 
 eco_api.register_placement("9slice_v1", {
     place = function(template, mapblock_pos, options)
-        local catalog, err = mapblock_lib.get_catalog(template.zip_file_path)
+        local catalog, err = mapblock_lib.get_catalog(template.mapblocks_path)
         if err then
             -- something went wrong
             return true, "Error reading zip catalog: " .. err
