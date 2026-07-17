@@ -198,7 +198,7 @@ eco_api.register_placement("9slice_v1", {
             ))
 
             if catalog:has_mapblock({x=1, y=1, z=1}) then
-              for yo = 2,options.size.y-2 do
+              for yo = 1,options.size.y-2 do
                 assert(catalog:deserialize(
                   {x=1, y=1, z=1},
                   vector.add(mapblock_pos, {x=xo,y=yo,z=zo})
