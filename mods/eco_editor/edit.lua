@@ -12,14 +12,22 @@ core.register_chatcommand("eco_edit", {
         local pos = player:get_pos()
         local mapblock_pos = mapblock_lib.get_mapblock(pos)
 
+        -- local template to edit
         local catalog, err = mapblock_lib.get_catalog(template.zip_file_path)
         if err then
             -- something went wrong
             return true, "Error reading zip catalog: " .. err
         end
 
+        -- TODO: place editor
+        local editor_template = assert(eco_api.get_template("editor"))
+        editor_template.place(mapblock_pos, {
+            size = vector.add(catalog:get_size(), 2)
+        })
+
+        -- place template to edit (offset by +1 in every axis)
         local _
-        _, err = catalog:deserialize_all(mapblock_pos, {
+        _, err = catalog:deserialize_all(vector.add(mapblock_pos, 1), {
             callback = function()
                 core.chat_send_player(name, "Template successfully read")
             end,
@@ -31,7 +39,6 @@ core.register_chatcommand("eco_edit", {
         if err then
             return true, "Deserialize failed: " .. err
         end
-        -- TODO: editor stuff
     end
 })
 

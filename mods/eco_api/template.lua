@@ -16,10 +16,9 @@ local function create_template(manifest, zip_file_path)
     }
 
     -- place template in-world with selected placement engine
-    -- TODO: options
-    function template.place(mapblock_pos)
+    function template.place(mapblock_pos, options)
         local placement = eco_api.get_placement(manifest.placement)
-        return placement.place(template, mapblock_pos)
+        return placement.place(template, mapblock_pos, options)
     end
 
     return template
