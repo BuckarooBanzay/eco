@@ -19,7 +19,11 @@ core.register_node("eco_editor:button_save", {
         local mapblock_pos2 = vector.add(mapblock_pos1, vector.add(template_size, -1))
 
         local options = {
-            delay = 0
+            delay = 0,
+            progress_callback = function(p)
+                meta = core.get_meta(pos)
+                meta:set_string("infotext", "Saving: " .. math.floor(p*100) .. "%")
+            end
         }
         core.chat_send_player(player:get_player_name(), "Starting to save template '" .. template_name .. "'")
         local f = io.open(zip_filename, "wb")
@@ -36,6 +40,8 @@ core.register_node("eco_editor:button_save", {
             eco_api.register_template_path(eco_api.world_template_path)
 
             core.chat_send_player(player:get_player_name(), "Template saved in '" .. zip_filename .. "'")
+            meta = core.get_meta(pos)
+            meta:set_string("infotext", "")
         end)
     end
 })
