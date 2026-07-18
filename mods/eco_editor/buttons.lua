@@ -13,7 +13,7 @@ core.register_node("eco_editor:button_save", {
 
         local template = assert(eco_api.get_template(template_name))
 
-        local path_prefix = eco_api.world_template_path .. "/" .. template_name
+        local zip_filename = eco_api.world_template_path .. "/" .. template_name .. ".zip"
 
         local mapblock_pos1 = vector.add(mapblock_pos, 1)
         local mapblock_pos2 = vector.add(mapblock_pos1, vector.add(template_size, -1))
@@ -22,13 +22,21 @@ core.register_node("eco_editor:button_save", {
             delay = 0
         }
         core.chat_send_player(player:get_player_name(), "Starting to save template '" .. template_name .. "'")
-        mapblock_lib.create_catalog(path_prefix .. ".zip", mapblock_pos1, mapblock_pos2, options):next(function()
+        local f = io.open(zip_filename, "wb")
+        local z = mtzip.zip(f)
+
+        Promise.async(function(await)
+            await(mapblock_lib.serialize_area_to_zip(z, mapblock_pos1, mapblock_pos2, options))
+
+            z:add("eco.json", core.write_json(template.manifest))
+            z:close()
+            f:close()
+
             -- reload templates from world path
             eco_api.register_template_path(eco_api.world_template_path)
-            core.chat_send_player(player:get_player_name(), "Template saved in '" .. path_prefix .. "'")
-        end)
 
-        core.safe_file_write(path_prefix .. ".json", core.write_json(template.manifest))
+            core.chat_send_player(player:get_player_name(), "Template saved in '" .. zip_filename .. "'")
+        end)
     end
 })
 

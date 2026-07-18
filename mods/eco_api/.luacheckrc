@@ -10,5 +10,5 @@ read_globals = {
 	"VoxelArea", "AreaStore",
 	
 	-- mods
-	"mapblock_lib", "mtt"
+	"mapblock_lib", "mtt", "mtzip"
 }

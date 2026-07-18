@@ -2,17 +2,10 @@
 -- name -> {}
 local templates = {}
 
-local function read_json(file)
-    local f = assert(io.open(file, "rb"))
-    local content = f:read("*all")
-    f:close()
-    return core.parse_json(content)
-end
-
-local function create_template(manifest, mapblocks_path)
+local function create_template(manifest, zip_filename)
     local template = {
         manifest = manifest,
-        mapblocks_path = mapblocks_path
+        zip_filename = zip_filename
     }
 
     -- place template in-world with selected placement engine
@@ -29,23 +22,34 @@ local template_paths = {}
 function eco_api.register_template_path(path)
     assert(core.path_exists(path), "template-path exists: '" .. path .. "'")
     table.insert(template_paths, path)
+    local count = 0
+    local t_start = core.get_us_time()
+
     -- register all templates in path
     for _, filename in ipairs(core.get_dir_list(path, false)) do
-        local index = string.find(filename, "[.]json")
-        if index then
-            local prefix = string.sub(filename, 1, index-1)
-            local mapblocks_path = path .. "/" .. prefix .. ".zip"
-            local json_file_path = path .. "/" .. prefix .. ".json"
+        if string.match(filename, "[%l|%d|_]+[.]zip$") then
+            count = count + 1
+            local zip_filename = path .. "/" .. filename
 
-            assert(core.path_exists(mapblocks_path), "zip file exists '" .. mapblocks_path .. "'")
+            local f = io.open(zip_filename, "rb")
+            local z = mtzip.unzip(f)
 
-            local manifest = read_json(json_file_path)
-            assert(manifest, "manifest is readable: '" .. json_file_path .. "'")
+            local eco_json_file = assert(z:get("eco.json"), "eco.json exists in '" .. zip_filename .. "'")
+            local manifest = core.parse_json(eco_json_file)
+            assert(manifest, "manifest is readable: '" .. zip_filename .. "'")
             assert(eco_api.get_placement(manifest.placement), "placement exists: '" .. manifest.placement .. "'")
 
-            templates[prefix] = create_template(manifest, mapblocks_path)
+            f:close()
+
+            local prefix = string.sub(filename, 1, #filename - 4) -- ".zip"
+            templates[prefix] = create_template(manifest, zip_filename)
         end
     end
+
+    local t_end = core.get_us_time()
+    print("[eco] loaded " .. count .. " templates from '" .. path .. "' in " .. (t_end-t_start) .. " us")
+
+    return count
 end
 
 function eco_api.reload_template_paths()
@@ -68,9 +72,9 @@ function eco_api.create_new_template(template_name)
     local manifest = {
         placement = "plain"
     }
-    local mapblocks_path = eco_api.world_template_path .. "/" .. template_name .. ".zip"
+    local zip_filename = eco_api.world_template_path .. "/" .. template_name .. ".zip"
 
-    local template = create_template(manifest, mapblocks_path)
+    local template = create_template(manifest, zip_filename)
     templates[template_name] = template
 
     return template
