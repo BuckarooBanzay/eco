@@ -21,7 +21,7 @@ local function create_editor(playername, templatename)
 
     -- place buttons
     local min = mapblock_lib.get_mapblock_bounds_from_mapblock(mapblock_pos)
-    local button_pos = vector.add(min, {x=10, y=10, z=0})
+    local button_pos = vector.add(min, {x=10, y=20, z=0})
 
     -- save
     core.set_node(button_pos, {name="eco_editor:button_save"})
@@ -31,7 +31,7 @@ local function create_editor(playername, templatename)
     meta:set_string("template_name", templatename)
 
     -- exit
-    button_pos = vector.add(min, {x=12, y=10, z=0})
+    button_pos = vector.add(min, {x=12, y=20, z=0})
     core.set_node(button_pos, {name="eco_editor:button_exit"})
     meta = core.get_meta(button_pos)
     meta:set_string("origin_mapblock_pos", core.pos_to_string(mapblock_pos))
