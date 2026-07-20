@@ -1,15 +1,21 @@
 
-local basetile = "eco_steel_block.png"
-
 core.register_node("eco_editor:button_save", {
-    tiles = {basetile .. "^eco_editor_save.png"},
+    tiles = {eco_editor.button_base_texture .. "^eco_editor_save.png"},
     groups = { not_in_creative_inventory = 1 },
+    light_source = 10,
     on_punch = function(pos, _, player)
         local meta = core.get_meta(pos)
 
         local mapblock_pos = core.string_to_pos(meta:get_string("origin_mapblock_pos"))
         local template_size = core.string_to_pos(meta:get_string("template_size"))
         local template_name = meta:get_string("template_name")
+
+        if eco_editor.operation_active[core.pos_to_string(mapblock_pos)] then
+            core.chat_send_player(player:get_player_name(),"Operation still in progress, please await completion first")
+            return
+        end
+        -- lock operations
+        eco_editor.operation_active[core.pos_to_string(mapblock_pos)] = true
 
         local template = assert(eco_api.get_template(template_name))
 
@@ -42,23 +48,9 @@ core.register_node("eco_editor:button_save", {
             core.chat_send_player(player:get_player_name(), "Template saved in '" .. zip_filename .. "'")
             meta = core.get_meta(pos)
             meta:set_string("infotext", "")
+
+            -- unlock operations
+            eco_editor.operation_active[core.pos_to_string(mapblock_pos)] = false
         end)
-    end
-})
-
-core.register_node("eco_editor:button_exit", {
-    tiles = {basetile .. "^eco_editor_exit.png"},
-    groups = { not_in_creative_inventory = 1 },
-    on_punch = function(pos)
-        local meta = core.get_meta(pos)
-
-        local mapblock_pos1 = core.string_to_pos(meta:get_string("origin_mapblock_pos"))
-        local template_size = core.string_to_pos(meta:get_string("template_size"))
-
-        local mapblock_pos2 = vector.add(mapblock_pos1, vector.add(template_size, 1))
-
-        for mapblock_pos in mapblock_lib.pos_iterator(mapblock_pos1, mapblock_pos2) do
-            mapblock_lib.clear_mapblock(mapblock_pos)
-        end
     end
 })
