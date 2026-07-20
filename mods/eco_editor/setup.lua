@@ -65,6 +65,12 @@ function eco_editor.setup(playername, templatename, template)
         rotation_inv:set_list("disable_orientation", disable_orientation)
     end
 
+    if template.manifest.placement == "mapgen_v1" then
+        -- configure mapgen
+        button_pos = vector.add(editor_origin_pos, eco_editor.button_offsets.configure_mapgen)
+        core.set_node(button_pos, {name="eco_editor:button_configure_mapgen"})
+    end
+
     -- place template to edit (offset by +1 in every axis)
     if catalog then
         local _

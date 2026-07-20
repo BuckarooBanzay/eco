@@ -12,7 +12,8 @@ eco_editor = {
         save = {x=12, y=20, z=0},
         toggle_light = {x=14, y=20, z=0},
         configure_placement = {x=16, y=20, z=0},
-        configure_rotation = {x=18, y=20, z=0}
+        configure_rotation = {x=18, y=20, z=0},
+        configure_mapgen = {x=20, y=20, z=0}
     }
 }
 
@@ -26,3 +27,4 @@ dofile(MP .. "/buttons/save.lua")
 dofile(MP .. "/buttons/toggle_light.lua")
 dofile(MP .. "/buttons/configure_rotation.lua")
 dofile(MP .. "/buttons/configure_placement.lua")
+dofile(MP .. "/buttons/configure_mapgen.lua")
