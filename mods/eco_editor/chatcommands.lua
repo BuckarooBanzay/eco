@@ -74,8 +74,11 @@ core.register_chatcommand("eco_create", {
         end
 
         -- start editor
+        local _
         _, err = eco_editor.setup(name, template_name, template)
-        return true, err
+        if err then
+            return true, err
+        end
     end
 })
 
