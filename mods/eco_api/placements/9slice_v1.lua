@@ -16,16 +16,7 @@
 
 --]]
 
-local function rotate_option(angle)
-  return {
-    transform = {
-      rotate = {
-        angle = angle,
-        axis = "y"
-      }
-    }
-  }
-end
+
 
 eco_api.register_placement("9slice_v1", {
     place = function(template, mapblock_pos, options)
@@ -39,6 +30,18 @@ eco_api.register_placement("9slice_v1", {
         assert(options.size.x >= 2)
         assert(options.size.y >= 2)
         assert(options.size.z >= 2)
+
+        local function rotate_option(angle)
+          return {
+            transform = {
+              rotate = {
+                angle = angle,
+                axis = "y",
+                disable_orientation = template.manifest.disable_orientation
+              }
+            }
+          }
+        end
 
         -- lower corners
         assert(catalog:deserialize(

@@ -3,6 +3,10 @@ core.register_node("eco_editor:button_exit", {
     tiles = {eco_editor.button_base_texture .. "^eco_editor_exit.png"},
     groups = { not_in_creative_inventory = 1 },
     light_source = 10,
+    on_construct = function(pos)
+        local meta = core.get_meta(pos)
+        meta:set_string("infotext", "Exit")
+    end,
     on_punch = function(pos, _, player)
         local meta = core.get_meta(pos)
 
