@@ -18,6 +18,7 @@ function eco_editor.save(editor_origin_pos, player)
     local eco_manifest = template.manifest
 
     -- save rotation config
+    eco_manifest.disable_rotation = nil
     eco_manifest.disable_orientation = {}
     local rotation_meta = core.get_meta(vector.add(editor_origin_pos, eco_editor.button_offsets.configure_rotation))
     local rotation_inv = rotation_meta:get_inventory()

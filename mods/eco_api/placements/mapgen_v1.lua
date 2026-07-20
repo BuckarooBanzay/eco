@@ -11,6 +11,9 @@ Basic mapgen type
 --]]
 
 eco_api.register_placement("mapgen_v1", {
+    check_size = function(size)
+        return size.x == 4 and size.y == 1 and size.z == 1
+    end,
     place = function(template, mapblock_pos, options)
         local catalog, err = mapblock_lib.get_catalog(template.zip_filename)
         if err then

@@ -12,3 +12,4 @@ dofile(MP .. "/placements/9slice_v1.lua")
 
 -- template api
 dofile(MP .. "/template.lua")
+dofile(MP .. "/discover.lua")

@@ -4,6 +4,9 @@ plain placement
 --]]
 
 eco_api.register_placement("plain", {
+    check_size = function()
+        return true
+    end,
     place = function(template, mapblock_pos)
         local catalog, err = mapblock_lib.get_catalog(template.zip_filename)
         if err then

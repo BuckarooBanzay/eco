@@ -38,7 +38,10 @@ core.register_chatcommand("eco_create", {
         }
 
         -- TODO: sanitize inputs
-        local template = eco_api.create_new_template(template_name)
+        local template, err = eco_api.create_new_template(template_name, size)
+        if err then
+            return true, "Create error: " .. err
+        end
 
         -- create stub zipfile
         mapblock_lib.create_empty_catalog(template.zip_filename, size)
