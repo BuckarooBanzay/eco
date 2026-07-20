@@ -68,7 +68,7 @@ core.register_chatcommand("eco_create", {
             end
         end
 
-        local template, err = eco_api.create_new_template(template_name, size)
+        local template, err = eco_api.create_new_template(template_name, size, placement_name)
         if err then
             return true, "Create error: " .. err
         end

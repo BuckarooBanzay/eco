@@ -6,6 +6,7 @@ function eco_editor.save(editor_origin_pos, player)
     local mapblock_pos = core.string_to_pos(meta:get_string("origin_mapblock_pos"))
     local template_size = core.string_to_pos(meta:get_string("template_size"))
     local template_name = meta:get_string("template_name")
+    local placement_name = meta:get_string("placement_name")
 
     if eco_editor.operation_active[core.pos_to_string(mapblock_pos)] then
         core.chat_send_player(player:get_player_name(),"Operation still in progress, please await completion first")
@@ -14,8 +15,11 @@ function eco_editor.save(editor_origin_pos, player)
     -- lock operations
     eco_editor.operation_active[core.pos_to_string(mapblock_pos)] = true
 
-    local template = assert(eco_api.get_template(template_name))
-    local eco_manifest = template.manifest
+    -- create new template
+    local eco_manifest = {
+        placement = placement_name,
+        size = template_size
+    }
 
     -- save rotation config
     eco_manifest.disable_rotation = nil

@@ -62,14 +62,14 @@ function eco_api.get_template(name)
     return templates[name]
 end
 
-function eco_api.create_new_template(template_name, size)
+function eco_api.create_new_template(template_name, size, placement_name)
     local name_valid, name_err = eco_api.check_template_name(template_name)
     if not name_valid then
         return false, name_err
     end
 
     local manifest = {
-        placement = "plain",
+        placement = placement_name,
         size = size
     }
     local zip_filename = eco_api.world_template_path .. "/" .. template_name .. ".zip"
@@ -78,8 +78,6 @@ function eco_api.create_new_template(template_name, size)
     if err then
         return false, err
     end
-
-    templates[template_name] = template
 
     return template
 end

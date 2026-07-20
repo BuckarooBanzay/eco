@@ -1,9 +1,6 @@
 
-local template_paths = {}
-
 function eco_api.register_template_path(path)
     assert(core.path_exists(path), "template-path exists: '" .. path .. "'")
-    table.insert(template_paths, path)
     local count = 0
     local t_start = core.get_us_time()
 
@@ -14,7 +11,7 @@ function eco_api.register_template_path(path)
             local template, err = eco_api.create_template_from_zip(path, filename)
             if err then
                 -- fail hard
-                error("could not load template: '"..path.."/"..filename"': " .. err)
+                error("could not load template: '"..path.."/"..filename.."': " .. err)
             end
 
             local prefix = string.sub(filename, 1, #filename - 4) -- ".zip"
@@ -26,12 +23,6 @@ function eco_api.register_template_path(path)
     print("[eco] loaded " .. count .. " templates from '" .. path .. "' in " .. (t_end-t_start) .. " us")
 
     return count
-end
-
-function eco_api.reload_template_paths()
-    for _, path in ipairs(template_paths) do
-        eco_api.register_template_path(path)
-    end
 end
 
 -- create and register global template path last (overrides any previously defined template)

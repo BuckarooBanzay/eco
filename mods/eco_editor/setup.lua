@@ -41,6 +41,7 @@ function eco_editor.setup(playername, templatename, template)
     meta:set_string("origin_mapblock_pos", core.pos_to_string(mapblock_pos))
     meta:set_string("template_size", core.pos_to_string(template.manifest.size))
     meta:set_string("template_name", templatename)
+    meta:set_string("placement_name", template.manifest.placement)
 
     -- toggle light
     button_pos = vector.add(editor_origin_pos, eco_editor.button_offsets.toggle_light)

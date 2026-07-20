@@ -22,6 +22,7 @@ core.register_node("eco_editor:button_exit", {
 
         for mapblock_pos in mapblock_lib.pos_iterator(mapblock_pos1, mapblock_pos2) do
             mapblock_lib.clear_mapblock(mapblock_pos)
+            player:send_mapblock(mapblock_pos)
         end
 
         -- reset light override
