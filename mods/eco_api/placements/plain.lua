@@ -4,6 +4,7 @@ plain placement
 --]]
 
 eco_api.register_placement("plain", {
+    description = "simple placement",
     check_size = function()
         return true
     end,

@@ -19,6 +19,7 @@
 
 
 eco_api.register_placement("9slice_v1", {
+  description = "9-sliced building schematic",
   check_size = function(size)
     return size.x == 2 and size.y == 3 and size.z == 2
   end,

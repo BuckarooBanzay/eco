@@ -1,23 +1,25 @@
 
-function eco_editor.setup(playername, templatename)
+function eco_editor.setup(playername, templatename, template)
     -- TODO: find an unoccupied area and use that
     local player = core.get_player_by_name(playername)
     local pos = player:get_pos()
     local mapblock_pos = mapblock_lib.get_mapblock(pos)
 
-    -- local template to edit
-    local template = eco_api.get_template(templatename)
-
-    local catalog, err = mapblock_lib.get_catalog(template.zip_filename)
-    if err then
-        -- something went wrong
-        return true, "Error reading zip catalog: " .. err
+    local catalog, err
+    if core.path_exists(template.zip_filename) then
+        -- only read catalog if there is a zip-file in the path
+        -- could be missing if the template has just been set up in-world but not saved yet
+        catalog, err = mapblock_lib.get_catalog(template.zip_filename)
+        if err then
+            -- something went wrong
+            return true, "Error reading zip catalog: " .. err
+        end
     end
 
     -- place editor
     local editor_template = assert(eco_api.get_template("editor"))
     editor_template.place(mapblock_pos, {
-        size = vector.add(catalog:get_size(), 2)
+        size = vector.add(template.manifest.size, 2)
     })
 
     -- place buttons
@@ -28,7 +30,7 @@ function eco_editor.setup(playername, templatename)
     core.set_node(button_pos, {name="eco_editor:button_exit"})
     local meta = core.get_meta(button_pos)
     meta:set_string("origin_mapblock_pos", core.pos_to_string(mapblock_pos))
-    meta:set_string("template_size", core.pos_to_string(catalog:get_size()))
+    meta:set_string("template_size", core.pos_to_string(template.manifest.size))
     meta:set_string("template_name", templatename)
 
     -- save
@@ -37,7 +39,7 @@ function eco_editor.setup(playername, templatename)
     meta = core.get_meta(button_pos)
     meta:set_string("editor_origin_pos", core.pos_to_string(editor_origin_pos))
     meta:set_string("origin_mapblock_pos", core.pos_to_string(mapblock_pos))
-    meta:set_string("template_size", core.pos_to_string(catalog:get_size()))
+    meta:set_string("template_size", core.pos_to_string(template.manifest.size))
     meta:set_string("template_name", templatename)
 
     -- toggle light
@@ -63,17 +65,19 @@ function eco_editor.setup(playername, templatename)
     end
 
     -- place template to edit (offset by +1 in every axis)
-    local _
-    _, err = catalog:deserialize_all(vector.add(mapblock_pos, 1), {
-        callback = function()
-            core.chat_send_player(playername, "Template successfully read")
-        end,
-        error_callback = function(import_err)
-            core.chat_send_player(playername, "Deserialization failed: " .. import_err)
-        end
-    })
+    if catalog then
+        local _
+        _, err = catalog:deserialize_all(vector.add(mapblock_pos, 1), {
+            callback = function()
+                core.chat_send_player(playername, "Template successfully read")
+            end,
+            error_callback = function(import_err)
+                core.chat_send_player(playername, "Deserialization failed: " .. import_err)
+            end
+        })
 
-    if err then
-        return true, "Deserialize failed: " .. err
+        if err then
+            return true, "Deserialize failed: " .. err
+        end
     end
 end

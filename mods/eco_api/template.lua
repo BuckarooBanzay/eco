@@ -2,6 +2,13 @@
 -- name -> {}
 local templates = {}
 
+function eco_api.check_template_name(template_name)
+    if string.match(template_name, "^[%w|_]+$") then
+        return true
+    end
+    return false, "Invalid characters in template name, allowed are: digits, letters and underscore"
+end
+
 function eco_api.create_template(manifest, zip_filename)
     local template = {
         manifest = manifest,
@@ -24,6 +31,12 @@ function eco_api.create_template(manifest, zip_filename)
 end
 
 function eco_api.create_template_from_zip(path, filename)
+    local template_name = string.sub(filename, 1, #filename - 4) -- ".zip"
+    local name_valid, name_err = eco_api.check_template_name(template_name)
+    if not name_valid then
+        return false, name_err
+    end
+
     local zip_filename = path .. "/" .. filename
 
     local f = io.open(zip_filename, "rb")
@@ -50,6 +63,11 @@ function eco_api.get_template(name)
 end
 
 function eco_api.create_new_template(template_name, size)
+    local name_valid, name_err = eco_api.check_template_name(template_name)
+    if not name_valid then
+        return false, name_err
+    end
+
     local manifest = {
         placement = "plain",
         size = size
