@@ -1,5 +1,5 @@
 local MP = core.get_modpath(core.get_current_modname())
-eco_api.register_template_path(MP .. "/templates")
+eco_template.register_template_path(MP .. "/templates")
 
 eco_editor = {
     button_base_texture = "eco_steel_block.png",

@@ -1,13 +1,13 @@
 std="min+minetest"
 
 globals = {
-	"eco_nodes"
+	"eco_template"
 }
 
 read_globals = {
 	-- Luanti
 	"core",
-
+	
 	-- mods
-	"stairsplus", "unifieddyes"
+	"eco_api", "mapblock_lib", "mtt", "mtzip"
 }

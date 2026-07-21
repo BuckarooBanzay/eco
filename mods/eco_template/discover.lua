@@ -1,5 +1,5 @@
 
-function eco_api.register_template_path(path)
+function eco_template.register_template_path(path)
     assert(core.path_exists(path), "template-path exists: '" .. path .. "'")
     local count = 0
     local t_start = core.get_us_time()
@@ -8,7 +8,7 @@ function eco_api.register_template_path(path)
     for _, filename in ipairs(core.get_dir_list(path, false)) do
         if string.match(filename, "[%l|%d|_]+[.]zip$") then
             count = count + 1
-            local template, err = eco_api.create_template_from_zip(path, filename)
+            local template, err = eco_template.create_template_from_zip(path, filename)
             if err then
                 -- fail hard
                 error("could not load template: '"..path.."/"..filename.."': " .. err)
@@ -27,6 +27,6 @@ end
 
 -- create and register global template path last (overrides any previously defined template)
 core.register_on_mods_loaded(function()
-    core.mkdir(eco_api.world_template_path)
-    eco_api.register_template_path(eco_api.world_template_path)
+    core.mkdir(eco_template.world_template_path)
+    eco_template.register_template_path(eco_template.world_template_path)
 end)

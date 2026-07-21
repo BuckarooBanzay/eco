@@ -1,3 +1,5 @@
+std="min+minetest"
+
 globals = {
 	"eco_editor"
 }
@@ -5,10 +7,7 @@ globals = {
 read_globals = {
 	-- Luanti
 	"core",
-	"vector", "ItemStack",
-	"dump", "dump2",
-	"VoxelArea", "AreaStore",
 	
 	-- mods
-	"eco_api", "mapblock_lib", "mtt", "Promise", "mtzip"
+	"eco_api", "eco_template", "mapblock_lib", "mtt", "Promise", "mtzip"
 }
