@@ -1,4 +1,5 @@
 
+-- checks if the template name is valid
 function eco_template.check_template_name(template_name)
     if string.match(template_name, "^[%w|_]+$") then
         return true
@@ -6,6 +7,7 @@ function eco_template.check_template_name(template_name)
     return false, "Invalid characters in template name, allowed are: digits, letters and underscore"
 end
 
+-- creates a new template instance from the given manifest and zip-filename
 function eco_template.create_template(manifest, zip_filename)
     local template = {
         manifest = manifest,
@@ -27,6 +29,7 @@ function eco_template.create_template(manifest, zip_filename)
     return template
 end
 
+-- creates a new template instance from the given path and filename (zip)
 function eco_template.create_template_from_zip(path, filename)
     local template_name = string.sub(filename, 1, #filename - 4) -- ".zip"
     local name_valid, name_err = eco_template.check_template_name(template_name)
@@ -50,6 +53,7 @@ function eco_template.create_template_from_zip(path, filename)
     return eco_template.create_template(manifest, zip_filename)
 end
 
+-- creates an empty template with given size and placement
 function eco_template.create_new_template(template_name, size, placement_name)
     local name_valid, name_err = eco_template.check_template_name(template_name)
     if not name_valid then
