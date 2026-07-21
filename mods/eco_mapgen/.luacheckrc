@@ -9,5 +9,5 @@ read_globals = {
 	"core",
 
 	-- mods
-	"eco_api", "eco_template", "mapblock_lib", "mtt"
+	"eco_api", "eco_template", "mapblock_lib", "Promise", "mtt"
 }

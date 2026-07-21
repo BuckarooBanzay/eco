@@ -8,7 +8,6 @@ dofile(MP .. "/discover.lua")
 
 -- placement types
 dofile(MP .. "/placements/plain.lua")
-dofile(MP .. "/placements/mapgen_v1.lua")
 dofile(MP .. "/placements/9slice_v1.lua")
 
 if core.get_modpath("mtt") and mtt.enabled then
