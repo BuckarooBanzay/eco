@@ -3,7 +3,6 @@
 local templates = {}
 
 function eco_api.register_template(name, template)
-    -- TODO: validate
     templates[name] = template
 end
 
