@@ -15,7 +15,7 @@ function eco_template.register_template_path(path)
             end
 
             local prefix = string.sub(filename, 1, #filename - 4) -- ".zip"
-            eco_api.register_template(template, prefix)
+            eco_api.register_template(prefix, template)
         end
     end
 
