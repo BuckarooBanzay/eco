@@ -6,3 +6,5 @@ mtt.register("eco_mapgen template registration", function(callback)
     assert(template.zip_filename)
     callback()
 end)
+
+mtt.emerge_area({x=0,y=0,z=0}, {x=100,y=0,z=0})
