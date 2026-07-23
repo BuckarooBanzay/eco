@@ -60,5 +60,8 @@ eco_api.register_placement("mapgen_v1", {
 
         cached_placement(mapblock_pos)
         return Promise.resolve()
+    end,
+    remove = function(_, mapblock_pos)
+        mapblock_lib.clear_mapblock(mapblock_pos)
     end
 })

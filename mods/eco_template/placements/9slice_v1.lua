@@ -215,6 +215,14 @@ eco_api.register_placement("9slice_v1", {
       end
     end
 
-    return Promise.resolve()
+    return Promise.resolve({
+      size = options.size
+    })
+  end,
+  remove = function(_, mapblock_pos1, mapblock_data)
+    local mapblock_pos2 = vector.add(mapblock_pos1, vector.add(mapblock_data.size, -1))
+    for mapblock_pos in mapblock_lib.pos_iterator(mapblock_pos1, mapblock_pos2) do
+        mapblock_lib.clear_mapblock(mapblock_pos)
+    end
   end
 })

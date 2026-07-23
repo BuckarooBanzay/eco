@@ -5,6 +5,13 @@ local Template_mt = { __index = Template }
 function Template:place(mapblock_pos, options)
     local placement = eco_api.get_placement(self.manifest.placement)
     return placement.place(self, mapblock_pos, options)
+    -- TODO: store data
+end
+
+function Template:remove(mapblock_pos, mapblock_data)
+    -- TODO: retrieve data
+    local placement = eco_api.get_placement(self.manifest.placement)
+    return placement.remove(self, mapblock_pos, mapblock_data)
 end
 
 -- validate size and placement
