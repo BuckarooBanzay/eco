@@ -5,6 +5,7 @@ eco_template = {
 }
 dofile(MP .. "/template.lua")
 dofile(MP .. "/discover.lua")
+dofile(MP .. "/common.lua")
 
 -- placement types
 dofile(MP .. "/placements/plain.lua")
@@ -12,4 +13,5 @@ dofile(MP .. "/placements/9slice_v1.lua")
 
 if core.get_modpath("mtt") and mtt.enabled then
     dofile(MP .. "/template.spec.lua")
+    dofile(MP .. "/common.spec.lua")
 end
