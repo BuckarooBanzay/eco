@@ -88,10 +88,10 @@ local function is_water(mapblock_pos)
 end
 
 local function select_template(temperature, humidity)
+    --[[
     local selected_score = -1
     local selected_template
 
-    --[[
     for _, biome in ipairs(biomes) do
         local score = math.abs(temperature - biome.temperature) + math.abs(humidity - biome.humidity)
         if not selected_biome or score > selected_score then
@@ -100,8 +100,7 @@ local function select_template(temperature, humidity)
         end
     end
     --]]
-
-    return selected_template
+    return eco_api.get_template("eco_mapgen_terrain_simple") -- XXX fixed template
 end
 
 local function get_template(mapblock_pos)
