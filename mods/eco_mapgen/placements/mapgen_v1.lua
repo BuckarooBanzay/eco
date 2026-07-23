@@ -41,7 +41,7 @@ eco_api.register_placement("mapgen_v1", {
             local catalog, err = mapblock_lib.get_catalog(template.zip_filename)
             if err then
                 -- something went wrong
-                return true, "Error reading zip catalog: " .. err
+                return Promise.reject("Error reading zip catalog: " .. err)
             end
 
             local catalog_pos = assert(part_mapping[options.partname])
@@ -59,5 +59,6 @@ eco_api.register_placement("mapgen_v1", {
         end
 
         cached_placement(mapblock_pos)
+        return Promise.resolve()
     end
 })

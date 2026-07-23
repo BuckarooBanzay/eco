@@ -1,5 +1,5 @@
 
-core.register_chatcommand("eco_edit", {
+Promise.register_chatcommand("eco_edit", {
     params = "<template-name>",
     description = "Edit a template",
     func = function(name, params)
@@ -8,7 +8,7 @@ core.register_chatcommand("eco_edit", {
             return true, "Template '" .. params .. "' not found"
         end
 
-        eco_editor.setup(name, params, template)
+        return eco_editor.setup(name, params, template)
     end
 })
 
@@ -34,7 +34,7 @@ core.register_chatcommand("eco_placements", {
     end
 })
 
-core.register_chatcommand("eco_create", {
+Promise.register_chatcommand("eco_create", {
     params = "<template-name> <placement-type> <x-size> <y-size> <z-size>",
     description = "Create a template",
     func = function(name, params)
@@ -74,11 +74,7 @@ core.register_chatcommand("eco_create", {
         end
 
         -- start editor
-        local _
-        _, err = eco_editor.setup(name, template_name, template)
-        if err then
-            return true, err
-        end
+        return eco_editor.setup(name, template_name, template)
     end
 })
 

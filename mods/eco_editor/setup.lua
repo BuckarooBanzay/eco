@@ -1,5 +1,5 @@
 
-function eco_editor.setup(playername, templatename, template)
+eco_editor.setup = Promise.asyncify(function(await, playername, templatename, template)
     -- TODO: find an unoccupied area and use that
     local player = core.get_player_by_name(playername)
     local pos = player:get_pos()
@@ -12,15 +12,16 @@ function eco_editor.setup(playername, templatename, template)
         catalog, err = mapblock_lib.get_catalog(template.zip_filename)
         if err then
             -- something went wrong
-            return true, "Error reading zip catalog: " .. err
+            error("Error reading zip catalog: " .. err, 0)
         end
     end
 
     -- place editor
     local editor_template = assert(eco_api.get_template("editor"))
-    editor_template.place(mapblock_pos, {
+    local place_options = {
         size = vector.add(template.manifest.size, 2)
-    })
+    }
+    await(editor_template.place(mapblock_pos, place_options))
 
     -- place buttons
     local editor_origin_pos = mapblock_lib.get_mapblock_bounds_from_mapblock(mapblock_pos)
@@ -73,18 +74,6 @@ function eco_editor.setup(playername, templatename, template)
 
     -- place template to edit (offset by +1 in every axis)
     if catalog then
-        local _
-        _, err = catalog:deserialize_all(vector.add(mapblock_pos, 1), {
-            callback = function()
-                core.chat_send_player(playername, "Template successfully read")
-            end,
-            error_callback = function(import_err)
-                core.chat_send_player(playername, "Deserialization failed: " .. import_err)
-            end
-        })
-
-        if err then
-            return true, "Deserialize failed: " .. err
-        end
+        await(catalog:deserialize_all(vector.add(mapblock_pos, 1)))
     end
-end
+end)
