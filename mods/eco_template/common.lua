@@ -43,7 +43,9 @@ function eco_template.create_new_template(template_name, size, placement_name)
     }
     local zip_filename = eco_template.world_template_path .. "/" .. template_name .. ".zip"
 
-    local template, err = eco_template.create_template(manifest, zip_filename)
+    local template = eco_template.create_template(manifest, zip_filename)
+
+    local _, err = template:validate()
     if err then
         return false, err
     end

@@ -191,7 +191,7 @@ core.register_on_generated(function(minp, maxp)
         local mapblock_pos = { x=x, y=y, z=z }
         local template, partname, rotation = get_template(mapblock_pos)
         if template then
-            template.place(mapblock_pos, {
+            template:place(mapblock_pos, {
                 partname = partname,
                 rotation = rotation
             })

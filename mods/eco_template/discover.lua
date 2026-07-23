@@ -14,6 +14,13 @@ function eco_template.register_template_path(path)
                 error("could not load template: '"..path.."/"..filename.."': " .. err)
             end
 
+            local _
+            _, err = template:validate()
+            if err then
+                -- fail hard
+                error("could not validate template: '"..path.."/"..filename.."': " .. err)
+            end
+
             local prefix = string.sub(filename, 1, #filename - 4) -- ".zip"
             eco_api.register_template(prefix, template)
         end

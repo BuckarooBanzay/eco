@@ -21,7 +21,7 @@ eco_editor.setup = Promise.asyncify(function(await, playername, templatename, te
     local place_options = {
         size = vector.add(template.manifest.size, 2)
     }
-    await(editor_template.place(mapblock_pos, place_options))
+    await(editor_template:place(mapblock_pos, place_options))
 
     -- place buttons
     local editor_origin_pos = mapblock_lib.get_mapblock_bounds_from_mapblock(mapblock_pos)

@@ -1,22 +1,26 @@
+local Template = {}
+local Template_mt = { __index = Template }
+
+-- place template in-world with selected placement engine
+function Template:place(mapblock_pos, options)
+    local placement = eco_api.get_placement(self.manifest.placement)
+    return placement.place(self, mapblock_pos, options)
+end
+
+-- validate size and placement
+function Template:validate()
+    local placement = eco_api.get_placement(self.manifest.placement)
+    if not placement.check_size(self.manifest.size) then
+        return false, "size check failed to placement: '"..self.manifest.placement.."'"
+    end
+    return true
+end
 
 -- creates a new template instance from the given manifest and zip-filename
 function eco_template.create_template(manifest, zip_filename)
-    local template = {
-        manifest = manifest,
+    local self = {
+		manifest = manifest,
         zip_filename = zip_filename
-    }
-
-    -- place template in-world with selected placement engine
-    function template.place(mapblock_pos, options)
-        local placement = eco_api.get_placement(manifest.placement)
-        return placement.place(template, mapblock_pos, options)
-    end
-
-    -- validate size and placement
-    local placement = eco_api.get_placement(manifest.placement)
-    if not placement.check_size(manifest.size) then
-        return false, "size check failed to placement: '"..manifest.placement.."'"
-    end
-
-    return template
+	}
+	return setmetatable(self, Template_mt)
 end
