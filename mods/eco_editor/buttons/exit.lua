@@ -27,5 +27,7 @@ core.register_node("eco_editor:button_exit", {
 
         -- reset light override
         player:override_day_night_ratio()
+
+        -- TODO: teleport player(s) back to pre-editor positions
     end
 })

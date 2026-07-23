@@ -7,4 +7,15 @@ core.register_node("eco_editor:button_configure_mapgen", {
         local meta = core.get_meta(pos)
         meta:set_string("infotext", "Configure mapgen params")
     end,
+    on_punch = Promise.asyncify(function(await, pos, _, player)
+        local fs = eco_editor.ui.formspec(10,11) ..
+            eco_editor.ui.label(0.5,0.5,"Configure mapgen params:") ..
+            -- TODO: temperature, humidity, min_y, max_y
+
+            eco_editor.ui.button_exit(8,10,1.8,0.8,"exit","Exit")
+
+        local fields = await(Promise.formspec(player:get_player_name(), fs))
+        -- TODO: save fields into meta
+        print(dump(fields))
+    end)
 })
