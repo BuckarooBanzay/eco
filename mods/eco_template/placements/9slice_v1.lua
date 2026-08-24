@@ -23,9 +23,6 @@ eco_api.register_placement("9slice_v1", {
   check_size = function(size)
     return size.x == 2 and size.y == 3 and size.z == 2
   end,
-  get_configuration = function()
-    return {}
-  end,
   place = function(template, mapblock_pos, options)
     local catalog, err = mapblock_lib.get_catalog(template.zip_filename)
     if err then

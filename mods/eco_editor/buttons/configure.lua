@@ -11,7 +11,10 @@ core.register_node("eco_editor:button_configure", {
         local meta = core.get_meta(pos)
         local manifest = core.parse_json(meta:get_string("manifest"))
         local placement = eco_api.get_placement(manifest.placement)
-        local config = placement.get_configuration(manifest)
+        local config = {}
+        if type(placement.get_configuration) == "function" then
+            config = placement.get_configuration(manifest) or {}
+        end
 
         -- apply global config
         local global_config = eco_template.get_common_configuration(manifest)
