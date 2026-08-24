@@ -39,7 +39,8 @@ minetest.register_node(":eco:water_source", {
 	liquid_alternative_source = "eco:water_source",
 	liquid_viscosity = 1,
 	post_effect_color = {a = 103, r = 30, g = 60, b = 90},
-	groups = {water = 3, liquid = 3, cools_lava = 1}
+	groups = {water = 3, liquid = 3, cools_lava = 1},
+	mapcolor = { r=29, g=130, b=223 }
 })
 
 minetest.register_node(":eco:water_static", {
@@ -78,7 +79,8 @@ minetest.register_node(":eco:water_static", {
 	drop = "",
 	drowning = 1,
 	post_effect_color = {a = 103, r = 30, g = 60, b = 90},
-	groups = {water = 3, liquid = 3, cools_lava = 1}
+	groups = {water = 3, liquid = 3, cools_lava = 1},
+	mapcolor = { r=29, g=130, b=223 }
 })
 
 minetest.register_node(":eco_nodes:water_flowing", {
@@ -124,6 +126,7 @@ minetest.register_node(":eco_nodes:water_flowing", {
 	liquid_viscosity = 1,
 	post_effect_color = {a = 103, r = 30, g = 60, b = 90},
 	groups = {water = 3, liquid = 3, not_in_creative_inventory = 1, cools_lava = 1},
+	mapcolor = { r=29, g=130, b=223 }
 })
 
 
@@ -170,6 +173,7 @@ minetest.register_node(":eco_nodes:lava_source", {
 	liquid_renewable = false,
 	post_effect_color = {a = 191, r = 255, g = 64, b = 0},
 	groups = {lava = 3, liquid = 2, igniter = 1},
+	mapcolor = { r=196, g=76, b=6 }
 })
 
 minetest.register_node(":eco_nodes:lava_flowing", {
@@ -216,4 +220,5 @@ minetest.register_node(":eco_nodes:lava_flowing", {
 	liquid_renewable = false,
 	post_effect_color = {a = 191, r = 255, g = 64, b = 0},
 	groups = {lava = 3, liquid = 2, igniter = 1, not_in_creative_inventory = 1},
+	mapcolor = { r=196, g=76, b=6 }
 })

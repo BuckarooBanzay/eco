@@ -28,3 +28,9 @@ function eco_nodes.node_sound_metal()
         footstep = {name = "eco_metal_footstep", gain = 0.3}
     }
 end
+
+function eco_nodes.node_sound_glass()
+    return {
+        footstep = {name = "eco_glass_footstep", gain = 0.3}
+    }
+end

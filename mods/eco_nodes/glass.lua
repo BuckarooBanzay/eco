@@ -5,18 +5,7 @@ eco_nodes.register("clean_glass", {
     use_texture_alpha = "clip",
     sunlight_propagates = true,
     paramtype = "light",
-    moreblocks = true
-})
-
-eco_nodes.register("framed_glass", {
-    tiles = {
-        { name = "framedglass_steel_frame.png", color = "white" },
-		"framedglass_whiteglass.png",
-    },
-    inventory_image = minetest.inventorycube("framedglass_glass_face_inv_static.png"),
-    drawtype = "glasslike_framed",
-    use_texture_alpha = "blend",
-    sunlight_propagates = true,
-    paramtype = "light",
-    unifieddyes = true
+    moreblocks = true,
+    mapcolor = { r=247, g=247, b=247, a=50 },
+    sounds = eco_nodes.node_sound_glass()
 })

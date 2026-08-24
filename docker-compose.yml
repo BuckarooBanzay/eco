@@ -1,17 +1,10 @@
-version: "3.6"
 
 services:
- sut:
-  image: registry.gitlab.com/minetest/minetest/server:${ENGINE_VERSION:-5.5.0}
-  entrypoint: "minetestserver --config /minetest.conf"
-  user: root
-  volumes:
-    - "./:/root/.minetest/worlds/world/game/"
-    - "./test/world.mt:/root/.minetest/worlds/world/world.mt"
-    - "./test/minetest.conf:/minetest.conf"
-    - "world:/root/.minetest/worlds/world"
-  ports:
-    - "30000:30000/udp"
-
-volumes:
-  world: {}
+  mtt:
+    image: ghcr.io/buckaroobanzay/mtt:latest
+    volumes:
+     - "./:/github/workspace"
+    environment:
+     INPUT_TEST_MODE: "game"
+     INPUT_MAPGEN: "singlenode"
+     INPUT_MTT_FILTER: "eco_api,eco_editor,eco_mapgen,eco_template"
