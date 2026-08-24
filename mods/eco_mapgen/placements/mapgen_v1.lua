@@ -27,6 +27,20 @@ eco_api.register_placement("mapgen_v1", {
     check_size = function(size)
         return size.x == 4 and size.y == 1 and size.z == 2
     end,
+    get_configuration = function()
+        return {
+            temperature = {
+                name = "Temperature",
+                category = "Mapgen",
+                type = "number"
+            },
+            humidity = {
+                name = "Humidity",
+                category = "Mapgen",
+                type = "number"
+            }
+        }
+    end,
     place = function(template, mapblock_pos, options)
         assert(options)
         assert(options.partname)

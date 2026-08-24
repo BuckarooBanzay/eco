@@ -52,3 +52,19 @@ function eco_template.create_new_template(template_name, size, placement_name)
 
     return template
 end
+
+-- global template configuration options
+function eco_template.get_common_configuration()
+    return {
+        disable_orientation = {
+            name = "Disable node orientation",
+            category = "General",
+            type = "items"
+        },
+        placement_type = {
+            name = "Placement type",
+            category = "General",
+            type = "placement_type"
+        }
+    }
+end

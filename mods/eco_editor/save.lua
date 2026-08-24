@@ -6,7 +6,7 @@ function eco_editor.save(editor_origin_pos, player)
     local mapblock_pos = core.string_to_pos(meta:get_string("origin_mapblock_pos"))
     local template_size = core.string_to_pos(meta:get_string("template_size"))
     local template_name = meta:get_string("template_name")
-    local placement_name = meta:get_string("placement_name")
+    --local placement_name = meta:get_string("placement_name")
 
     if eco_editor.operation_active[core.pos_to_string(mapblock_pos)] then
         core.chat_send_player(player:get_player_name(),"Operation still in progress, please await completion first")
@@ -15,12 +15,11 @@ function eco_editor.save(editor_origin_pos, player)
     -- lock operations
     eco_editor.operation_active[core.pos_to_string(mapblock_pos)] = true
 
-    -- create new template
-    local eco_manifest = {
-        placement = placement_name,
-        size = template_size
-    }
+    local button_pos = vector.add(editor_origin_pos, eco_editor.button_offsets.configure_placement)
+    local button_meta = core.get_meta(button_pos)
+    local eco_manifest = core.parse_json(button_meta:get_string("manifest"))
 
+    --[[
     -- save rotation config
     eco_manifest.disable_rotation = nil
     eco_manifest.disable_orientation = {}
@@ -31,6 +30,7 @@ function eco_editor.save(editor_origin_pos, player)
             eco_manifest.disable_orientation[item:get_name()] = true
         end
     end
+    --]]
 
     local zip_filename = eco_api.world_template_path .. "/" .. template_name .. ".zip"
 

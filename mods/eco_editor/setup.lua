@@ -50,8 +50,11 @@ eco_editor.setup = Promise.asyncify(function(await, playername, templatename, te
 
     -- configure placement
     button_pos = vector.add(editor_origin_pos, eco_editor.button_offsets.configure_placement)
-    core.set_node(button_pos, {name="eco_editor:button_configure_placement"})
+    core.set_node(button_pos, {name="eco_editor:button_configure"})
+    meta = core.get_meta(button_pos)
+    meta:set_string("manifest", core.write_json(template.manifest))
 
+    --[[
     -- configure rotation
     button_pos = vector.add(editor_origin_pos, eco_editor.button_offsets.configure_rotation)
     core.set_node(button_pos, {name="eco_editor:button_configure_rotation"})
@@ -71,6 +74,7 @@ eco_editor.setup = Promise.asyncify(function(await, playername, templatename, te
         button_pos = vector.add(editor_origin_pos, eco_editor.button_offsets.configure_mapgen)
         core.set_node(button_pos, {name="eco_editor:button_configure_mapgen"})
     end
+    --]]
 
     -- place template to edit (offset by +1 in every axis)
     if catalog then
