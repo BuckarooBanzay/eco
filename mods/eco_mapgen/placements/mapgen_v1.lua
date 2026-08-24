@@ -27,17 +27,25 @@ eco_api.register_placement("mapgen_v1", {
     check_size = function(size)
         return size.x == 4 and size.y == 1 and size.z == 2
     end,
-    get_configuration = function()
+    get_configuration = function(manifest)
         return {
             temperature = {
                 name = "Temperature",
                 category = "Mapgen",
-                type = "number"
+                type = "number",
+                value = manifest.mapgen_temperature or 0,
+                set = function(v)
+                    manifest.mapgen_temperature = v
+                end
             },
             humidity = {
                 name = "Humidity",
                 category = "Mapgen",
-                type = "number"
+                type = "number",
+                value = manifest.mapgen_humidity or 0,
+                set = function(v)
+                    manifest.mapgen_humidity = v
+                end
             }
         }
     end,

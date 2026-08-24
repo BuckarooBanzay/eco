@@ -54,17 +54,25 @@ function eco_template.create_new_template(template_name, size, placement_name)
 end
 
 -- global template configuration options
-function eco_template.get_common_configuration()
+function eco_template.get_common_configuration(manifest)
     return {
         disable_orientation = {
             name = "Disable node orientation",
             category = "General",
-            type = "items"
+            type = "items",
+            value = manifest.disable_orientation,
+            set = function(v)
+                manifest.disable_orientation = v
+            end
         },
         placement_type = {
             name = "Placement type",
             category = "General",
-            type = "placement_type"
+            type = "placement_type",
+            value = manifest.placement,
+            set = function(v)
+                manifest.placement = v
+            end
         }
     }
 end

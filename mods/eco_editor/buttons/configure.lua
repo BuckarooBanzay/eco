@@ -14,7 +14,7 @@ core.register_node("eco_editor:button_configure", {
         local config = placement.get_configuration(manifest)
 
         -- apply global config
-        local global_config = eco_template.get_common_configuration()
+        local global_config = eco_template.get_common_configuration(manifest)
         for k, v in pairs(global_config) do
             config[k] = v
         end
